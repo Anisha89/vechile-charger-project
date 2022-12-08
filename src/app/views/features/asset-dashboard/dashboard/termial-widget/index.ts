@@ -1,0 +1,1 @@
+export { TerminalWidgetComponent as TermialWidgetComponent } from './terminal-widget.component';

@@ -1,0 +1,100 @@
+.charging-vehicles {
+    .card-header {
+        .card-icons {
+            float: right;
+            .icon-wrapper {
+                width: 30px;
+                height: 30px;
+                padding: 5px;
+                color: #23282c!important;
+                text-decoration: none;
+                i {
+                    font-size: large;
+                }
+            }
+            
+        }
+    }
+    .charging-vehicle {
+        line-height: 35px;
+        cursor: pointer;
+        &.selected {
+            background-color: #f0f3f5;
+            font-weight: 500;
+        }
+        .status {
+            min-width: 68px;
+            line-height: 14px;
+        }
+        .name {
+            white-space: nowrap;
+            width: 20%;
+            .logo {
+                display: inline-block;
+                width: 70px;
+                text-align: center;
+                img {
+                    height: 35px;
+                    padding: 0px;
+                    border-radius: 0;
+                    border: none;
+                    margin-right: 10px;
+                }
+                a {
+                    text-decoration: none;
+                }
+            }
+        }
+        .status{
+            margin-top: 5px;
+        }
+        a.btn {
+            padding: 5px;
+        }
+    }
+    .empty {
+        text-align: center;
+        font-size: 40px;
+        color: lightgrey;
+        padding: 10px;
+        background: #fff;
+        font-style: italic;
+        line-height: 64px;
+        font-weight: 600;
+    }
+
+    .empty {
+        td {
+            line-height: 35px;
+        }
+    }
+    
+    td{
+        line-height: 21px;
+        vertical-align: middle;
+        &.contact{        
+            width: 9%;
+            text-align: center;
+        }
+
+        &.status-col{        
+            width: 5%;
+            text-align: center;
+        }
+
+        &.action{        
+            width: 7%;
+            min-width: 94px;
+            text-align: center;
+        }
+
+        &.capacity{        
+            width: 5%;
+            text-align: right;
+        }
+
+        &.model{
+            width: 11%;
+        }
+    }
+}

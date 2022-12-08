@@ -1,0 +1,30 @@
+<div class="rule-builder-tab tab-1" [ngClass]="{'selected': selectedTab === 'builder'}" (click)="onTab('builder')">
+  <label class="rule-builder-tab-label">
+    Builder
+  </label>
+</div>
+<div class="rule-builder-tab tab-2" [ngClass]="{'selected': selectedTab === 'raw'}" (click)="onTab('raw')">
+  <label class="rule-builder-tab-label">
+    Text Viewer
+  </label>
+</div>
+<div class="rule-builder" [hidden]="selectedTab !== 'builder'">
+    <app-query-builder 
+      [formControl]='queryCtrl' 
+      [data]="query"
+      [config]='config'
+      [disabled]='disabled'
+      (fieldChanged)="handleFieldChange($event)">
+      <ng-container *queryInput="let rule; type: 'textarea'; let getDisabledState=getDisabledState">
+        <textarea class="text-input text-area" [(ngModel)]="rule.value" [disabled]=getDisabledState()
+          placeholder="Custom Textarea"></textarea>
+      </ng-container>
+    </app-query-builder> 
+</div>
+<div class="rule-builder" [hidden]="selectedTab === 'builder'">
+  <label>Raw Rule</label>
+  <textarea readonly>{{query | json}}</textarea>
+  <label>Compiled Rule</label>
+  <textarea readonly>{{ compiledQueryParsed | json}}</textarea>
+</div>
+  

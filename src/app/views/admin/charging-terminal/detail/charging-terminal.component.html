@@ -1,0 +1,196 @@
+<div class="animated fadeIn charging-terminal">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-bank"></i> Charging Outlet
+                    <button type="button" class="close" (click)="checkAndClose($event)" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="card-body" *ngIf="chargingTerminal != null">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <tabset>
+                                <tab heading="Charging Outlet Detail">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group name">
+                                                <label for="name"
+                                                    [ngClass]="{'astric': validationSpecs['make']?.mandatory}">Make</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="fa fas fa-industry"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="chargingTerminal.make"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Charging Outlet Make">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['make']">
+                                                    {{validationErrors['make'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group name">
+                                                <label for="name"
+                                                    [ngClass]="{'astric': validationSpecs['model']?.mandatory}">Model</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fas fa-product-hunt"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="chargingTerminal.model"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Charging Outlet Model">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['model']">
+                                                    {{validationErrors['model'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group name">
+                                                <label for="name"
+                                                    [ngClass]="{'astric': validationSpecs['capacity']?.mandatory}">Capacity</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fas fa-battery-full"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="number" [(ngModel)]="chargingTerminal.capacity"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Charging Outlet's Capacity">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['capacity']">
+                                                    {{validationErrors['capacity'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group name">
+                                                <label for="name"
+                                                    [ngClass]="{'astric': validationSpecs['equipment']?.mandatory}">Equipment</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-wrench"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="chargingTerminal.equipment"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Charging Outlet Equipment">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['equipment']">
+                                                    {{validationErrors['equipment'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group name">
+                                                <label for="name"
+                                                    [ngClass]="{'astric': validationSpecs['price']?.mandatory}">Price</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-money"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="number" [(ngModel)]="chargingTerminal.price"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Price per KVA">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['price']">
+                                                    {{validationErrors['price'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                                <div class="form-group name">
+                                                    <label for="name"
+                                                        [ngClass]="{'astric': validationSpecs['chargingVehicleId']?.mandatory}">Charging Vehicle</label>
+                                                    <div class="input-group">
+                                                        <!-- This Dropdown is with Editable Feature-->
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i
+                                                                    class="fa fa-building-o"></i></span>
+                                                        </div>
+                                                        <select class="form-control" [(ngModel)]="attachedChargingVehicle" (ngModelChange)="changeChargingVehicle($event)">
+                                                            <option *ngFor="let chargingVehicle of chargingVehicles"
+                                                                [selected]="attachedChargingVehicle?.assetSerialNumber === chargingVehicle.assetSerialNumber"
+                                                                [ngValue]="chargingVehicle">{{chargingVehicle.assetSerialNumber}}</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="invalid-feedback"
+                                                        *ngIf="validationErrors && validationErrors['chargingVehicleId']">
+                                                        {{validationErrors['chargingVehicleId'].errorMessage}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            &nbsp;
+                                        </div>
+                                    </div>
+                                </tab>
+                            </tabset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary" (click)="save($event)">Save</button>
+                                <button class="btn btn-secondary" type="button"
+                                    (click)="checkAndClose($event)">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div bsModal #descardconfirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm</h4>
+                    <button type="button" class="close" (click)="descardconfirmationModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This will discard all the changes and will goback to the list. Are you sure you want discard the
+                        changes?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        (click)="descardconfirmationModal.hide()">Cancel</button>
+                    <button type="button" class="btn btn-danger" (click)="close()">Yes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>

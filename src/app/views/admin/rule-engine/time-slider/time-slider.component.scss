@@ -1,0 +1,21 @@
+.hr-slider:before {
+    content: 'Hour';
+    --position: absolute;
+    bottom: 22px;
+    padding-left: 40%;
+  }
+
+  .label-hr {
+    .from-hr {
+      // background: #f25d29;
+      color: white;
+      border-radius: 2px;
+      padding: 1px;
+    }
+    .to-hr {
+      // background: #f25d29;
+      color: white;
+      border-radius: 2px;
+      padding: 2px;
+    }
+  }

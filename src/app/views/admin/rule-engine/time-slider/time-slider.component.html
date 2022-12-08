@@ -1,0 +1,5 @@
+<div class="label-hr">
+  <span class="from-hr">{{displayHr[0]}}</span>
+  <span class="to-hr pull-right">{{displayHr[1]}}</span>
+</div>
+<nouislider class="hr-slider" [config]="rangeConfig" [(ngModel)]="range" (ngModelChange)="onChange($event)"></nouislider>

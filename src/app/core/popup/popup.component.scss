@@ -1,0 +1,18 @@
+.modal {
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999999;
+}
+
+.app-modal-close {
+  cursor: pointer;
+  cursor: pointer;
+  right: 10px;
+  position: fixed;
+  top: 10px;
+  color: white;
+  font-size: xx-large;
+}
+
+.modal-content{
+  border-radius: 0px;
+}

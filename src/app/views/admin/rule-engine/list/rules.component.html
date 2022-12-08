@@ -1,0 +1,196 @@
+<div class="animated fadeIn rules">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-cogs"></i> Rules
+                    <div class="card-icons">
+                        <a class="icon-wrapper" (click)="void">
+                            <i class="icon-list"></i>
+                        </a>
+                        <a class="icon-wrapper" (click)="void">
+                            <i class="fa fa-file-excel-o"></i>
+                        </a>
+                        <a class="icon-wrapper" (click)="add($event)">
+                            <i class="fa fa-plus-square-o"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                        <app-loading *ngIf="isLoading"></app-loading>
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Alarm</th>
+                                <th>Assets</th>
+                                <th>Updated By</th>
+                                <th>Updated On</th>
+                                <th>Published On</th>
+                                <th>Status</th>
+                                <th>Test</th>
+                                <th>Publish</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="rule empty" *ngIf="rules?.length == 0">
+                                <td colspan="5">No Rules found</td>
+                            </tr>
+                            <tr class="rule" [ngClass]="{'selected':selected?.id == rule.id}" (click)="select(rule, $event)"
+                                *ngFor="let rule of rulesList">
+                                <td class="name">{{rule.name}}</td>
+                                <td class="alarm-name">{{rule.alarmName}}</td>
+                                <td class="assets">
+                                    <div class="asset" *ngFor="let asset of rule.assets">
+                                        {{asset.assetSerialNumber}}
+                                    </div>
+                                </td>
+                                <td class="updated-by">{{rule.updatedBy}}</td>
+                                <td class="date updated-on">{{rule.updatedOn | date: 'MM/dd/yyyy hh:mm a'}}</td>
+                                <td class="date published-on">{{rule.publishedOn | date: 'MM/dd/yyyy hh:mm a'}}</td>
+                               
+                                <td class="status-col">
+                                    <div class="status">
+                                        <label class="switch switch-label switch-pill switch-primary">
+                                            <input type="checkbox" class="switch-input" 
+                                                [ngModel]="rule.status"
+                                                (ngModelChange)="confirmAndChangeStatus(rule, $event)">
+                                            <span class="switch-slider"></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td class="test">
+                                    <button class="btn btn-primary sm" (click)="test(rule)">Test</button>
+                                </td>
+                                <td calss="publish">
+                                    <button class="btn btn-primary sm btn-publish" 
+                                        *ngIf="!rule.published"
+                                        (click)="confirmPublish(rule)">Publish</button>
+                                    <button class="btn btn-primary sm btn-publish" 
+                                        *ngIf="rule.published"
+                                        [disabled]="rule.assets == null || rule.assets.length == 0"
+                                        (click)="confirmPublish(rule)">Unpublish</button>
+                                </td>
+                                <td class="action">
+                                    <a class="btn" (click)="edit(rule, $event)">
+                                        <i class="icon-pencil"></i>
+                                    </a>
+                                    <a class="btn" (click)="confirmAnddelete(rule, $event)">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- <nav>
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" (click)="void">Prev</a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" (click)="void">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" (click)="void">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" (click)="void">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" (click)="void">4</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" (click)="void">Next</a>
+                            </li>
+                        </ul>
+                    </nav> -->
+                </div>
+                <div class="card-footer">
+                        <div *ngIf="rules.length != 0"><app-pagination [totalData]="rules" (valueChange)='displayData($event)'></app-pagination></div> 
+                    </div>
+            </div>
+        </div>
+    </div>
+    <div bsModal #deleteConfirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm</h4>
+                    <button type="button" class="close" (click)="deleteConfirmationModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This will remove the Rule and the related data permanently. Are you sure, you want to delete?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="deleteConfirmationModal.hide()">Cancel</button>
+                    <button type="button" class="btn btn-danger" (click)="delete(selected, $event)">Delete</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div bsModal #statusChangeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm</h4>
+                    <button type="button" class="close" (click)="statusChangeModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This will Activate/Deactivate Rule. Are you sure, you want to proceed?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="cancelStatusChange(selected)">No</button>
+                    <button type="button" class="btn btn-danger" (click)="onStatusChange(selected, $event)">Yes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <div bsModal #publishConfirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm</h4>
+                    <button type="button" class="close" (click)="publishConfirmationModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to 
+                        <span *ngIf="!selected?.published"> publish?</span>
+                        <span *ngIf="selected?.published"> unpublish?</span>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="publishConfirmationModal.hide()">Cancel</button>
+                    <button type="button" class="btn" 
+                        [ngClass]="{'btn-danger': selected?.published, 'btn-success': !selected?.published}"
+                        (click)="publish(selected, $event)">
+                        <span *ngIf="!selected?.published">Publish</span>
+                        <span *ngIf="selected?.published">Unpublish</span>
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <app-rule-test-result
+        [show]="showTestResult"
+        [rule]="testRule" 
+        [testResults]="testResults"
+        (onClose)="onTestResultModalClose()">
+    </app-rule-test-result>
+</div>

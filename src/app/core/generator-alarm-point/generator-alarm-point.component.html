@@ -1,0 +1,106 @@
+<div [style.minHeight]="minInnerHeight" class="panel panel-app" [hidden]="!selectedView">
+  <div class="panel-heading clearfix panel-white-heading panel-border">
+    <div class="text-left">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="491 885 32 32" width="30px" height="30px">
+        <defs>
+          <style>
+            .cls-1 {
+              fill: none;
+            }
+
+            .cls-2 {
+              fill: #e02629;
+              fill-rule: evenodd;
+            }
+          </style>
+        </defs>
+        <g id="ic_fullscreen" transform="translate(-150 807)">
+          <rect id="rectangle" class="cls-1" width="32" height="32" transform="translate(641 78)"/>
+          <path id="path" class="cls-2" d="M7.667,17H5v6.667h6.667V21h-4V17ZM5,11.667H7.667v-4h4V5H5v6.667ZM21,21H17v2.667h6.667V17H21v4ZM17,5V7.667h4v4h2.667V5Z" transform="translate(642.667 79.667)"/>
+        </g>
+      </svg>
+      <span class="pull-left">Alarm Console</span>
+      <img *ngIf="alarmData.length > 0" src="assets/images/search-normal.svg" class="svg-icon alarm-console-search-icon" (click)="toggleFilterSearch = !toggleFilterSearch"
+      />
+      <span class="pull-right">
+        <!--<a href="javascript:void(0)" (click)="toggleExpand = !toggleExpand;changeTableMaxView()" [hidden]="selectedRealTimeData.length > 0">
+          <img *ngIf="!toggleExpand" src="assets/images/expand.svg" class="expand-icon"/>
+          <img *ngIf="toggleExpand" src="assets/images/collapse.svg" class="expand-icon"/>
+        </a>-->
+      </span>
+    </div>
+  </div>
+  <!--<div class="panel-body-padding" [ngClass]="selectedRealTimeData.length >0 ? 'panel-max-height':'panel-full-page-height'">-->
+  <div class="panel-body-padding">
+    <div class="table-responsive">
+      <table id="AdAlarmConsoleTable" class="table org-table alarm-console-table" [mfData]="alarmData ? alarmData : []" [mfRowsOnPage]="10"
+             #mf="mfDataTable" [(mfSortBy)]="paginationInfo.sortBy" [(mfSortOrder)]="paginationInfo.sortOrder">
+        <thead>
+        <tr>
+          <th width="25%" class="first">
+            <mfDefaultSorter by="name" class="sorter"> Alarm Description</mfDefaultSorter>
+          </th>
+          <th width="60%" class="sec">
+            <mfDefaultSorter by="occurrence_date_time" class="sorter"> Trigger Time</mfDefaultSorter>
+          </th>
+          <th width="15%" class="search-include-th center third">
+            <mfDefaultSorter by="status" class="sorter"> Status</mfDefaultSorter>
+          </th>
+        </tr>
+        </thead>
+        <tbody class="main-body" id="mainBody" [ngStyle]="toggleFilterSearch && {'padding-top': '40px'}">
+        <tr class="filter-search-table" *ngIf="toggleFilterSearch">
+          <td width="25%">
+            <input type="text" id="name" (keyup)='keyUp.next($event)' />
+          </td>
+          <td width="60%">
+            <input type="text" id="occurrence_date_time" (keyup)='keyUp.next($event)' />
+          </td>
+          <td width="15%">
+            <input type="text" id="status" (keyup)='keyUp.next($event)' />
+          </td>
+        </tr>
+        <ng-container *ngFor="let asset of mf.data">
+          <tr *ngIf="alarmData.length > 0;else no_data" class="asset-table-tr">
+            <td width="25%" class="alarm-console-assetId" (click)="goToOperationAlarm(asset.assetID)">{{asset?.event_param[0]?.name}}</td>
+            <td width="60%">{{ asset.occurrence_date_time }}</td>
+            <td width="15%" class="center">
+              <img class="status-icon" *ngIf="asset?.event_param[0]?.sts == 2 || asset?.event_param[0]?.sts == 'Acknowledged'" src="assets/images/alert_console_orange.svg"
+              />
+              <img class="status-icon" *ngIf="asset?.event_param[0]?.sts == 0 || asset?.event_param[0]?.sts == 'Alarm'" src="assets/images/alert_console_alert.svg"
+              />
+              <img class="status-icon" *ngIf="asset?.event_param[0]?.sts != 0 && asset?.event_param[0]?.sts != 2 && asset?.event_param[0]?.sts != 'Acknowledged' && asset?.event_param[0]?.sts != 'Alarm'"
+                   src="assets/images/alert_console_right.svg" />
+            </td>
+          </tr>
+        </ng-container>
+        </tbody>
+        <tfoot>
+          <tr *ngIf="liveData && liveData.length > paginationInfo.numberRowPerPage" id="alarmmfBootstrapPaginator">
+            <td colspan="3">
+              <mfBootstrapPaginator [rowsOnPageSet]="[liveData.length+0.1,5,10,25]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+        <!--<tr *ngIf="liveData && liveData.length > paginationInfo.numberRowPerPage" id="alarmmfBootstrapPaginator">
+          <td colspan="3" class="text-right">
+            <mfBootstrapPaginator [rowsOnPageSet]="[liveData.length+0.1,5,10,25]"></mfBootstrapPaginator>
+          </td>
+        </tr>-->
+      </table>
+    </div>
+    <div *ngIf="alarmData.length == 0" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-data">
+      No Data exists
+    </div>
+  </div>
+</div>
+<div class="panel panel-app" [hidden]="selectedView">
+  <div class="panel-heading clearfix panel-white-heading">
+    <a href="javascript:void(0)" (click)="changeTableView()">
+      <i class="glyphicon glyphicon-arrow-right"></i>
+    </a>
+  </div>
+  <div class="panel-body-shrink panel-border panel-white-heading" [ngClass]="selectedRealTimeData.length >0 ? 'panel-max-height':'panel-full-page-height'">
+    <div class="vertical-text">Alarm Console</div>
+  </div>
+</div>

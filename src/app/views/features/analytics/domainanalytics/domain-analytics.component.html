@@ -1,0 +1,178 @@
+<div id="main-content1">
+    <app-loading *ngIf="isLoading"></app-loading>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 margin-bottom-0 p-2">
+            <div class="row block-content border-none">    
+
+                    <div class="row block-content border-none">
+                        <div class="column asset-type-column px-3 pb-3">
+                            <span class="float-left">
+                                <label class="smaller">Asset Type</label>
+                                <select [(ngModel)]="assetType" class="form-control" (change)="onAssetTypeChanged($event.target.value)">
+                                    <option>
+                                        
+                                    </option>
+                                    <option *ngFor="let assetTypeOp of assetTypeMap | keyvalue" [label]="assetTypeOp.value">{{assetTypeOp.key}}</option>
+                                </select>
+                            </span>
+                        </div>
+                        <div class="column asset-type-column px-3 pb-3" *ngIf="showAssetDropDown">
+                            <span class="float-right" >
+                                <label class="smaller">Asset</label>
+                                <select [(ngModel)]="asset" class="form-control" (change)="onAssetChanged($event.target.value)">
+                                    <option>
+                                        
+                                    </option>
+                                    <option *ngFor="let assetOp of assetMap | keyvalue" [label]="assetOp.value" >{{assetOp.key}}</option>
+                                </select>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- <div class="column1 asset-type-column" *ngIf="showAssetDropDown">
+                        <label class="smaller">Asset</label>
+                        <select [(ngModel)]="asset" class="form-control" (change)="onAssetChanged($event.target.value)">
+                            <option>
+                                
+                            </option>
+                            <option *ngFor="let assetOp of assetList">{{assetOp}}</option>
+                        </select>
+                    </div> -->
+                    <div class="block-content border-none" *ngIf="showAssetImage">
+                            <div class="block-inner-data1">
+                                <h2 class="spl-block-head margin-none">
+                                    {{selectedDomain.entityName}}
+                                </h2>
+                                <img class="image-fluid w-50 h-25 p-3" src="https://images.pexels.com/photos/3378993/pexels-photo-3378993.jpeg?cs=srgb&dl=pexels-ruvim-3378993.jpg&fm=jpg" alt="">
+                            </div>
+                            <table cellpadding="0" cellspacing="2" border="0" class="details-table3" id="feel_status_table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2"  class="text-center" style="background: #c7dceb none repeat scroll 0 0;border: 1px solid #78a6c6;border-radius: 3px;">{{selectedDomain.entityName}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of selectedDomain.domainAttributes | keyvalue">
+                                        <td colspan="2" class="td-header">
+                                            {{data.value.attributeName}}
+                                        </td>
+                                        <!-- <td>
+                                            {{data.value.attributeDescription}}
+                                        </td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                    </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 margin-bottom-25 p-2">
+            <div class="blocks" *ngIf="showAssetImage">
+                <h2 class="spl-block-head text-center margin-none">
+                    {{selectedDomain.entityName}}
+                </h2>
+                <div class="block-content border-none">
+                    <div class="block-inner-data">
+                        <table cellpadding="0" cellspacing="6" border="0" class="details-table3" id="feel_status_table">
+                            <thead>
+                                <tr>
+                                    <td class="text-center" *ngFor="let domain of domainDataMap">{{domain.name}}</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td *ngFor="let domain of domainDataMap">
+                                        <!-- {{rowData.key}} -- {{rowData.value}}  -->
+                                        <div class="my-1" *ngFor="let rowData of domain.data | keyvalue">
+                                            <!-- {{rowData.value | json}} -->
+                                            <table>
+                                                <tbody>
+                                                    <tr *ngFor="let data of rowData.value | keyvalue">
+                                                        <td class="td-header" style="background: #c7dceb none repeat scroll 0 0;border: 1px solid #78a6c6;border-radius: 3px;">
+                                                            {{data.key}}
+                                                        </td>
+                                                        <td>
+                                                            {{data.value}}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- {{domainDataMap | json}} -->
+
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <!-- <div class="blocks"> -->
+                        <div class="block-inner-data">
+                            <h2 class="spl-block-head text-center margin-none">
+                                History data of {{selectedDomain.entityName}}
+                            </h2>
+                            <table cellpadding="0" cellspacing="3" border="0" class="details-table3" id="feel_status_table">
+                                <thead>
+                                    <tr>
+                                        <td class="text-center" [attr.colspan]="domainHistoryDataKeys?.length">{{domainHistoryDataMap.name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center" *ngFor="let columnName of domainHistoryDataKeys">{{columnName}}</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of domainHistoryDataMap.data | keyvalue">
+                                        <td *ngFor="let columnName of domainHistoryDataKeys">
+                                            {{item.value[columnName]}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+            
+                            <div class="clearfix"></div>
+                        </div>
+
+                    <!-- </div> -->
+
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+            
+
+        </div>
+
+
+
+    <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 margin-bottom-25">
+        <div class="blocks">
+            <h2 class="spl-block-head text-center margin-none">
+                History data of {{selectedDomain.entityName}}
+            </h2>
+            <div class="block-inner-data">
+                <table cellpadding="0" cellspacing="3" border="0" class="details-table3" id="feel_status_table">
+                    <thead>
+                        <tr>
+                            <td class="text-center" [attr.colspan]="domainHistoryDataKeys?.length">{{domainHistoryDataMap.name}}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" *ngFor="let columnName of domainHistoryDataKeys">{{columnName}}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of domainHistoryDataMap.data | keyvalue">
+                            <td *ngFor="let columnName of domainHistoryDataKeys">
+                                {{item.value[columnName]}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="clearfix"></div> -->
+
+</div>

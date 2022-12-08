@@ -1,0 +1,247 @@
+<div class="animated fadeIn charging-vehicle">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-bank"></i> Charging Vehicle
+                    <button type="button" class="close" (click)="checkAndClose($event)" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="card-body" *ngIf="chargingVehicle != null">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <tabset>
+                                <tab heading="Vehicle Detail">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group logo">
+                                                <label for="name"
+                                                    [ngClass]="{'astric': validationSpecs['picture']?.mandatory}">Picture</label>
+                                                <div class="logo-wrapper" (click)="logoFile.click();">
+                                                    <div *ngIf="chargingVehicle.picture != null" class="logo-pic"
+                                                        [ngStyle]="{'background-image': 'url(' + chargingVehicle.picture + ')'}">
+
+                                                    </div>
+                                                    <a class="btn"><i class="fa fa-camera"></i></a>
+                                                    <input type="file" (change)="uploadLogo($event)" accept="image/*"
+                                                        #logoFile />
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['picture']">
+                                                    {{validationErrors['picture'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group name">
+                                                <label for="name"
+                                                    [ngClass]="{'astric': validationSpecs['assetSerialNumber']?.mandatory}">Asset
+                                                    Serial Number</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fa fa-bank"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="chargingVehicle.assetSerialNumber"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Charging Vehicle Asset Number"
+                                                        [readonly]="activateSerialNumber">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['assetSerialNumber']">
+                                                    {{validationErrors['assetSerialNumber'].errorMessage}}
+                                                </div>
+                                            </div>
+                                            <div class="form-group name">
+                                                <label for="name"
+                                                    [ngClass]="{'astric': validationSpecs['facilityId']?.mandatory}">Facility</label>
+                                                <div class="input-group">
+                                                    <!-- This Dropdown is with Editable Feature-->
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="fa fa-building-o"></i></span>
+                                                    </div>
+                                                    <select class="form-control" [(ngModel)]="attachedFacility"
+                                                        (ngModelChange)="changeFacility($event)">
+                                                        <option *ngFor="let facility of facilities"
+                                                            [selected]="attachedFacility?.name === facility.name"
+                                                            [ngValue]="facility">{{facility.name}}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['facilityId']">
+                                                    {{validationErrors['facilityId'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group name">
+                                                <label for="name"
+                                                    [ngClass]="{'astric': validationSpecs['address']?.mandatory}">Address</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="icon-location-pin"></i></span>
+                                                    </div>
+                                                    <input placeholder="Address" autocorrect="off" autocapitalize="off"
+                                                        spellcheck="off" type="text" class="form-control" #addressRef
+                                                        [value]="chargingVehicle.address"
+                                                        [formControl]="addressControl">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['address']">
+                                                    {{validationErrors['address'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group name">
+                                                <label for="name"
+                                                    [ngClass]="{'astric': validationSpecs['make']?.mandatory}">Make</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="fa fas fa-industry"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="chargingVehicle.make"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Charging Vehicle Make">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['make']">
+                                                    {{validationErrors['make'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group name">
+                                                <label for="name"
+                                                    [ngClass]="{'astric': validationSpecs['model']?.mandatory}">Model</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fas fa-product-hunt"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="chargingVehicle.model"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Charging Vehicle Model">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['model']">
+                                                    {{validationErrors['model'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group name">
+                                                <label for="name"
+                                                    [ngClass]="{'astric': validationSpecs['totalCapacity']?.mandatory}">Capacity</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fas fa-battery-full"></i>
+                                                        </span>
+                                                    </div>
+                                                    <input type="number" [(ngModel)]="chargingVehicle.totalCapacity"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Charging Vehicle Total Capacity">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['totalCapacity']">
+                                                    {{validationErrors['totalCapacity'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group name">
+                                                <label for="name"
+                                                    [ngClass]="{'astric': validationSpecs['assetType']?.mandatory}">Type</label>
+                                                <div class="input-group">
+                                                    <!-- This Dropdown is with Editable Feature-->
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="fa fa-building-o"></i></span>
+                                                        <!--Icon not found-->
+                                                    </div>
+                                                    <select class="form-control" (change)="changeAssetType($event)">
+                                                        <option *ngFor="let assetType of assetTypes"
+                                                            [selected]="assetType === chargingVehicle.assetType"
+                                                            [ngValue]="assetType">{{assetType}}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['assetType']">
+                                                    {{validationErrors['assetType'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            &nbsp;
+                                        </div>
+                                    </div>
+                                </tab>
+                                <tab heading="Charging Outlets ({{chargingTerminals.length}})">
+                                    <app-charging-terminals [data]="chargingTerminals" [parent]="chargingVehicle">
+                                    </app-charging-terminals>
+                                </tab>
+                            </tabset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary" (click)="save($event)">Save</button>
+                                <button class="btn btn-secondary" type="button"
+                                    (click)="checkAndClose($event)">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div bsModal #descardconfirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm</h4>
+                    <button type="button" class="close" (click)="descardconfirmationModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This will discard all the changes and will goback to the list. Are you sure you want discard the
+                        changes?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        (click)="descardconfirmationModal.hide()">Cancel</button>
+                    <button type="button" class="btn btn-danger" (click)="close()">Yes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>

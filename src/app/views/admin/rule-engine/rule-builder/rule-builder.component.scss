@@ -1,0 +1,62 @@
+.mat-form-field {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.text-input {
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.text-area {
+    width: 300px;
+    height: 100px;
+}
+
+.output {
+    width: 100%;
+    height: 300px;
+}
+
+.rule-builder {
+    @media only screen and (max-width: 1024px) {
+       overflow-x: auto;
+    }
+    padding: 10px 14px;
+    border: 1px solid #c8ced3;
+    min-height: 200px;
+    padding-bottom: 85px;
+    margin-top: 38px;
+    background-color: #e4e5e6;
+}
+
+.rule-builder-tab {
+    position: absolute;
+    top: -1px;
+    padding: 5px 15px;
+    background-color: #ffffff;
+    border: 1px solid #c8ced3;
+    label {
+        font-weight: 500;
+        font-size: 12px;
+    }
+}
+
+.rule-builder-tab.tab-2 {
+    left: 80px;
+    
+}
+
+.rule-builder-tab.selected {
+    border-bottom: none;
+    top: 0px;
+    background: #e4e5e6;
+}
+
+.rule-builder textarea {
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 300px;
+    max-height: 300px;
+}

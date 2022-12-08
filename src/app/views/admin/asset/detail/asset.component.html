@@ -1,0 +1,312 @@
+<div class="animated fadeIn asset">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-bank"></i> Asset
+                    <button type="button" class="close" (click)="checkAndClose($event)" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <tabset>
+                                <tab heading="Asset Detail">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+
+                                            <div class="form-group name">
+                                                <label for="name"
+                                                    [ngClass]="{'astric': validationSpecs['entityName']?.mandatory}">Name</label>
+                                                <div class="float-right">
+                                                    <label class="switch switch-label switch-pill switch-primary">
+                                                        <input type="checkbox" class="switch-input"
+                                                            [ngModel]="domain.isActive===true"
+                                                            (ngModelChange)="statusChange(domain.isActive,$event)">
+                                                        <span class="switch-slider"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fa fa-bank"></i></span>
+                                                    </div>
+
+                                                    <input type="text" [(ngModel)]="domain.entityName"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Asset Name">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['entityName']">
+                                                    {{validationErrors['entityName'].errorMessage}}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group logo">
+                                                <label [ngClass]="{'astric': validationSpecs['rawFile']?.mandatory}"
+                                                    for="name">Logo</label>
+                                                <div class="logo-wrapper" (click)="logoFile.click();">
+                                                    <div *ngIf="domain.rawFile != null" class="logo-pic"
+                                                        [ngStyle]="{'background-image': 'url(' + domain.rawFile + ')'}">
+                                                    </div>
+                                                    <a class="btn"><i class="fa fa-camera"></i></a>
+                                                    <input type="file" (change)="uploadLogo($event)" accept="image/*"
+                                                        #logoFile />
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['rawFile']">
+                                                    {{validationErrors['rawFile'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <br>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <br>
+                                            <div class="form-group name">
+                                                <label [ngClass]="{'astric': validationSpecs['description']?.mandatory}"
+                                                    for="name">Description</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="fa fa-copyright"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="domain.entityDescription"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Entity Description of Asset">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['description']">
+                                                    {{validationErrors['description'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group name">
+                                                <label [ngClass]="{'astric': validationSpecs['domainTypes']?.mandatory}"
+                                                    for="name">Domain</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="fa fa-copyright"></i></span>
+                                                    </div>
+                                                    <select class="form-control" [(ngModel)]="domain.domainType">
+                                                        <option *ngFor="let type of domainIdAndNameList" [ngValue]="type.name">
+                                                            {{type.name}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['domainTypes']">
+                                                    {{validationErrors['domainTypes'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group name">
+                                                <label
+                                                    [ngClass]="{'astric': validationSpecs['parentDomain']?.mandatory}"
+                                                    for="name">Parent Domain</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="fa fa-copyright"></i></span>
+                                                    </div>
+                                                    <select class="form-control">
+                                                        <option *ngFor="let idAndName of idAndNames"
+                                                            [ngValue]="idAndName.id">
+                                                            {{idAndName.name}}
+                                                        </option>
+                                                    </select>
+
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['parentDomain']">
+                                                    {{validationErrors['parentDomain'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            &nbsp;
+                                        </div>
+                                    </div>
+                                </tab>
+                            </tabset>
+                        </div>
+                        <div class="col-sm-7">
+                            <tabset>
+                                <tab heading="Domain Attribute Detail">
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group logo">
+                                                <label
+                                                    [ngClass]="{'astric': validationSpecs['schemaDefinition']?.mandatory}"
+                                                    for="name">Domain Attributes</label>
+                                                <div class="logo-wrapper" (click)="jsonFile.click();">
+                                                    <div *ngIf="domain.schemaDefinition != null" class="logo-pic"
+                                                        [ngStyle]="{'background-image': 'url(' + domain.schemaDefinition + ')'}">
+
+                                                    </div>
+                                                    <a class="btn"><i class="fa fa-file-o"></i></a>
+                                                    <input type="file" (change)="uploadJson($event)"
+                                                        accept="application/json" #jsonFile />{{fileName}}
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['schemaDefinition']">
+                                                    {{validationErrors['schemaDefinition'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+
+                                    <div class="row">
+
+                                        <div class="col-sm-12">
+
+                                            <!-- <app-loading *ngIf="isLoading"></app-loading> -->
+                                            <table class="table table-bordered table-striped table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Type</th>
+                                                        <th>Length</th>
+                                                        <th>Description</th>
+                                                        <th>Allow Null</th>
+                                                        <th>Unique</th>
+                                                        <th>Indexed</th>
+                                                        <th>Foreign Key</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="asset empty" *ngIf=" domainAttributesArray.length== 0">
+                                                        <td colspan="5">No Domain Attributes found</td>
+                                                    </tr>
+                                                    <tr *ngFor="let attribute of domainAttributesArray">
+                                                        <!-- <td class="name">{{attribute.entityName}}</td> -->
+                                                        <td>{{attribute.attributeName}}</td>
+                                                        <td>{{attribute.attributeType}}</td>
+                                                        <td>{{attribute.attributeLength}}</td>
+                                                        <td>{{attribute.attributeDescription}}</td>
+                                                        <td>{{attribute.allowNull}}</td>
+                                                        <td>{{attribute.isUnique}}</td>
+                                                        <td>{{attribute.isIndexed}}</td>
+                                                        <td>{{attribute.isForeignKey}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+                                    </div>
+
+
+
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            &nbsp;
+                                        </div>
+                                    </div>
+                                </tab>
+                            </tabset>
+                        </div>
+
+
+                    </div>
+
+                    <!-- start -->
+
+
+
+
+
+                    <!-- end -->
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary" (click)="save($event)">Save</button>
+                                <button class="btn btn-secondary" type="button"
+                                    (click)="checkAndClose($event)">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div bsModal #discardConfirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm</h4>
+                    <button type="button" class="close" (click)="discardConfirmationModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This is discard the changes and goback to the list. Are you sure you want discard the changes?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        (click)="discardConfirmationModal.hide()">Cancel</button>
+                    <button type="button" class="btn btn-danger" (click)="close()">Discard Changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!-- error message dialog -->
+    <div bsModal #errorModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Vehicle Charger</h4>
+                    <button type="button" class="close" (click)="errorModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Submit Failed, Please contact the system administrator..!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="errorModal.hide()">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>

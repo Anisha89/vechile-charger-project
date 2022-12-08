@@ -1,0 +1,55 @@
+$theme-form-color : #3ea0ce;
+
+// Rounded corner chips
+
+.days-scheduler-with-checkbox {
+    display: flex;
+    justify-content: space-between;
+    .day-name {
+        position: relative;
+        display: flex;
+        width: 45px;
+        height:50px;
+        border: 2px solid #cbccce;
+        justify-content: center;
+        align-items: center;
+        font-size: 11px;
+        color: black;
+        margin-top: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      //  border-radius: 57px;
+        background: #e3e7e8;
+        //margin: 0px 4px;
+        &.selected {
+            border: 2px solid #3e96bf;
+            background-color: $theme-form-color;
+            color: white;
+            &:hover {
+               background-color: #3e96bf;
+            }
+        }
+        &.disabled {
+            pointer-events: none;
+            opacity: 0.65;
+            background: #e3e7e8;
+            &:hover {
+                background: #e3e7e8;
+            }
+            &.selected {
+                background-color: $theme-form-color;
+                &:hover {
+                    background-color: $theme-form-color;
+                 }
+
+            }
+            
+        }
+        &:hover {
+            background-color: #d8d6d6;
+        }
+    }
+    .tab-active {
+        transform: scale(1.1);
+    }
+}

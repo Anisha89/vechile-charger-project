@@ -1,0 +1,18 @@
+<div [style.width.%]="lineChartInfo.width" [style.height.px]="lineChartInfo.height">
+  <div class="title"> Coolant Temp Vs Oil Temp </div>
+  <ngx-charts-line-chart
+    [view]="view"
+    [scheme]="lineChartInfo.colorScheme"
+    [results]="getAnalyticInfo"
+    [gradient]="lineChartInfo.gradient"
+    [xAxis]="lineChartInfo.showXAxis"
+    [yAxis]="lineChartInfo.showYAxis"
+    [legend]="lineChartInfo.showLegend"
+    [showXAxisLabel]="lineChartInfo.showXAxisLabel"
+    [showYAxisLabel]="lineChartInfo.showYAxisLabel"
+    [xAxisLabel]="lineChartInfo.xAxisLabel"
+    [yAxisLabel]="lineChartInfo.yAxisLabel"
+    [autoScale]="lineChartInfo.autoScale"
+    (select)="onSelect($event)">
+  </ngx-charts-line-chart>
+</div>

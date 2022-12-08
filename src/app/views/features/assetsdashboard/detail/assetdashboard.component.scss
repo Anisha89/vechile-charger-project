@@ -1,0 +1,151 @@
+
+
+.main {
+  
+	display: inherit;
+	 font-size: 14px;
+	
+		.card-header {
+			
+			.card-icons {
+				float: right;
+				.icon-wrapper {
+					width: 30px;
+					height: 60px;
+					padding: 5px;
+				   
+					
+					color:black;
+					text-decoration: none;
+					
+					i {
+						font-size:18px;
+						
+					}
+				}}}
+				
+			
+
+
+			
+
+
+.assetinfocard{
+height:488px;
+overflow: hidden;
+.card-header{
+	height:68px;
+	
+	
+}
+
+z-index: 1;
+	transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+	box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+}
+
+.picture{
+display: block;
+margin-left: auto;
+margin-right: auto;
+width: 60%;
+
+
+
+
+object-fit: cover;
+}
+.realtime,.alarmdata{
+height:488px;
+.card-body{
+height: 400px;
+overflow:auto;
+width:100%;
+}
+
+z-index: 1;
+transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+}
+
+.opt1,.opt2{
+margin-top: 3px;
+margin-bottom: 3px;
+}
+input[type="checkbox"] {
+background-color: #fff;
+border: 1px solid #ccc;
+border-radius: 50%;
+cursor: pointer;
+height: 17px;
+
+
+margin-top:5px;
+
+width: 17px;
+box-shadow: 1px 1px 1px 1px lightblue;
+}
+
+.roundshape{
+content:'';
+border:1px solid;
+margin-left:20px;
+display:flex;
+width:17px;
+
+height: 17px;
+border-radius: 50%;
+margin-top:7px;
+}
+.allignment{
+ display:flex;
+
+}
+.chartcard{
+height:488px;
+z-index: 1;
+transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+}
+
+
+.optionbutton{
+margin-top:3px;
+
+display:flex;
+float:right;
+flex-wrap: wrap;
+
+
+}
+
+.card-footer{
+display:flex;
+ flex-direction:column;
+}
+
+.Open{
+color: white;
+background-color:#FFBF00;	
+//<i style="color:#FFBF00;"class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+}
+.Critical{
+font-weight: bold;
+}
+
+.table,.td{
+table-layout: fixed;
+width:100%;
+
+line-height:41px;
+
+}
+button{
+height: 35px;margin-bottom: 7px;
+}
+
+
+}
+::-webkit-scrollbar{
+width:10px;
+}

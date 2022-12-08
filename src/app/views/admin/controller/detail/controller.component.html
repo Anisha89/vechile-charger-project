@@ -1,0 +1,225 @@
+<div class="animated fadeIn user">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-user"></i> Controller
+                    <button type="button" class="close" (click)="checkAndClose($event)" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <tabset>
+                                <tab heading="Controller Detail">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group logo">
+                                                <label [ngClass]="{'astric': validationSpecs['picture']?.mandatory}"for="name">Logo</label>
+                                                
+                                                 <div class="float-right">
+                                                <label class="switch switch-label switch-pill switch-primary">
+                                                    <input type="checkbox" class="switch-input" 
+                                                    [ngModel]="controller.status" (ngModelChange)="statusChange(controller.status,$event)">
+                                                    <span class="switch-slider"></span>
+                                                </label>
+                                                </div> 
+                                                <div class="logo-wrapper" (click)="logoFile.click();">
+                                                    <div *ngIf="controller.picture!= null" class="logo-pic"
+                                                     [ngStyle]="{'background-image': 'url(' + controller.picture + ')'}">
+
+                                                    </div>
+                                                    <a class="btn"><i class="fa fa-camera"></i></a>
+                                                    <input type="file" (change)="uploadLogo($event)" accept="image/*"
+                                                        #logoFile />
+                                                </div>
+                                                <div class="invalid-feedback" *ngIf="validationErrors && validationErrors['picture']">
+                                                        {{validationErrors['picture'].errorMessage}}
+                                                </div>     
+                                            </div>
+                                        </div>
+                                
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                         <br>
+                                         <br>
+                                         <br>
+                                            <div class="form-group name">
+                                                <label
+                                                    [ngClass]="{'astric': validationSpecs['version']?.mandatory}"
+                                                    for="name">Version</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="icon-user"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="controller.version"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Version">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['version']">
+                                                    {{validationErrors['version'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group name">
+                                                <label
+                                                    [ngClass]="{'astric': validationSpecs['serialNumber']?.mandatory}"
+                                                    for="name">Serial Number</label>                         
+                                                    
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="icon-user"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="controller.serialNumber"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Serial Number">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['serialNumber']">
+                                                    {{validationErrors['serialNumber'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                       </div>
+                                       <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group name">
+                                             
+                                                <label
+                                                    [ngClass]="{'astric': validationSpecs['description']?.mandatory}"
+                                                    for="name">Description</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="icon-user"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="controller.description"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Description">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['description']">
+                                                    {{validationErrors['description'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group name">
+                                                <label
+                                                    [ngClass]="{'astric': validationSpecs['ipAddress']?.mandatory}"
+                                                    for="name">IP Address</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="icon-user"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="controller.ipAddress"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="IP Address">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['ipAddress']">
+                                                    {{validationErrors['ipAddress'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group name">
+                                                <label
+                                                    [ngClass]="{'astric': validationSpecs['macAddress']?.mandatory}"
+                                                    for="name">MAC Address</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="icon-user"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="controller.macAddress"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="MAC Address">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['macAddress']">
+                                                    {{validationErrors['macAddress'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group name">
+                                                <label
+                                                    [ngClass]="{'astric': validationSpecs['tags']?.mandatory}"
+                                                    for="name">Tags</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="icon-user"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="controller.tags"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Tags">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['tags']">
+                                                    {{validationErrors['tags'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            &nbsp;
+                                        </div>
+                                    </div>
+                                </tab>
+                            </tabset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary" (click)="save($event)">Save</button>
+                                <button class="btn btn-secondary" type="button"
+                                    (click)="checkAndClose($event)">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div bsModal #discardConfirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm</h4>
+                    <button type="button" class="close" (click)="discardConfirmationModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This is discard the changes and goback to the list. Are you sure you want discard the changes?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        (click)="discardConfirmationModal.hide()">Cancel</button>
+                    <button type="button" class="btn btn-danger" (click)="close()">Discard Changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>

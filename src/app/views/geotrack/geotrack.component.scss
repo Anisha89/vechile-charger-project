@@ -1,0 +1,52 @@
+.map-wrapper {
+    margin: -25px;
+
+    agm-map {
+        height: calc(100vh - 150px);
+    }
+    
+    .location-inputs {
+        position: absolute;
+        margin: 25px;
+        z-index: 1;
+        .origin {
+            width: 400px;
+            border: 1px solid #c8ced3;
+        }
+        
+        .destination {
+            width: 400px;
+            margin-top: 10px;
+            border: 1px solid #c8ced3;
+        }
+    }
+
+    .dropdown button.dropdown-toggle {
+        height: 35px;
+
+    }
+
+    .dropdown-menu a{
+        display: block;
+    }
+    
+}
+
+@media (max-width:480px) {
+    .map-wrapper {
+        .location-inputs {
+            margin: 0px;
+            max-width: calc(100% - 40px);
+
+            .origin {
+                max-width: 95%;
+            }
+
+            .destination {
+                max-width: 95%;
+            }
+        }
+        
+    }
+    
+}

@@ -1,0 +1,17 @@
+<div [style.width.%]="heatMapChartInfo.width" [style.height.px]="heatMapChartInfo.height">
+  <ngx-charts-heat-map
+      [view]="heatMapChartInfo.view"
+      [scheme]="heatMapChartInfo.colorScheme"
+      [results]="data"
+      [legend]="heatMapChartInfo.showLegend"
+      [gradient]="heatMapChartInfo.gradient"
+      [xAxis]="heatMapChartInfo.showXAxis"
+      [yAxis]="heatMapChartInfo.showYAxis"
+      [showXAxisLabel]="heatMapChartInfo.showXAxisLabel"
+      [showYAxisLabel]="heatMapChartInfo.showYAxisLabel"
+      [xAxisLabel]="heatMapChartInfo.xAxisLabel"
+      [yAxisLabel]="heatMapChartInfo.yAxisLabel"
+      (select)="onSelect($event)">
+    </ngx-charts-heat-map>
+</div>
+

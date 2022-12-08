@@ -1,0 +1,609 @@
+  <div id="main-content">
+    <h1 class="page-title">Dashboard</h1>
+
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 margin-bottom-25">
+      <div class="blocks">
+        <h2 class="spl-block-head margin-none">
+          <select>
+            <option>YTD</option>
+            <option>MTD</option>
+          </select>
+          Cost <small>Vs</small> Budget
+          <span class="glyphicon glyphicon-cog pull-right pointer" title="Settings"  data-toggle="modal" data-target="#myModal"></span>
+        </h2>
+        <div class="block-content border-none">
+          <div class="block-inner-top-strip">
+            <span>For</span>
+            <select class="form-control">
+              <option>Select</option>
+              <option>Point ID</option>
+              <option>Portfolio</option>
+              <option>Location</option>
+              <option>All (Location)</option>
+            </select>
+            <div class="clearfix"></div>
+          </div>
+          <div class="block-inner-data">
+            <div class="col-md-2 col-sm-6 col-xs-6 padding-none text-left"><img src="/assets/img/money.png" alt="" class="circle-img" /></div>
+            <div class="col-md-2 col-sm-6 col-xs-6 padding-none text-right pull-right">
+            <div class="value-div">
+              <span>05%</span>
+              <table class="table">
+                <tr>
+                  <td>296</td>
+                  <td>Days<br>Remaining</td>
+                </tr>  
+                <tr>
+                  <td class="big-text green-text">05%</td>
+                  <td>Under<br>Budget</td>
+                </tr>
+                <tr>
+                  <td>$202,193</td>
+                  <td>Projected<br>Surplus</td>
+                </tr>
+                <tr>
+                  <td>$2,091,007</td>
+                  <td>Remaining<br>Spend</td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="text-right">Unit Cost : $0.05 / KWH</td>
+                </tr>
+              </table>
+            </div>
+            </div>
+            <div class="col-md-8 col-sm-12 col-xs-12 padding-none" id="costBudget">
+              <div class="level-show-div">
+                <div class="level-div"></div>
+                <img src="/assets/img/building.png" width="100%" height="100%" alt="" />
+
+                <div class="level_line1">
+                  <span class="head-size-1">$2,702,193</span>
+                  <span class="head-caption-1">Project Spend</span>
+                </div>
+                <div class="level_line2">
+                  <span class="head-size-1">$2,500,000</span>
+                  <span class="head-caption-1">Your Early Budjet</span>
+                </div>
+                <div class="level_line3">
+                  <span class="head-size-1">$483,871</span>
+                  <span class="head-caption-1">Budget to Date</span>
+                </div>
+                <div class="level_line4">
+                  <span class="head-size">$408,993</span>
+                  <span class="head-caption">Spend to Date</span>
+                </div>
+                <div class="level_line5">
+                  <span class="head-size-1">11</span>
+                  <span class="head-caption-1">MAR</span>  
+                </div>
+
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 margin-bottom-25">
+      <div class="blocks">
+        <h2 class="spl-block-head margin-none">
+          <select>
+            <option>YTD</option>
+            <option>MTD</option>
+          </select>
+          Consumption <small>Vs</small> Budget
+          <span class="glyphicon glyphicon-cog pull-right pointer" title="Settings"  data-toggle="modal" data-target="#myModal"></span>
+        </h2>
+        <div class="block-content border-none">
+          <div class="block-inner-top-strip">
+            <span>For</span>
+            <select class="form-control">
+              <option>Select</option>
+              <option>Point ID</option>
+              <option>Portfolio</option>
+              <option>Location</option>
+              <option>All (Location)</option>
+            </select>
+            <div class="clearfix"></div>
+          </div>
+          <div class="block-inner-data">
+            <div class="col-md-2 col-sm-6 col-xs-6 padding-none text-left"><img src="/assets/img/meter.png" alt="" class="circle-img" /></div>
+            <div class="col-md-2 col-sm-6 col-xs-6 padding-none text-right pull-right">
+            <div class="value-div">
+              <span>23%</span>
+              <table class="table">
+                <tr>
+                  <td>296</td>
+                  <td>Days<br>Remaining</td>
+                </tr>
+                <tr>
+                  <td class="big-text green-text">23%</td>
+                  <td>Under<br>Budget</td>
+                </tr>
+                <tr>
+                  <td>$202,193</td>
+                  <td>Projected<br>Surplus</td>
+                </tr>
+                <tr>
+                  <td>$2,091,007</td>
+                  <td>Remaining<br>Spend</td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="text-right">Unit Cost : $0.05 / kWh</td>
+                </tr>
+              </table>
+            </div>
+            </div>
+            <div class="col-md-8 col-sm-12 col-xs-12 padding-none" id="consumptionBudget">
+              <div class="level-show-div">
+                <div class="level-div"></div>
+                <img src="/assets/img/building.png" width="100%" height="100%" alt="" />
+
+                <div class="level_line1">
+                  <span class="head-size-1">15,702,193 <span class="measurement">kWh</span></span>
+                  <span class="head-caption-1">Projected Yearly Usage</span>
+                </div>
+                <div class="level_line2">
+                  <span class="head-size-1">2,500,000</span>
+                  <span class="head-caption-1">Your Early Budjet</span>
+                </div>
+                <div class="level_line3">
+                  <span class="head-size-1">2,98,511 <span class="measurement">kWh</span></span>
+                  <span class="head-caption-1">Budget to Date</span>
+                </div>
+                <div class="level_line4">
+                  <span class="head-size">2,556,204 <span class="measurement">kWh</span></span>
+                  <span class="head-caption">Usage to Date</span>
+                </div>
+                <div class="level_line5">
+                  <span class="head-size-1">11</span>
+                  <span class="head-caption-1">MAR</span>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 margin-bottom-25">
+      <div class="blocks">
+        <h2 class="spl-block-head margin-none">
+          <select>
+            <option>YTD</option>
+            <option>MTD</option>
+          </select>
+          Carbon Footprint
+          <span class="glyphicon glyphicon-cog pull-right pointer" title="Settings"  data-toggle="modal" data-target="#myModal"></span>
+        </h2>
+        <div class="block-content border-none">
+          <div class="block-inner-top-strip">
+            <span>For</span>
+            <select class="form-control">
+              <option>Select</option>
+              <option>Point ID</option>
+              <option>Portfolio</option>
+              <option>Location</option>
+              <option>All (Location)</option>
+            </select>
+            <div class="clearfix"></div>
+          </div>
+          <div class="block-inner-data">
+            <div class="col-md-2 col-sm-6 col-xs-6 padding-none text-left"><img src="/assets/img/meter.png" alt="" class="circle-img" /></div>
+            <div class="col-md-2 col-sm-6 col-xs-6 padding-none text-right pull-right">
+            <div class="value-div">
+              <span>15%</span>
+              <table class="table">
+                <tr>
+                  <td>296</td>
+                  <td>Days<br>Remaining</td>
+                </tr>
+                <tr>
+                  <td class="big-text green-text">15%</td>
+                  <td>Under<br>Budget</td>
+                </tr>
+                <tr>
+                  <td>$202,193</td>
+                  <td>Projected<br>Surplus</td>
+                </tr>
+                <tr>
+                  <td>$2,091,007</td>
+                  <td>Remaining<br>Spend</td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="text-right">Unit Cost : $0.05 / KWH</td>
+                </tr>
+              </table>
+            </div>
+            </div>
+            <div class="col-md-8 col-sm-12 col-xs-12 padding-none" id="corbonFootprint">
+              <div class="level-show-div">
+                <!--div class="level-div"></div-->
+                <img src="/assets/img/pipes.png" width="100%" height="100%" alt="" />
+
+                <div class="level_line1">
+                  <span class="head-size-1">10,116 <span class="measurement">mt</span></span>
+                  <span class="head-caption-1">Projected Emissions</span>
+                </div>
+                <div class="level_line2">
+                  <span class="head-size-1">9,996<span class="measurement">mt</span></span>
+                  <span class="head-caption-1">Goal -1%</span>
+                </div>
+                <div class="level_line3">
+                  <span class="head-size-1">9,125 <span class="measurement">mt</span></span>
+                  <span class="head-caption-1">Last Year's Emission</span>
+                </div>
+                <div class="level_line4">
+                  <span class="head-size">1,531</span>
+                  <span class="head-caption">Emissions to date</span>
+                </div>
+                <div class="level_line5">
+                  <span class="head-size-1">11</span>
+                  <span class="head-caption-1">MAR</span>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="clearfix"></div>                  
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 margin-bottom-25">
+      <div class="blocks">
+        <h2 class="spl-block-head margin-none">
+          <select>
+            <option>YTD</option>
+            <option>MTD</option>
+          </select>
+          Cost <small>Vs</small> Baseline
+          <span class="glyphicon glyphicon-cog pull-right pointer" title="Settings"  data-toggle="modal" data-target="#myModal"></span>
+        </h2>
+        <div class="block-content border-none">
+          <div class="block-inner-top-strip">
+            <span>For</span>
+            <select class="form-control">
+              <option>Select</option>
+              <option>Point ID</option>
+              <option>Portfolio</option>
+              <option>Location</option>
+              <option>All (Location)</option>
+            </select>
+            <div class="clearfix"></div>
+          </div>
+          <div class="block-inner-data">
+            <div class="col-md-2 col-sm-6 col-xs-6 padding-none text-left"><img src="/assets/img/money.png" alt="" class="circle-img" /></div>
+            <div class="col-md-2 col-sm-6 col-xs-6 padding-none text-right pull-right">
+            <div class="value-div">
+              <span>35%</span>
+              <table class="table">
+                <tr>
+                  <td>296</td>
+                  <td>Days<br>Remaining</td>
+                </tr>  
+                <tr>
+                  <td class="big-text green-text">35%</td>
+                  <td>Under<br>Budget</td>
+                </tr>
+                <tr>
+                  <td>$202,193</td>
+                  <td>Projected<br>Surplus</td>
+                </tr>
+                <tr>
+                  <td>$2,091,007</td>
+                  <td>Remaining<br>Spend</td>
+                </tr>
+                <tr>
+                  <td colspan="2" class="text-right">Unit Cost : $0.05 / KWH</td>
+                </tr>
+              </table>
+            </div>
+            </div>
+            <div class="col-md-8 col-sm-12 col-xs-12 padding-none" id="costBaseline">
+              <div class="level-show-div">
+                <div class="level-div"></div>
+                <img src="/assets/img/building.png" width="100%" height="100%" alt="" />
+
+                <div class="level_line1">
+                  <span class="head-size-1">$2,702,193</span>
+                  <span class="head-caption-1">Project Spend</span>
+                </div>
+                <div class="level_line2">
+                  <span class="head-size-1">$2,500,000</span>
+                  <span class="head-caption-1">Your Early Budjet</span>
+                </div>
+                <div class="level_line3">
+                  <span class="head-size-1">$483,871</span>
+                  <span class="head-caption-1">Budget to Date</span>
+                </div>
+                <div class="level_line4">
+                  <span class="head-size">$408,993</span>
+                  <span class="head-caption">Spend to Date</span>
+                </div>
+                <div class="level_line5">
+                  <span class="head-size-1">11</span>
+                  <span class="head-caption-1">MAR</span>
+                </div>
+
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div> 
+
+
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><span class="glyphicon glyphicon-cog"></span> Settings</h4>
+          </div>
+          <div class="modal-body">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              For : <b>Berkshine Hall</b>
+              <hr class="slight-line">
+              Set Budget for 2015
+            </div>
+            <div class="clearfix"></div>
+            <br>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <label>Yearly</label>
+              <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 text-center">
+              <label class="visibility-hidden">Yearly</label>
+              <div class="clearfix"></div>
+              <button class="btn btn-default"><img src="/assets/img/val-expand.png" width="10" />&nbsp;&nbsp; Previous Year's Data</button>
+            </div>
+            <div class="clearfix"></div>
+            <hr>
+            <div class="clearfix"></div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+
+              <div class="col-md-6 col-sm-6 col-xs-6 padding-light">
+                <label>Jan</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Feb</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Mar</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Apr</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>May</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Jun</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-6 col-xs-6 padding-light">
+                <label>Jul</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Aug</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Sep</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Oct</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Nov</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Dec</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                For : <b>Berkshine Hall</b>
+                <hr class="slight-line">
+                Set Budget for 2014
+              </div>
+
+            <div class="col-md-6 col-sm-6 col-xs-12 padding-light">
+
+              <div class="col-md-6 col-sm-6 col-xs-6 padding-light">
+                <label>Jan</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Feb</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Mar</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Apr</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>May</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Jun</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-6 col-xs-6 padding-light">
+                <label>Jul</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Aug</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Sep</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Oct</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Nov</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+                <label>Dec</label>
+                <div class="input-group">
+                  <span class="input-group-addon">$</span>
+                  <input type="text" class="form-control" id="inputGroupSuccess2" aria-describedby="inputGroupSuccess2Status">
+                </div>
+              </div>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-12 padding-light">
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th colspan="4" class="text-center">Previous Year's Data</th>
+                  </tr>
+                  <tr>
+                    <th></th>
+                    <th>Spend</th>
+                    <th>Consumption</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Jan</td>
+                    <td>$5.00</td>
+                    <td>25.63kWh</td>
+                  </tr>
+                  <tr>
+                    <td>Feb</td>
+                    <td>$5.00</td>
+                    <td>25.63kWh</td>
+                  </tr>
+                  <tr>
+                    <td>Mar</td>
+                    <td>$5.00</td>
+                    <td>25.63kWh</td>
+                  </tr>
+                  <tr>
+                    <td>Apr</td>
+                    <td>$5.00</td>
+                    <td>25.63kWh</td>
+                  </tr>
+                  <tr>
+                    <td>May</td>
+                    <td>$5.00</td>
+                    <td>25.63kWh</td>
+                  </tr>
+                  <tr>
+                    <td>Jun</td>
+                    <td>$5.00</td>
+                    <td>25.63kWh</td>
+                  </tr>
+                  <tr>
+                    <td>Jul</td>
+                    <td>$5.00</td>
+                    <td>25.63kWh</td>
+                  </tr>
+                  <tr>
+                    <td>Aug</td>
+                    <td>$5.00</td>
+                    <td>25.63kWh</td>
+                  </tr>
+                  <tr>
+                    <td>Sep</td>
+                    <td>$5.00</td>
+                    <td>25.63kWh</td>
+                  </tr>
+                  <tr>
+                    <td>Oct</td>
+                    <td>$5.00</td>
+                    <td>25.63kWh</td>
+                  </tr>
+                  <tr>
+                    <td>Nov</td>
+                    <td>$5.00</td>
+                    <td>25.63kWh</td>
+                  </tr>
+                  <tr>
+                    <td>Dec</td>
+                    <td>$5.00</td>
+                    <td>25.63kWh</td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix"></div>
+  </div>

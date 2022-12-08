@@ -1,0 +1,5 @@
+<div [style.width.%]="barChartInfo.width" [style.height.px]="barChartInfo.height">
+  <div class="title"> Genset Engine Run Time </div>
+  <ngx-charts-bar-vertical  [scheme]="barChartInfo.colorScheme" [results]="results" [gradient]="barChartInfo.gradient" [xAxis]="barChartInfo.showXAxis" [yAxis]="barChartInfo.showYAxis" [legend]="barChartInfo.showLegend" [showXAxisLabel]="barChartInfo.showXAxisLabel" [showYAxisLabel]="barChartInfo.showYAxisLabel" [xAxisLabel]="barChartInfo.xAxisLabel" [yAxisLabel]="barChartInfo.yAxisLabel" (select)="onSelect($event)">
+  </ngx-charts-bar-vertical>
+</div>

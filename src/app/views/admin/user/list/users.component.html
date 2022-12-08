@@ -1,0 +1,121 @@
+<div class="animated fadeIn users">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fas fa-users"></i> Users
+                    <div class="card-icons">
+                        <a class="icon-wrapper" (click)="void">
+                            <i class="icon-list"></i>
+                        </a>
+                        <a class="icon-wrapper" (click)="userCsvFile()">
+                            <i class="fa fa-file-excel-o"></i>
+                        </a>
+                        <a class="icon-wrapper" (click)="add($event)">
+                            <i class="fa fa-plus-square-o"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                        <app-loading *ngIf="isLoading"></app-loading>
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Job Title</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="user empty" *ngIf="users?.length == 0">
+                                <td colspan="6">No User found</td>
+                            </tr>
+                            <tr class="user" [ngClass]="{'selected':selected?.id == user.id}" (click)="select(user, $event)" *ngFor="let user of usersList">
+                                <td class="name">
+                                    <div class="logo">
+                                        <img *ngIf="user.picture != null || user.picture != null" src="{{user.picture != null ? user.picture : user.picture }}" />
+                                    </div>
+                                    {{user.displayName}}
+                                </td>
+                                <td>{{user.jobTitle}}</td>
+                                <td>{{user.emailAddress}}</td>
+                                <td>{{user.getRoleNames()}}</td>
+                                <td class="status-col">
+                                        <div class="status">
+                                                <label class="switch switch-label switch-pill switch-primary">
+                                                    <input type="checkbox" class="switch-input" 
+                                                    [ngModel]="user.activated" 
+                                                    (ngModelChange)="confirmAndChangeStatus(user, $event)">
+                                                    <span class="switch-slider"></span>
+                                                </label>
+                                            </div>
+                                </td>
+                                <td class="action">
+                                    <a class="btn" (click)="edit(user, $event)">
+                                        <i class="icon-pencil"></i>
+                                    </a>
+                                    <a class="btn" (click)="checkAndDelete(user, $event)">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <div *ngIf="users.length != 0">
+                        <app-pagination [totalData]="users" (valueChange)='displayData($event)'></app-pagination>
+                    </div> 
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div bsModal #deleteConfirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm</h4>
+                    <button type="button" class="close" (click)="deleteConfirmationModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This will delete the selected User permanantly. Are you sure you want delete the changes?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="deleteConfirmationModal.hide()">Cancel</button>
+                    <button type="button" class="btn btn-danger" (click)="delete(selected)">Yes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div bsModal #statusChangeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm</h4>
+                    <button type="button" class="close" (click)="statusChangeModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This will Activate/Deactivate User. Are you sure, you want to proceed?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="cancelStatusChange(selected)">No</button>
+                    <button type="button" class="btn btn-danger" (click)="onStatusChange(selected, $event)">Yes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</div>

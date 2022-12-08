@@ -1,0 +1,212 @@
+.panel-app {
+  margin-bottom: 1px;
+  border:0px;
+}
+
+.text-left svg {
+  float: left;
+  position: relative;
+  left: -20px;
+}
+.panel-app .panel-body-padding {
+  padding: 0px;
+}
+.asset-table-tr{
+  td {
+    padding: 3px 8px !important;
+  }
+}
+.alarm-console-assetId {
+  color: #8D919D;
+  transition: all 0.3s ease;
+  &:hover{
+    cursor: pointer;
+    color: #108EE2;
+  }
+}
+.status-icon {
+  width: 18px;
+}
+.panel-white-heading{
+  padding: 6px 15px 6px 30px;
+  position: relative;
+  background-color: #f7f7f7 !important;
+  .bell-icon {
+    max-width: 20px;
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    transform: translate(0%,-50%);
+  }
+}
+
+.org-table thead{
+  background-color: #e4e4e4;
+  color: #545454;
+}
+
+.org-table {
+  border: 0px solid #F1F1F1;
+}
+
+
+
+.pull-left {
+  float: left !important;
+  color: #e02629;
+  position: relative;
+  top: 5px;
+  left: -12px;
+}
+
+.org-table .sorter a {
+  color: #3e3e3e!important;
+  font-weight: bold!important;
+}
+
+mfdefaultsorter .sorter a.text-nowrap {
+  color: #3e3e3e!important;
+  font-weight: bold!important;
+}
+
+.org-table tbody tr td {
+  color: #2a3142;
+  border: 0px;
+  border-right: 1px solid #e4e4e4;
+  text-align: center;
+}
+
+.org-table tbody th td {
+  text-align: center;
+}
+
+.org-table thead tr th {
+  font-weight: normal;
+  text-align: center;
+  color: #000;
+  border-bottom: 0px;
+}
+.panel-app {
+  margin-bottom: 1px;
+}
+.expand-icon {
+  max-width: 17px;
+}
+.alarm-console-search-icon {
+  position: absolute;
+  cursor: pointer;
+  right: 40px;
+  top: 5px;
+  max-width: 20px;
+
+
+}
+.filter-search-table {
+  top: 36px;
+  td {
+    padding: 0px 8px !important;
+  }
+}
+.expand-icon {
+  max-width: 12px;
+}
+.asset-table-tr{
+  td {
+    padding: 3px 8px !important;
+    white-space: normal;
+  }
+}
+.alarm-console-assetId {
+  transition: all 0.3s ease;
+  &:hover{
+    cursor: pointer;
+    color: #108EE2;
+  }
+}
+.status-icon {
+  width: 18px;
+}
+.panel-white-heading{
+  padding: 6px 15px 6px 30px;
+  position: relative;
+  .bell-icon {
+    max-width: 20px;
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    transform: translate(0%,-50%);
+  }
+}
+.center {
+  text-align: center;
+}
+.alarm-console-table {
+  display: table;
+  width: 100%;
+  margin-bottom: 0;
+  thead {
+    float: left;
+    width: 100%;
+    tr {
+      width: 100%;
+      display: table;
+    }
+  }
+  tbody {
+    float: left;
+    width: 100%;
+    overflow: auto;
+    max-height: 400px;
+    tr {
+      width: 100%;
+      display: table;
+    }
+  }
+}
+
+
+@media only screen and (min-width : 320px)and (max-width : 992px) {
+  .alarm-console-search-icon {
+    position: absolute;
+    cursor: pointer;
+    right: 40px;
+    top: 6px;
+    max-width: 20px;
+  }
+  .pull-left {
+    padding-left: 10px;
+  }
+  .panel-white-heading .bell-icon {
+    max-width: 20px;
+    position: absolute;
+    left: 10px;
+    top: 36%;
+    -webkit-transform: translate(0%, -50%);
+    transform: translate(0%, -50%);
+  }
+  .panel-white-heading[_ngcontent-c14] {
+    padding: 6px 15px 6px 30px;
+    position: absolute;
+    background-color: #f7f7f7 !important;
+  }
+
+}
+
+.panel-app .panel-full-page-height {
+  min-height: 350px;
+}
+@media only screen and (min-width : 320px)and (max-width : 767px) {
+  .panel-app .panel-full-page-height {
+    min-height: 550px;
+  }
+}
+
+@media only screen and (min-width : 1600px)and (max-width : 3000px) {
+  .panel-app .panel-full-page-height {
+    min-height: 450px;
+  }
+}
+
+.org-table tfoot {
+  background-color: #fff;
+}

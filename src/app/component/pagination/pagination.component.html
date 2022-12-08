@@ -1,0 +1,89 @@
+<div class="row" *ngIf="viewSize === 12">
+    <div class="col-md-5">
+        <nav class="float-left">
+            <ul class="pagination" *ngIf="pager.pages && pager.pages.length">
+                <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                    <a class="page-link" (click)="valueChanged(1)">First</a>
+                </li>
+                <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                    <a class="page-link" (click)="valueChanged(pager.currentPage - 1)">Previous</a>
+                </li>
+                <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                    <a class="page-link" (click)="valueChanged(page)">{{page}}</a>
+                </li>
+                <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                    <a class="page-link" (click)="valueChanged(pager.currentPage + 1)">Next</a>
+                </li>
+                <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                    <a class="page-link" (click)="valueChanged(pager.totalPages)">Last</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-2 text-center" style="margin-top: 6px;"><span class="label info">Total
+            Record:<b>{{totalData.length}}</b></span></div>
+    <div class="col-md-5">
+        <div class="float-right">
+            <select class="form-control float-right" name="pageSize" [(ngModel)]="pageSize"
+                (ngModelChange)="changeTotalPage($event)">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row"  *ngIf="viewSize === 3">
+    <div class="col-sm-3" style="display: flex;float: left;" >
+        
+            <nav class="float-left">
+                <ul class="pagination" *ngIf="pager.pages && pager.pages.length">
+                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                        <a class="page-link" (click)="valueChanged(1)">First</a>
+                    </li>
+                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === 1}">
+                        <a class="page-link" (click)="valueChanged(pager.currentPage - 1)">Previous</a>
+                    </li>
+                    <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                        <a class="page-link" (click)="valueChanged(page)">{{page}}</a>
+                    </li>
+                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <a class="page-link" (click)="valueChanged(pager.currentPage + 1)">Next</a>
+                    </li>
+                    <li class="page-item" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                        <a class="page-link" (click)="valueChanged(pager.totalPages)">Last</a>
+                    </li>
+                </ul>
+            </nav>
+                <div style="margin-left:80px;"  >
+                    <span  class="label1 info">  Total  :{{totalData.length}}</span>
+                </div>  
+              
+                <div style="float: right;margin-left:90px;">
+                    <select style="margin-left:45px;" class="form-control float-right" name="pageSize" [(ngModel)]="pageSize"
+                    (ngModelChange)="changeTotalPage($event)">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+                </div>
+                    
+            
+  </div>
+    
+</div>

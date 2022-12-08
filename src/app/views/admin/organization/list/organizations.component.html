@@ -1,0 +1,146 @@
+
+<div class="animated fadeIn organizations">
+       
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-bank"></i> Organizations
+                    <div class="card-icons">
+                        <a class="icon-wrapper" (click)="void">
+                            <i class="icon-list"></i>
+                        </a>
+                        <a class="icon-wrapper" (click)="void">
+                            <i class="fa fa-file-excel-o"></i>
+                        </a>
+                        <a class="icon-wrapper" (click)="add($event)">
+                            <i class="fa fa-plus-square-o"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                       
+                        <app-loading *ngIf="isLoading"></app-loading>
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Organization</th>
+                                <th>Location</th>
+                                <th>Contact</th>
+                                <th>Status</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="organization empty" *ngIf="orginationList.length == 0">
+                                <td colspan="5">No Organizations found</td>
+                            </tr>
+                            <tr class="organization" [ngClass]="{'selected':selected?.id == organization.id}" (click)="select(organization, $event)"
+                                *ngFor="let organization of orginationList">
+                                <td class="name">
+                                        <i class="fa fa-bank fa-lg"></i>
+                                    <!-- <div class="logo" *ngIf="organization.smallLogo">
+                                        <img src="{{organization.smallLogo != null ? organization.smallLogo : organization.logo }}"
+                                        />
+                                    </div> -->
+                                    {{organization.name}}
+                                </td>
+                                <td>{{organization.address}}</td>
+                                <td class="contact">{{organization.phone}}</td>
+                                <td class="status-col">
+                                    <div class="status">
+                                        <label class="switch switch-label switch-pill switch-primary">
+                                            <input type="checkbox" class="switch-input" 
+                                                [ngModel]="organization.status===1"
+                                                (ngModelChange)="confirmAndChangeStatus(organization, $event)">
+                                            <span class="switch-slider"></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td class="action">
+                                    <a class="btn" (click)="edit(organization, $event)">
+                                        <i class="icon-pencil"></i>
+                                    </a>
+                                    <a class="btn" (click)="confirmAnddelete(organization, $event)">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- <nav>
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" (click)="void">Prev</a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" (click)="void">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" (click)="void">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" (click)="void">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" (click)="void">4</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" (click)="void">Next</a>
+                            </li>
+                        </ul>
+                    </nav> -->
+                </div>
+                <div class="card-footer">
+                    <div *ngIf="organizations.length != 0">
+                        <app-pagination [totalData]="organizations" (valueChange)='displayData($event)'></app-pagination></div> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div bsModal #deleteConfirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm</h4>
+                    <button type="button" class="close" (click)="deleteConfirmationModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This will remove the Organization and the related data permanently. Are you sure, you want to delete?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="deleteConfirmationModal.hide()">Cancel</button>
+                    <button type="button" class="btn btn-danger" (click)="delete(selected, $event)">Delete</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div bsModal #statusChangeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm</h4>
+                    <button type="button" class="close" (click)="statusChangeModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This will Activate/Deactivate Organization. Are you sure, you want to proceed?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="cancelStatusChange(selected)">No</button>
+                    <button type="button" class="btn btn-danger" (click)="onStatusChange(selected, $event)">Yes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</div>

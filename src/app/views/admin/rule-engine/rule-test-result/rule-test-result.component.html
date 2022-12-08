@@ -1,0 +1,73 @@
+<div class="test-result">
+    <div bsModal #testResultsModal="bs-modal" id="testResultsModal" class="modal fade test-results-modal" tabindex="-1"
+        role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">
+                        Test Results - ({{rule?.name}})
+                    </h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="testResultsModal.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="test-result-header">
+                        Test Result
+                    </div>
+                    <div class="test-result-content-section">
+                        <div class="test-result-content">
+                            <table class="test-result-detail" *ngFor="let testResult of testResults">
+                                <tr class="test-result-detail-header">
+                                    <td class="asset-id">
+                                        {{testResult.assetSerialNumber}}
+                                    </td>
+                                    <td class="status">
+                                        <div class="success" *ngIf="testResult.result != null">
+                                            <ng-container [ngSwitch]="testResult.result ">
+                                                <ng-container *ngSwitchCase="true ">
+                                                    <span class="alram-status ACTIVE"><i class="icon-bell"></i></span>
+                                                </ng-container>
+                                                <ng-container *ngSwitchCase="false ">
+                                                    <span class="alram-status NORMAL"><i class="icon-bell"></i></span>
+                                                </ng-container>
+                                            </ng-container>
+                                        </div>
+                                        <div class="error" *ngIf="testResult.error != null && testResult.error != ''">
+                                            <span class="alram-status ACTIVE"><i class="fa fa-exclamation-triangle"></i></span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="test-result-detail-content" *ngFor="let datapoint of testResult.datapoints">
+                                    <td class="datapoint-name">
+                                        {{datapoint.name}}
+                                    </td>
+                                    <td class="datapoint-value">
+                                        {{datapoint.value}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="code-section">
+                            <div class="test-result-header code">
+                                Rule
+                            </div>
+                            <div class="rule-content">
+                                <span [innerHTML]="displayRule | safehtmlmain"></span>
+                                <!-- {{displayRule}} -->
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="text-right">
+                        <button class="btn btn-cancel" (click)="testResultsModal.hide()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

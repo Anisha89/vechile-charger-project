@@ -1,0 +1,8 @@
+<div #sliderRef>
+<div class="label-date">
+    <span class="from-date">{{displayDate[0]}}</span>
+    <span class="to-date pull-right">{{displayDate[1]}}</span>
+</div>
+  <nouislider class="date-slider" [config]="rangeConfig" [(ngModel)]="range" (ngModelChange)="onChange($event)" ></nouislider>
+</div>
+<!-- {{range | json}} -->

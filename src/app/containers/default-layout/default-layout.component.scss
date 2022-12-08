@@ -1,0 +1,83 @@
+.app-header .nav-item .nav-link {
+    cursor: pointer!important;
+}
+
+::ng-deep .app-header button[appasidemenutoggler] {
+    display: none!important;
+}
+app-aside {
+    .close {
+        float: right;
+        padding: 10px 15px;
+    }
+    hr {
+        margin: 0px;
+    }
+    .aside-btns {
+        text-align: right;
+        padding-top: 15px;
+        .btn-primary.disabled {
+            opacity: 0.5;
+        }
+    }
+
+    .amount-to-buy {
+        float: left;
+        font-size: larger;
+        font-weight: 700;
+        padding-left: 15px;
+        line-height: 27px;
+        
+    }
+    ::ng-deep .amount-to-buy-btn.disabled {
+        opacity: 0.5!important;
+    }
+
+    .credit-cards {
+        text-align: center;
+    }
+
+    .aside-buy {
+        .p-3 {
+            padding: 0.5rem 1rem!important;
+        }
+
+        button {
+            width: 100%;
+        }
+    }
+
+    ::ng-deep tabset {
+        .nav-item.disabled {
+            opacity: 0.5;
+        }
+    }
+}
+
+@media (max-width:480px) {
+    ::ng-deep .container-fluid {
+        .card {
+            margin-left: -25px;
+            margin-right: -25px;
+            .card-body {
+                padding-left: 0px;
+                padding-right: 0px;
+                overflow: auto;
+            } 
+        }
+
+        .asset-dashboard {
+            .card {
+                margin-left: inherit;
+                margin-right: inherit;
+                .card-body {
+                    margin-right: inherit;
+                    overflow: inherit;
+                } 
+            }
+        }
+        
+        
+    }
+    
+}

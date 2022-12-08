@@ -1,0 +1,23 @@
+.label {
+    color: white;
+    padding: 0.5rem 0.75rem;
+    font-family: Arial;
+    border-radius: 4px;
+  }
+  .success {background-color: #4CAF50;} /* Green */
+  .info {background-color: #42a9d8;} /* Blue */
+  .warning {background-color: #ff9800;} /* Orange */
+  .danger {background-color: #f44336;} /* Red */ 
+  .other {background-color: #e7e7e7; color: black;}
+  .label1 {
+    color: white;
+   padding: 10px 10px;
+    font-family: Arial;
+    display:flex;
+    flex-wrap: wrap;
+    width:70px;
+    border-radius: 4px;
+    margin-bottom: 10px;;
+  }
+
+  

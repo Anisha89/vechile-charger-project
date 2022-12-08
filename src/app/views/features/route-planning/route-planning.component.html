@@ -1,0 +1,86 @@
+<div class="route-plan map-wrapper animated fadeIn" >
+  <div class="row">
+    <div class="col-lg-8">
+        <div class="location-inputs">
+          <div class="input-group origin">
+              <input 
+                placeholder="Current Location" 
+                autocorrect="off"
+                autocapitalize="off" 
+                spellcheck="off" 
+                type="text" 
+                class="form-control" #originRef 
+                [value]="origin?.address"
+                [formControl]="searchControl">
+                <div class="input-group-append">
+                  <button class="input-group-text"  href="#" role="button"><i class="fa fa-search"></i></button>
+                </div>
+            </div>            
+        </div>
+      
+        <agm-map 
+          [latitude]="origin.latitude" 
+          [longitude]="origin.longitude" 
+          [zoom]="zoom"
+          [fullscreenControl]="true"
+          (boundsChange)="boundsChange($event)"
+          (mapClick)="selectDestination($event)">
+          <agm-direction *ngIf="route && origin && origin.latitude && destination && destination.latitude"
+            [origin]="origin" [destination]="destination" [provideRouteAlternatives] = "true">
+          </agm-direction>
+          <agm-marker 
+            [latitude]="currentLocation.latitude" 
+            [longitude]="currentLocation.longitude"
+            [iconUrl]="'/assets/img/live-marker.svg'">
+          </agm-marker>
+      
+          <agm-marker *ngFor="let chargingVehicle of chargingVehicles"
+            [latitude]="chargingVehicle.location.latitude" 
+            [longitude]="chargingVehicle.location.longitude"
+            [iconUrl]="chargingVehicle.markerIconUrl"
+            (markerClick)="clickedMarker(infowindow, chargingVehicle)">
+            
+            <agm-info-window #infowindow [disableAutoPan]="true">
+              <span>
+                  <strong>Address:</strong> 
+                  {{chargingVehicle?.address}}
+              </span>
+              <br>
+              <span>
+                  <strong>Make: </strong>
+                  {{chargingVehicle?.make}}
+              </span>
+              <br>
+              <span>
+                  <strong>Model: </strong>
+                  {{chargingVehicle?.model}}
+              </span>
+              <br>
+              <span>
+                  <strong>Asset Type: </strong>
+                  {{chargingVehicle?.assetType}}
+              </span>
+              <br>
+              <span>
+                  <strong>Price: </strong>
+                  {{chargingVehicle?.price | currency:'USD'}}
+              </span>
+            </agm-info-window>
+      
+          </agm-marker>
+          <agm-circle [latitude]="origin.latitude + 0.3" [longitude]="origin.longitude" 
+            [radius]="5000"
+            [fillColor]="'red'"
+            [circleDraggable]="true"
+            [editable]="true">
+        </agm-circle>
+      </agm-map>
+    </div>
+    <div class="col-lg-4">
+        <app-charging-vehicles-list [data]="filteredChargingVehicles" [parent]="facility">
+
+        </app-charging-vehicles-list>
+    </div>
+  </div>
+</div>
+

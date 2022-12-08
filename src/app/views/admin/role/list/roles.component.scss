@@ -1,0 +1,81 @@
+.users {
+    .card-header {
+        .card-icons {
+            float: right;
+            .icon-wrapper {
+                width: 30px;
+                height: 30px;
+                padding: 5px;
+                color: #23282c!important;
+                text-decoration: none;
+                i {
+                    font-size: large;
+                }
+            }
+            
+        }
+    }
+    .user {
+        line-height: 35px;
+        cursor: pointer;
+        &.selected {
+            background-color: #f0f3f5;
+            font-weight: 500;
+        }
+        .status {
+            min-width: 48px;
+            line-height: 14px;
+        }
+        .name {
+            .logo {
+                display: inline-block;
+                width: 70px;
+                text-align: center;
+                img {
+                    height: 35px;
+                    padding: 0px;
+                    border-radius: 0;
+                    border: none;
+                    margin-right: 10px;
+                }
+            }
+        }
+        .status{
+            margin-top: 5px;
+        }
+        a.btn {
+            padding: 5px;
+        }
+    }
+    .empty {
+        text-align: center;
+        font-size: 40px;
+        color: lightgrey;
+        padding: 10px;
+        background: #fff;
+        font-style: italic;
+        line-height: 64px;
+        font-weight: 600;
+    }
+
+    .empty {
+        td {
+            line-height: 35px;
+        }
+    }
+    
+    td{
+        line-height: 21px;
+        vertical-align: middle;
+        &.action{
+            width: 6%;
+            min-width: 64px;
+            text-align: center;
+        }
+        
+        &.status-col{
+            width: 8%;
+            text-align: center;
+        }
+    }
+}

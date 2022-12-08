@@ -1,0 +1,24 @@
+<div class="container-fluid">
+  <div class="row">
+    <!--<div class="panel panel-app asset-location" [style.height.px]="assetLocationHeight">-->
+    <div class="panel panel-app asset-location">
+      <div class="panel-heading clearfix panel-white-heading">
+        <img src="assets/images/navigator.svg" class="placeholderNew-info svg-icon" />
+        <span class="text-left">Asset Location :</span>
+        <p *ngIf="assetLocationAddress.address1" class="location-info">{{assetLocationAddress.address1}}, {{assetLocationAddress.address2}}</p>
+        <span class="text-right"></span>
+      </div>
+      <div class="panel-body panel-min-height" id="map_canvas">
+        <agm-map [latitude]="assetMapInfo?.latitude" (centerChange)="centerChange($event)" [usePanning]="true" [fullscreenControl]="true" [longitude]="assetMapInfo?.longitude"
+                 [minZoom]="1" [zoom]="mapZoom">
+          <agm-marker *ngIf="icon != null" [latitude]="assetMapInfo?.latitude" [longitude]="assetMapInfo?.longitude" [iconUrl]="icon" [label]="labelOptions"
+                      [zIndex]="zIndex" title="{{labelOptions}}">
+          </agm-marker>
+          <div [hidden]="assetMapInfo?.latitude">
+            <app-gmap (mapReady)="mapRendered($event)"></app-gmap>
+          </div>
+        </agm-map>
+      </div>
+    </div>
+  </div>
+</div>

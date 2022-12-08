@@ -1,0 +1,41 @@
+<div class="animated fadeIn charging-vehicles-list">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-truck"></i> Charging Vehicles
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead>
+                            <tr class="charging-vehicle">
+                                <th class="name">Asset Serial#</th>
+                                <th>Location</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="charging-vehicle empty" *ngIf="chargingVehicles?.length == 0">
+                                <td colspan="7">No Charging Vehicles found</td>
+                            </tr>
+                            <tr class="charging-vehicle" [ngClass]="{'selected':selected?.id == chargingVehicle.id}" (click)="select(chargingVehicle, $event)"
+                                *ngFor="let chargingVehicle of chargingVehicles">
+                                <td class="name">
+                                    <a (click)="showDashboard(chargingVehicle, $event)">
+                                        {{chargingVehicle.assetSerialNumber}}
+                                    </a>
+                                </td>
+                                <td>{{chargingVehicle.address}}</td>
+                                <td class="action">
+                                    <a class="btn" (click)="showDashboard(chargingVehicle, $event)">
+                                        <i class="icon-speedometer"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,110 @@
+.rules {
+    .card-header {
+        .card-icons {
+            float: right;
+            .icon-wrapper {
+                width: 30px;
+                height: 30px;
+                padding: 5px;
+                color: #23282c!important;
+                text-decoration: none;
+                i {
+                    font-size: large;
+                }
+            }
+            
+        }
+    }
+    .rule {
+        line-height: 35px;
+        cursor: pointer;
+        &.selected {
+            background-color: #f0f3f5;
+            font-weight: 500;
+        }
+        .status {
+            min-width: 48px;
+            line-height: 14px;
+        }
+        .status {
+            margin-top:5px;
+        }
+        a.btn {
+            padding: 5px;
+        }
+        .assets {
+            .asset {
+                display: inline-block;
+                color: #fff;
+                background-color: #1985ac;
+                border-color: #187da0;
+                margin-left: 5px;
+                font-size: 10px;
+                padding: 3px;
+                border-radius: 5px;
+                font-weight: 500;
+                margin-top: 5px;
+            }
+        }
+        .btn-publish {
+            width: 90px;
+        }
+    }
+    .empty {
+        text-align: center;
+        font-size: 40px;
+        color: lightgrey;
+        padding: 10px;
+        background: #fff;
+        font-style: italic;
+        line-height: 64px;
+        font-weight: 600;
+    }
+
+    .empty {
+        td {
+            line-height: 35px;
+        }
+    }
+    
+    td{
+        line-height: 21px;
+        vertical-align: middle;
+        &.date {
+            white-space: nowrap;
+            width: 145px;
+        }
+        &.name {
+            width: 15%;
+        }
+        &.alarm-name {
+            width: 15%;
+        }
+        &.assets {
+            width: 15%;
+        }
+        &.updated-by {
+            width: 10%;
+        }
+        &.status-col{        
+            width: 5%;
+            text-align: center;
+        }
+        &.test{        
+            width: 60px;
+            text-align: center;
+        }
+        &.publish{        
+            width: 100px;
+            text-align: center;
+        }
+        &.action{        
+            width: 4%;
+            min-width: 64px;
+            text-align: center;
+            white-space: nowrap;
+        }
+        //Date
+        //whitespace: no wrap
+    }
+}

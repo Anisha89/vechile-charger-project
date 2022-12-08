@@ -1,0 +1,425 @@
+<div class="query-builder" [ngClass]="{'empty': data.rules == null || data.rules.length == 0, 'q-switch-and-selected': data.condition === 'and', 'q-switch-or-selected': data.condition === 'or'}">
+  <div class="header q-if-header" *ngIf="data && data.elseRules">IF</div>
+  <div class="block if-block">
+    <div (resized)="calculateWidths()">
+      <ng-container *ngIf="getButtonGroupTemplate() as template; else defaultButtonGroup">
+        <div class="q-button-group q-right-align">
+          <ng-container *ngTemplateOutlet="template; context: getButtonGroupContext()"></ng-container>
+        </div>
+      </ng-container>
+
+      <ng-template #defaultButtonGroup>
+        <div class="q-more-icons">
+          <div class="btn-group">
+            <button type="button" (click)="performAction(lastSelectedAction, $event)" class="btn btn-default q-button"
+              [ngClass]="{'disabled': disabled}">
+              {{lastSelectedAction}}
+            </button>
+            <!-- Workaround -->
+            <button type="button" 
+              *ngIf="!displayActionDropdown"
+              ngbDropdown ngbDropdownToggle 
+              (mouseover)="setDisplayActionDropdown(true)"
+              [ngClass]="{'disabled': disabled}" class="btn btn-default dropdown-toggle dropdown-toggle-split btn-action q-button">
+              <span class="caret"></span>
+            </button>
+            <button *ngIf="displayActionDropdown"
+              (openChange)="isActionDropdownOpen = $event; isActionDropdownOpen === false ? setDisplayActionDropdown(false): ''"
+              type="button" ngbDropdown ngbDropdownToggle [ngClass]="{'disabled': disabled}" class="btn btn-default dropdown-toggle dropdown-toggle-split btn-action q-button"
+              aria-controls="dropdown-split">
+              <span class="caret"></span>
+              <ul class="dropdown-menu">
+                <li (click)="addRule()">
+                  <a href="javascript:void(0);">Add Condition</a>
+                </li>
+                <li (click)="addRuleSet()">
+                  <a href="javascript:void(0);">Add Sub Condition</a>
+                </li>
+                <li (click)="toggleElseRuleSet()"
+                  *ngIf="!elseBlock && data?.rules && data?.rules.length > 0">
+                  <a href="javascript:void(0);">
+                    <span *ngIf="data.elseRules == null">Add </span>
+                    <span *ngIf="data.elseRules != null">Remove </span>
+                    Else Condition
+                  </a>
+                </li>
+                <li (click)="removeRuleSet()"
+                  *ngIf="parentValue && (parentValue?.rules?.length > 1 || elseBlock)">
+                  <a href="javascript:void(0);">Remove Block</a>
+                </li>
+              </ul>
+            </button>
+          </div>
+
+        </div>
+      </ng-template>
+
+      <ng-container *ngIf="getSwitchGroupTemplate() as template; else defaultSwitchGroup">
+        <ng-container *ngTemplateOutlet="template; context: getSwitchGroupContext()"></ng-container>
+      </ng-container>
+
+      <ng-template #defaultSwitchGroup>
+        <div class="q-switch-group q-transition" *ngIf="checkIsSwitchNeeded()">
+          <div *ngIf="conditionSwitchNeeded">
+            <input type="radio" class="q-switch-radio" [(ngModel)]="data.condition" [disabled]=disabled
+              value="and" #andOption />
+            <label (click)="changeCondition(andOption.value)" class='q-switch-and q-switch-label'>AND</label>
+          </div>
+          <div *ngIf="conditionSwitchNeeded">
+            <input type="radio" class="q-switch-radio" [(ngModel)]="data.condition" [disabled]=disabled
+              value="or" #orOption />
+            <label (click)="changeCondition(orOption.value)" class='q-switch-or q-switch-label'>OR</label>
+          </div>
+        </div>
+        <div class="q-switch-group q-transition" *ngIf="!conditionSwitchNeeded">
+          <div>&nbsp;</div>
+          <div>&nbsp;</div>
+        </div>
+      </ng-template>
+    </div>
+
+    <ul class="q-tree" [ngClass]="{'padding-left-none': !conditionSwitchNeeded}" *ngIf="data && data.rules" #queryBuilderConditions>
+      <ng-container *ngFor="let rule of data.rules; let ruleIndex = index">
+        <ng-container *ngIf="{ruleset: !!rule.rules, invalid: !config.allowEmptyRulesets && rule.rules && rule.rules.length === 0} as local">
+          <li class="{{data.condition}} q-row q-connector q-transition q-rule {{local.ruleset ? 'ruleSet' : 'rule'}}" 
+            [ngClass]="{'selected': context.selected == rule, 'switch-not-needed': !conditionSwitchNeeded}"
+            (click)="select(rule, $event)">
+            <ng-container *ngIf="!local.ruleset">
+
+              <ng-container *ngIf="getRemoveButtonTemplate() as template; else defaultRemoveButton">
+                <div class="q-button-group q-right-align">
+                  <ng-container *ngTemplateOutlet="template; context: getRemoveButtonContext(rule)"></ng-container>
+                </div>
+              </ng-container>
+
+              <ng-template #defaultRemoveButton>
+                <div class="q-right-align">
+                  <button *ngIf="data.rules.length > 1" class="q-button q-remove-button" (click)="removeRule(rule, data)"
+                    [disabled]=disabled>
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+
+
+                </div>
+              </ng-template>
+              <div class="q-input-fields">
+                <div *ngIf="entities?.length > 0" class="q-inline-block-display">
+                  <ng-container *ngIf="getEntityTemplate() as template; else defaultEntity">
+                    <ng-container *ngTemplateOutlet="template; context: getEntityContext(rule)"></ng-container>
+                  </ng-container>
+                </div>
+
+                <ng-template #defaultEntity>
+                  <div class="q-control-size">
+                    <select class="q-entity-control" [(ngModel)]="rule.entity" (ngModelChange)="changeEntity($event, rule)"
+                      [disabled]="disabled">
+                      <option *ngFor="let entity of entities" [ngValue]="entity.value">
+                        {{entity.name}}
+                      </option>
+                    </select>
+                  </div>
+                </ng-template>
+
+                <ng-container *ngIf="getFieldTemplate() as template; else defaultField">
+                  <ng-container *ngTemplateOutlet="template; context: getFieldContext(rule)"></ng-container>
+                </ng-container>
+
+                <ng-template #defaultField>
+                  <div [style.width.%]="fieldWidth" class="q-control-size q-data-field-control-size">
+                    <div>
+                      <!-- Change datalist to searchable dropdown -->
+                      <span class="q-field-control-before" [innerHtml]="'{' | safehtml"></span>
+                      <div *ngIf="ruleActiveDropdown.ruleIndex != ruleIndex || ruleActiveDropdown.dropdownIndex != 1" 
+                        class="q-field-control field-value"
+                        [ngClass]="{'placeholder': !rule.field}"
+                        (mouseover)="setActiveDropdown(ruleIndex, 1)"
+                        [ngClass]="{'highlight-error': rule.fieldError, 'value-selected': rule?.fields?.length > 0}">
+                        {{rule.field? rule.field: 'Datapoint'}}
+                      </div>
+                      <angular2-multiselect  
+                        *ngIf="ruleActiveDropdown.dropdownIndex == 1 && ruleActiveDropdown.ruleIndex == ruleIndex" 
+                        [settings]="fieldsSetting"
+                        class="q-field-control"
+                        id="field-dropdown"
+                        class="single-select"
+                        (onSelect)="selectField($event, rule)"
+                        (onDeSelect)="selectField($event, rule)"
+                        (onClose)="setActiveDropdown(-1, -1)"
+                        [data]="fields" [(ngModel)]="rule.fields">
+                      </angular2-multiselect>
+                      <span class="q-field-control-after" [innerHtml]="'}' | safehtml"></span>
+
+                      <div *ngIf="rule.fieldError" class="custom-errors">
+                        {{rule.fieldError}}
+                      </div>
+                    </div>
+
+
+                  </div>
+                </ng-template>
+
+                <ng-container *ngIf="getOperatorTemplate() as template; else defaultOperator">
+                  <ng-container *ngTemplateOutlet="template; context: getOperatorContext(rule)"></ng-container>
+                </ng-container>
+
+                <ng-template #defaultOperator>
+                  <div class="q-control-size"
+                    [style.width.%]="operatorWidth">
+                    <!-- Workaround -->
+                    <div *ngIf="ruleActiveDropdown.ruleIndex != ruleIndex || ruleActiveDropdown.dropdownIndex != 2" 
+                      (mouseover)="setActiveDropdown(ruleIndex, 2)"
+                      [ngClass]="{'disabled': disabled}" class="btn-group q-tooltip q-tooltip-bottom full-width q-control-size">
+                      <div type="button" class="btn btn-default btn-value q-button operator-value">
+                          {{operatorAndTextMap[rule.operator]}}
+                        <span *ngIf="rule.operator == null || rule.operator == ''">&nbsp;</span>
+                      </div>
+                      <div type="button" class="btn btn-default dropdown-toggle dropdown-toggle-split btn-action q-button operator-value"
+                        aria-controls="dropdown-split">
+                        <span class="caret"></span>
+                      </div>
+                    </div>
+                    <div *ngIf="ruleActiveDropdown.dropdownIndex == 2 && ruleActiveDropdown.ruleIndex == ruleIndex" 
+                      (openChange)="$event == false? setActiveDropdown(-1, -1): ''"
+                      [ngClass]="{'disabled': disabled}" class="btn-group q-tooltip q-tooltip-bottom full-width q-control-size"
+                      ngbDropdown ngbDropdownToggle>
+                      <button type="button" class="btn btn-default btn-value q-button">
+                        {{operatorAndTextMap[rule.operator]}}<span *ngIf="rule.operator == null || rule.operator == ''">&nbsp;</span>
+                      </button>
+                      <button type="button" class="btn btn-default dropdown-toggle dropdown-toggle-split btn-action q-button"
+                        aria-controls="dropdown-split">
+                        <span class="caret"></span>
+
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li *ngFor="let operator of getOperators(rule.field)">
+                          <a href="javascript:void(0);" (click)="rule.operator = operator">{{operatorAndTextMap[operator]}}</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div *ngIf="rule.operatorError" class="custom-errors">
+                        {{rule.operatorError}}
+                    </div>
+                  </div>
+
+                </ng-template>
+
+                <ng-container *ngIf="findTemplateForRule(rule) as template; else defaultInput">
+                  <ng-container *ngTemplateOutlet="template; context: getInputContext(rule)"></ng-container>
+                </ng-container>
+
+                <ng-template #defaultInput>
+                  <div class="q-control-size" [ngSwitch]="getInputType(rule.field, rule.operator)"
+                    [style.width.%]="valueWidth" class="q-tooltip q-tooltip-bottom">
+                    <input class="q-input-control" [ngClass]="{'highlight-error': rule.valueError}" [placeholder]="'Value'"
+                      [(ngModel)]="rule.value" (ngModelChange)="changeInput()" [disabled]="disabled"
+                      *ngSwitchCase="'string'" type="text">
+                    <input class="q-input-control" [ngClass]="{'highlight-error': rule.valueError}" [placeholder]="'Value'"
+                      [(ngModel)]="rule.value" (ngModelChange)="changeInput()" [disabled]="disabled" *ngSwitchCase="'number'"
+                      type="number">
+                    <input class="q-input-control" [ngClass]="{'highlight-error': rule.valueError}"  [placeholder]="'Value'"
+                      [(ngModel)]="rule.value" (ngModelChange)="changeInput()" [disabled]="disabled" *ngSwitchCase="'date'"
+                      type="date">
+                    <input class="q-input-control" [ngClass]="{'highlight-error': rule.valueError}"  [placeholder]="'Value'"
+                      [(ngModel)]="rule.value" (ngModelChange)="changeInput()" [disabled]="disabled" *ngSwitchCase="'time'"
+                      type="time">
+                    <select class="q-input-control" [ngClass]="{'highlight-error': rule.valueError}"  [(ngModel)]="rule.value"
+                      (ngModelChange)="changeInput()" [disabled]="disabled" *ngSwitchCase="'category'">
+                      <option *ngFor="let opt of getOptions(rule.field)" [ngValue]="opt.value">
+                        {{opt.name}}
+                      </option>
+                    </select>
+                    <ng-container *ngSwitchCase="'multiselect'">
+                      <select class="q-input-control" [ngClass]="{'highlight-error': rule.valueError}"  [(ngModel)]="rule.value"
+                        (ngModelChange)="changeInput()" [disabled]="disabled" multiple>
+                        <option *ngFor="let opt of getOptions(rule.field)" [ngValue]="opt.value">
+                          {{opt.name}}
+                        </option>
+                      </select>
+                    </ng-container>
+                    <input class="q-input-control" [ngClass]="{'highlight-error': rule.valueError}"  [(ngModel)]="rule.value"
+                      (ngModelChange)="changeInput()" [disabled]="disabled" *ngSwitchCase="'boolean'" type="checkbox">
+                    <div *ngIf="rule.valueError" class="custom-errors">
+                      {{rule.valueError}}
+                    </div>
+                  </div>
+                </ng-template>
+
+                <ng-container *ngIf="getUnitTemplate() as template; else defaultUnit">
+                  <ng-container *ngTemplateOutlet="template; context: getUnitContext(rule)"></ng-container>
+                </ng-container>
+
+                <ng-template #defaultUnit>
+                  <div class="q-control-size" [ngClass]="{'highlight-error': rule.unitError}" [style.width.%]="unitWidth">
+                    <!-- Workaround -->
+                    <div *ngIf="ruleActiveDropdown.ruleIndex != ruleIndex || ruleActiveDropdown.dropdownIndex != 3"
+                      (mouseover)="setActiveDropdown(ruleIndex, 3)"
+                      [ngClass]="{'highlight-error': rule.unitError, 'disabled': disabled}" class="btn-group q-tooltip q-tooltip-bottom full-width q-control-size">
+                      <button type="button" class="btn btn-default btn-value q-button unit-value">
+                        <span *ngIf="getUnits(rule)?.length > 0">
+                          <span [innerHTML]="rule.unit | safehtml"></span>
+                          <span *ngIf="rule.operator == null || rule.operator == ''">&nbsp;</span>
+                        </span>
+                        <span *ngIf="!(getUnits(rule)?.length > 0)">N/A</span>
+                      </button>
+                      <button type="button" class="btn btn-default dropdown-toggle dropdown-toggle-split btn-action q-button unit-value"
+                        aria-controls="dropdown-split">
+                        <span class="caret" *ngIf="getUnits(rule)?.length > 0"></span>
+
+                      </button>
+                      <div *ngIf="rule.unitError" class="custom-errors">
+                        {{rule.unitError}}
+                      </div>
+                    </div>
+                    <div *ngIf="ruleActiveDropdown.dropdownIndex == 3 && ruleActiveDropdown.ruleIndex == ruleIndex"
+                      (openChange)="$event == false ? setActiveDropdown(-1, -1): ''"
+                      [ngClass]="{'highlight-error': rule.unitError, 'disabled': disabled}" class="btn-group q-tooltip q-tooltip-bottom full-width q-control-size"
+                      ngbDropdown ngbDropdownToggle>
+                      <button type="button" class="btn btn-default btn-value q-button">
+                        <span *ngIf="getUnits(rule)?.length > 0">
+                          <span [innerHTML]="rule.unit | safehtml"></span>
+                          <span *ngIf="rule.operator == null || rule.operator == ''">&nbsp;</span>
+                        </span>
+                        <span *ngIf="!(getUnits(rule)?.length > 0)">N/A</span>
+                      </button>
+                      <button type="button" class="btn btn-default dropdown-toggle dropdown-toggle-split btn-action q-button"
+                        aria-controls="dropdown-split">
+                        <span class="caret" *ngIf="getUnits(rule)?.length > 0"></span>
+
+                      </button>
+                      <ul class="dropdown-menu" *ngIf="getUnits(rule)?.length > 0">
+                        <li *ngFor="let unit of getUnits(rule)">
+                          <a href="javascript:void(0);" (click)="changeUnit(rule, unit)">
+                            <span [innerHTML]="unit | safehtml"></span>
+                          </a>
+                        </li>
+                      </ul>
+                      <div *ngIf="rule.unitError" class="custom-errors">
+                        {{rule.unitError}}
+                      </div>
+                    </div>
+                  </div>
+
+                </ng-template>
+
+                <ng-container *ngIf="getThresholdTemplate(rule) as template; else defaultThreshold">
+                  <ng-container *ngTemplateOutlet="template;"></ng-container>
+                </ng-container>
+
+                <ng-template #defaultThreshold>
+                  <div *ngIf="isThresholdApplicable(rule)"
+                    [style.width.%]="thresholdWidth" class="q-tooltip q-tooltip-bottom q-control-size">
+                    <input class="q-unit-control" [ngClass]="{'highlight-error': rule.thresholdError}"
+                      [placeholder]="'Threshold Dead Band'" (keydown)="restrictNegativeThreshold($event)" [(ngModel)]="rule.threshold"
+                      (ngModelChange)="changeThreshold(rule, $event)" (change)="toggleShowExtra(rule)" min="0" *ngIf="rule.showExtra" [disabled]="disabled" type="number">
+                    <div class="extra" [ngClass]="{'hide-extra': rule.showExtra, 'margin-top': !rule.showExtra}"
+                      (click)="rule.showExtra = !rule.showExtra">
+                      <span class="caret"></span>
+                    </div>
+                    <div *ngIf="rule.thresholdError && !rule.showExtra" class="custom-errors">
+                      {{rule.thresholdError}}
+                    </div>
+                  </div>
+                </ng-template>
+
+              </div>
+
+
+            </ng-container>
+            <app-query-builder *ngIf="local.ruleset" [queryBuilderInstanceNumber]="queryBuilderInstanceNumber+1" [data]="rule"
+              [disabled]="disabled" [parentTouchedCallback]="parentTouchedCallback || onTouchedCallback"
+              [parentChangeCallback]="parentChangeCallback || onChangeCallback" [parentInputTemplates]="parentInputTemplates || inputTemplates"
+              [parentOperatorTemplate]="parentOperatorTemplate || operatorTemplate" [parentUnitTemplate]="parentUnitTemplate || unitTemplate"
+              [parentThresholdTemplate]="parentThresholdTemplate || thresholdTemplate" [parentFieldTemplate]="parentFieldTemplate || fieldTemplate"
+              [parentEntityTemplate]="parentEntityTemplate || entityTemplate" [parentSwitchGroupTemplate]="parentSwitchGroupTemplate || switchGroupTemplate"
+              [parentButtonGroupTemplate]="parentButtonGroupTemplate || buttonGroupTemplate"
+              [parentRemoveButtonTemplate]="parentRemoveButtonTemplate || removeButtonTemplate"
+              [parentEmptyWarningTemplate]="parentEmptyWarningTemplate || emptyWarningTemplate" [parentValue]="data"
+              [classNames]="classNames" [config]="config" [allowRuleset]="allowRuleset" [emptyMessage]="emptyMessage"
+              [operatorMap]="operatorMap" (fieldChanged)="handleFieldChange($event)">
+            </app-query-builder>
+
+            <ng-container *ngIf="getEmptyWarningTemplate() as template; else defaultEmptyWarning">
+              <ng-container *ngIf="local.invalid">
+                <ng-container *ngTemplateOutlet="template; context: getEmptyWarningContext()"></ng-container>
+              </ng-container>
+            </ng-container>
+
+            <ng-template #defaultEmptyWarning class="q-tooltip q-tooltip-bottom">
+              <div class="q-empty-warning" *ngIf="local.invalid">
+                <div class="t-content">Rule Block should have at least one Rule or another Rule Block.</div>
+              </div>
+            </ng-template>
+          </li>
+
+        </ng-container>
+      </ng-container>
+    </ul>
+  </div>
+  <!-- Else case-->
+  <div class="header q-else-header" *ngIf="data && data.elseRules">ELSE IF</div>
+  <div class="block else-block" *ngIf="data && data.elseRules">
+    <ul class="q-tree" *ngIf="data && data.elseRules">
+      
+      <ng-container *ngFor="let rule of data.elseRules">
+        <ng-container *ngIf="{ruleset: !!rule.rules, invalid: !config.allowEmptyRulesets && rule.rules && rule.rules.length === 0} as local">
+          <li class="q-row q-else q-transition {{local.ruleset ? 'q-ruleset' : 'q-rule'}}" [ngClass]="{'selected': context.selected == rule}" (click)="select(rule, $event)">
+            <ng-container *ngIf="!local.ruleset">
+
+              <ng-container *ngIf="getRemoveButtonTemplate() as template; else defaultRemoveButton">
+                <div class="q-button-group q-right-align">
+                  <ng-container *ngTemplateOutlet="template; context: getRemoveButtonContext(rule)"></ng-container>
+                </div>
+              </ng-container>
+
+              <div *ngIf="entities?.length > 0" class="q-inline-block-display">
+                <ng-container *ngIf="getEntityTemplate() as template; else defaultEntity">
+                  <ng-container *ngTemplateOutlet="template; context: getEntityContext(rule)"></ng-container>
+                </ng-container>
+              </div>
+
+              <ng-container *ngIf="getFieldTemplate() as template; else defaultField">
+                <ng-container *ngTemplateOutlet="template; context: getFieldContext(rule)"></ng-container>
+              </ng-container>
+
+              <ng-container *ngIf="getOperatorTemplate() as template; else defaultOperator">
+                <ng-container *ngTemplateOutlet="template; context: getOperatorContext(rule)"></ng-container>
+              </ng-container>
+
+              <ng-container *ngIf="findTemplateForRule(rule) as template; else defaultInput">
+                <ng-container *ngTemplateOutlet="template; context: getInputContext(rule)"></ng-container>
+              </ng-container>
+
+            </ng-container>
+            <app-query-builder *ngIf="local.ruleset" [data]="rule" [disabled]="disabled" [parentTouchedCallback]="parentTouchedCallback || onTouchedCallback"
+              [parentChangeCallback]="parentChangeCallback || onChangeCallback" [parentInputTemplates]="parentInputTemplates || inputTemplates"
+              [parentOperatorTemplate]="parentOperatorTemplate || operatorTemplate" [parentFieldTemplate]="parentFieldTemplate || fieldTemplate"
+              [parentEntityTemplate]="parentEntityTemplate || entityTemplate" [parentSwitchGroupTemplate]="parentSwitchGroupTemplate || switchGroupTemplate"
+              [parentButtonGroupTemplate]="parentButtonGroupTemplate || buttonGroupTemplate"
+              [parentRemoveButtonTemplate]="parentRemoveButtonTemplate || removeButtonTemplate"
+              [parentEmptyWarningTemplate]="parentEmptyWarningTemplate || emptyWarningTemplate" [parentValue]="data"
+              [classNames]="classNames" [config]="config" [allowRuleset]="allowRuleset" [emptyMessage]="emptyMessage"
+              [operatorMap]="operatorMap" [elseBlock]=true (fieldChanged)="handleFieldChange($event)">
+            </app-query-builder>
+
+            <ng-container *ngIf="getEmptyWarningTemplate() as template; else defaultEmptyWarning">
+              <ng-container *ngIf="local.invalid">
+                <ng-container *ngTemplateOutlet="template; context: getEmptyWarningContext()"></ng-container>
+              </ng-container>
+            </ng-container>
+
+            <ng-template #defaultEmptyWarning class="q-tooltip q-tooltip-bottom">
+              <div class="q-empty-warning" *ngIf="local.invalid">
+                <div class="t-content">Rule Block should have at least one Rule or another Rule Block.</div>
+              </div>
+            </ng-template>
+          </li>
+        </ng-container>
+      </ng-container>
+    </ul>
+  </div>
+
+
+
+
+
+</div>

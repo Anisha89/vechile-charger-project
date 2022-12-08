@@ -1,0 +1,20 @@
+<div class="home-search">
+  <a class="glyphicon glyphicon-search" (click)="show()"></a>
+  <div class="search-input" [ngClass]="showInput">
+    <input type="text" #searchBox (keyup)="search(searchBox.value)" (blur)="dropDown = false;"/>
+    <span class="bar"></span>
+    <div class="dropdown" [ngClass]="{'open': dropDown }">
+      <div class=""></div>
+
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li *ngFor="let name of autoSuggestion?.response; let i = index" (click)="gotoProduct(search)">
+          <a href="#">{{name}}</a>
+          <div class="col-lg-12 text-right" ng-if="autoSuggestion?.category[i].nodes" *ngFor="let group of autoSuggestion?.category[i].nodes;">
+            {{group.name}}
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>

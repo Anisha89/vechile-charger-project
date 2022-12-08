@@ -1,0 +1,1 @@
+export { AlarmModule } from './alarm.module';

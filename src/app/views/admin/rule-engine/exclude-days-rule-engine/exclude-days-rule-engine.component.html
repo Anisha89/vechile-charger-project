@@ -1,0 +1,21 @@
+<div class="app-exclude-days-rule-engine custom" [ngClass]="{'disabled': disabled }">
+    <div #selectedDaysSection class="selected-days" *ngIf="excludedDays.length > 0" (click)="clickedOnDiv()">
+      <div class="selected-day" *ngFor="let day of excludedDays;let index = index" >
+        {{day}}
+        <span *ngIf="!disabled" class="fa fa-remove" (click)="removeDate(index)"></span>
+      </div>
+    </div>
+    <input [style.height.px]="getMinHeightForInput()" 
+      class="form-control date-input" 
+      (click)="onDateInputClick($event)" 
+      (keydown)="eventTriggered($event)"
+      [ngClass]="{'no-placeholder': excludedDays.length > 0 }"
+      type="date" 
+      [min]="min" 
+      [max]="max" 
+      data-placeholder=""
+      (input)="parseDate($event.target.value)" 
+      id="exd-date-type"
+      [disabled]="disabled"/>
+    <!-- <input class="picker" type="date"> -->
+  </div>

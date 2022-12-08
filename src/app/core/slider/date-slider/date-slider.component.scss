@@ -1,0 +1,23 @@
+.date-slider:before {
+  content: 'Date';
+  position: absolute;
+  bottom: 22px;
+  padding-left: 40%;
+}
+
+.label-date {
+  .from-date {
+    // background: #f25d29;
+    color: white;
+    border-radius: 2px;
+    padding: 1px;
+  }
+  .to-date {
+    // background: #f25d29;
+    color: white;
+    border-radius: 2px;
+    padding: 2px;
+    top: -2px;
+    position: relative;
+  }
+}

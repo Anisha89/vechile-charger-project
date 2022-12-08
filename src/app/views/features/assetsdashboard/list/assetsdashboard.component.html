@@ -1,0 +1,99 @@
+<div class="animated fadeIn assetdashboard">
+ 
+   
+              
+                    <app-loading *ngIf="isLoading"></app-loading>
+                             
+    <div class="float-box" cdkDrag #mapfloatField>
+        &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <label style="margin-top: 7px;">Type&nbsp;</label>
+        <select style="margin-bottom: 7px;"(change)="onDomainTypeChange($event.target.value)" placeholder="Type"
+            style="height:40px;float:right;margin-left: 0px;">
+
+            <option *ngFor="let domainType of domainTypes" [ngValue]="domainType">
+                {{domainType}}
+            </option>
+        </select>&nbsp; &nbsp;
+        <label style="margin-top: 7px;">Asset&nbsp;
+        <select style="margin-bottom: 7px;" id="domain" (change)="onDomainNameChange($event.target.value)" style="height:40px;">
+            <option *ngFor="let domainName of domainNameList" [ngValue]="domainName">
+                {{domainName}}
+            </option>
+        </select>&nbsp; &nbsp;</label>
+        <label style="margin-top: 7px;">Attribute&nbsp;
+        <select style="margin-bottom: 7px;"id="attribute" (change)="onIsIndexedChange($event.target.value)" style="height:40px;">
+            <option *ngFor="let attribute of isIndexedList" [ngValue]="attribute">
+                {{attribute}}
+            </option>
+        </select>&nbsp; &nbsp;</label>
+        <label style="margin-top: 7px;">Facility&nbsp;
+            <select style="margin-bottom: 7px;"id="facility" (change)="onFacilityChange($event.target.value)" style="height:40px;">
+                <option *ngFor="let facility of facilities" [value]="facility.id">
+                    {{facility.name}}
+                </option>
+            </select>&nbsp; &nbsp;</label>
+       
+        <input style="height:40px;margin-bottom: 7px;margin-top: 7px;" type="text" class="my-map-search-field" (keydown.enter)="$event.preventDefault()"
+            placeholder="Search Location" autocorrect="off" autocapitalize="off" spellcheck="off">
+
+
+        <div class="floatbox-handle" cdkDragHandle>
+            <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                    d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+                </path>
+                <path d="M0 0h24v24H0z" fill="none"></path>
+            </svg>
+        </div>
+    </div>
+                    <google-map height="87vh" width="100%" [zoom]="zoom" [center]="center" [options]="options">
+                        <map-marker-clusterer [imagePath]="markerClustererImagePath">
+                        <map-marker #markerElem="mapMarker" *ngFor="let marker of locationDataMgr.getGMapMarkerList()"
+                            [position]="marker.position" [label]="marker.label" [title]="marker.title"
+                            [options]="marker.options" (mapClick)="gmapMarkerClick(markerElem, marker, marker.info)">
+                        </map-marker> </map-marker-clusterer>
+                        <map-info-window>
+                          
+                         <!--<div class="gm-style-iw-d" >
+                           <div class="w3-panel card">
+                               <h1 style="margin-top:30px;margin-left: 30px;color: #696969"> {{infoAssetName}}</h1>
+                               <hr class="solid">
+                            <div [innerHTML]="infoContent"
+                                   style=" margin-left:10px;font-size:medium; color: black;overflow: auto;margin-top: -25px;" class="card-body ">
+                               </div>
+                            <hr class="solid">
+                            <div class="col-6 col-sm-4 col-md-2 col-xl mb-3 mb-xl-0">
+                                <button style="margin-left: 25px;"type="submit"  (click)="link()" class="btn btn-primary">Details</button>
+                            </div>
+                           </div>
+                         </div>-->  
+                         <div class="gm-style-iw-d" style="overflow: hidden;" >
+                            <div class="w3-panel card" >
+                               <div style="background-color: white;" class="card-header">
+                                <h1 ><b> {{infoAssetName}}</b></h1>
+                                   </div>
+                                <div class="card-body" >
+                                    <div style="margin-left: 20px;margin-right:20px;font-size: medium; overflow-y:auto;height:100px;" [innerHTML]="infoContent"></div>
+                                </div>
+                                <div style="background-color: white;" class="card-footer">
+                                    <div class="col-6 col-sm-4 col-md-2 col-xl mb-3 mb-xl-0">
+                                        <button style="margin-left: 25px;"type="submit"  (click)="link()" class="btn btn-primary">Details</button>
+                                    </div>
+                                </div>
+                                   
+                                                                                    
+                         </div>
+                        
+                          
+                        </div>
+                       </map-info-window>
+                     
+                   
+                    </google-map>
+                   
+            
+                  
+                
+    
+</div>
+ 

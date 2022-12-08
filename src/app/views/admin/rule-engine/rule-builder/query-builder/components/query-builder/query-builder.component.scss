@@ -1,0 +1,652 @@
+
+$placeholder-color: #858787;
+$table-button-bg-color: #91C2E8;
+$theme-form-color: #3ea0ce; 
+
+// Richa Starts
+
+.query-builder {
+  .btn-group.dropdown-toggle::after {
+    display: none;
+  }
+  .dropdown-menu li a {
+    padding: 5px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .dummy-input::placeholder {
+    color: #555!important;
+  }
+  .block {
+    padding: 2px;
+    margin-bottom: 15px;
+    background-color: #f0f3f5;
+    border: 2px solid #c8ced3;
+    ul.q-tree.padding-left-none {
+      padding-left: 0px;
+    }
+
+  }
+  .else-block {
+    &.block {
+      --border: 0px;
+      margin-bottom: 0px;
+    }
+
+    > ul > li > app-rule-builder > .query-builder >.block.if-block {
+      border: 0px;
+      margin-bottom: 0px;
+      padding: 0px;
+    }
+
+    > ul > li > app-rule-builder > .query-builder >.header.q-if-header {
+      display: none;
+    }
+    // .block:first-of-type {
+    //   border: 0px;
+    //   margin-bottom: 0px;
+    //   padding: 0px;
+    // }  
+
+    >.q-tree{
+      padding-left: 0px;
+
+      >.q-row.q-else {
+        border: 0px !important;
+        padding: 0px;
+      }
+    }
+    
+   
+  }
+  &.q-ruleset {
+    border: 1px solid #52AFED;
+    background: #F1F1F1;
+  }
+
+  .header {
+    background: #62a7e0;
+    color: white;
+    text-align: center;
+    
+  }
+
+
+}
+
+// Richa Stops
+
+.query-builder {
+  min-width: 280px;
+  display: block;
+  min-width: 100%;
+  width: fit-content;
+
+  .q-icon {
+    font-style: normal;
+    font-size: 12px;
+  }
+  .custom-label {
+    font-weight: normal;
+    margin: 0;
+    vertical-align: top;
+    font-size: 13px;
+    color: gray;
+    &.with-margin-left {
+      margin-left: 10px;
+    }
+  }
+
+
+  datalist {
+
+    option {
+      &.selected{
+        font-weight: bold;
+      }
+    }
+  }
+
+
+  .q-remove-icon {
+    &::before {
+      content: '❌'
+    }
+  }
+  .q-add-icon {
+    color: #555;
+    &::before {
+      content: '➕'
+    }
+  }
+
+  .q-switch-group, .q-button-group {
+    overflow: hidden;
+  }
+
+  .q-right-align {
+    float: right;
+  }
+
+  .q-button {
+    margin-left: 8px;
+    padding: 0 8px;
+    background-color: white;
+    &.btn-action {
+      margin-left: 0px;
+    }
+    &.btn-unit {
+      min-width: 50px;
+    }
+    &:disabled {
+      display: none;
+    }
+  }
+  
+
+  .q-input-fields {
+    width: 100%;
+    padding-right: 30px;
+    .extra {
+      padding: 6px;
+      display: inline-block;
+      cursor: pointer;
+      .caret {
+        transform: rotate(-90deg);
+      }
+      &.hide-extra {
+        .caret {
+          transform: rotate(90deg);
+        }
+      }
+    }
+  }
+
+  .q-remove-button {
+    color: #B3415D;
+    width: 24px;
+    margin: 0px;
+    padding: 0px;
+  }
+
+  .q-control-size {
+    display: inline-block;
+    vertical-align: top;
+    --padding-right: 5px;
+    --padding-bottom: 5px;
+  }
+
+  .q-input-control, .q-operator-control, .q-field-control, .q-entity-control, .q-unit-control {
+    display: inline-block;
+    padding: 5px 8px;
+    color: #555;
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 13px;
+    &:disabled {
+      border-color: transparent;
+    }
+  }
+
+  .q-input-control {
+    width: 96%;
+    margin-left: 8px;
+  }
+
+  .q-operator-control, .q-unit-control .q-field-control,.q-entity-control, .q-input-control:not([type='checkbox']) {
+    min-height: 32px;
+    -webkit-appearance: none;
+  }
+
+  .q-field-control {
+    min-width: 120px;
+    border: 0px;
+    width: calc(100% - 20px);
+
+
+  }
+
+  .q-unit-control {
+    width: calc(100% - 25px);
+  }
+
+  .q-field-control-before, .q-field-control-after {
+    // font-size: 18px;
+    font-size: 24px;
+    font-weight: 400;
+    vertical-align: middle;
+    line-height: 14px;
+  }
+
+  .q-control-size {
+    ::ng-deep  angular2-multiselect {
+    
+      .cuppa-dropdown {
+        width: 92%;
+        display: inline-block;
+
+        .selected-list {
+          .c-btn {
+            border: 0px;
+            background: transparent;
+            padding: 7px;
+            box-shadow: none;
+            span {
+              color: $placeholder-color;
+            }
+          }
+          .c-angle-down, .c-angle-up {
+            display: none!important;
+          }
+
+        }
+
+        .dropdown-list {
+          .pure-checkbox {
+            input[type="checkbox"] {
+              +label {
+                padding-left:5px;
+              }
+              +label:before {
+                display: none;
+              }
+              +label:after {
+                display: none;
+              }
+            }
+          }
+
+          .list-area {
+            .list-filter {
+                input.c-input:focus {
+                  outline: none;
+                  border: 1px solid transparent;
+                }
+            }
+          }
+        }
+      }
+      
+    }
+
+    ::ng-deep  angular2-multiselect.value-selected {
+      .c-btn {
+          span {
+              color: #555!important;
+          }
+      }
+    }
+
+    &.q-data-field-control-size {
+
+      .q-field-control{
+        height: 32px;
+        padding: 0px;
+        &.field-value {
+          background: transparent;
+          padding: 7px;
+          font-size: 14px;
+          color: #858787;
+          vertical-align: middle;
+          width:92%;
+          img {
+            width: 15px;
+            height: 15px;
+            position: absolute;
+            right: 33px;
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+            pointer-events: none;
+          }
+          &.placeholder {
+    
+          }
+        }
+      }
+    }
+    .q-button {
+      background: $table-button-bg-color;
+      height: 32px;
+      font-weight: 500;
+      color: black;
+      &.operator-value, &.unit-value {
+        line-height: 30px;
+        white-space: nowrap;
+      }
+    } 
+    .btn-value {
+      width: calc(100% - 35px);
+      border-right: 0px;
+    }
+    .btn-action {
+      width: 26px;
+      border-left: 0px;
+    }
+    &.show {
+      display: inline-block!important;
+      .dropdown-menu {
+        margin-left: 5px;
+        display: block;
+        margin-top: -5px;
+        min-width: 100%;
+        z-index: 2000;
+      }
+    }
+    &.disabled {
+      pointer-events: none;
+      opacity: .65;
+    }
+  }
+
+  .q-switch-label, .q-button {
+    float: left;
+    margin-bottom: 0;
+    font-size: 13px;
+    line-height: 24px;
+    font-weight: normal;
+    text-align: center;
+    text-shadow: none;
+    box-sizing: border-box;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .q-button {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    &:hover {
+      background-color: #F0F0F0;
+    }
+    &.q-remove-button {
+      border: 0px;
+      background: transparent;
+    }
+    &.disabled {
+      pointer-events: none;
+      opacity: 0.65;
+    }
+  }
+
+  .q-switch-label {
+    border: 0px;
+    padding: 0 8px;
+    opacity: 0.5;
+    color: white;
+    border-width: 1px;
+    border-style: solid;
+    &.q-switch-and {
+      background-color: #2a3142;
+      border-right: 0px;
+    }
+    &.q-switch-or {
+      background-color: #f05050;
+      border-left: 0px;
+    }
+  }
+
+  .q-switch-and-selected {
+    .q-switch-label {
+      border-color: #2a3142;
+    }
+  }
+
+  .q-switch-or-selected {
+    .q-switch-label {
+      border-color: #f05050;
+    }
+  }
+
+  .q-switch-radio {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    width: 1px;
+    border: 0;
+    overflow: hidden;
+
+    &:checked + .q-switch-label {
+      --border: 1px solid rgb(97, 158, 215);
+      --background: white;
+      --color: rgb(49, 118, 179);
+      opacity: 1;
+    }
+
+    &:disabled + .q-switch-label {
+      display: none;
+    }
+
+    &:checked:disabled + .q-switch-label {
+      display: initial;
+      --color: initial;
+      cursor: default;
+      border-color: transparent;
+      opacity: 0.65;
+    }
+  }
+
+  .q-invalid-ruleset {
+    border: 1px solid rgba(179, 65, 93, 0.5) !important;
+    background: rgba(179, 65, 93, 0.1) !important;
+  }
+
+  .q-else-header {
+    //border: 1px solid rgba(179, 65, 93, 0.5) !important;
+    --background: rgba(179, 65, 93, 0.1) !important;
+    text-align: center;
+    margin-top: -6px;
+
+    background: #62a7e0 !important;
+  }
+
+  .q-empty-warning {
+    color: rgb(141, 37, 46);
+    text-align: center;
+  }
+
+  .q-ruleset {
+    border: 1px solid #CCC;
+    background: white;
+  }
+
+  .q-rule {
+    border: 1px solid #CCC;
+    background: white;
+  }
+
+  .q-transition {
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition:    all 0.1s ease-in-out;
+    -ms-transition:     all 0.1s ease-in-out;
+    -o-transition:      all 0.1s ease-in-out;
+    transition:         all 0.1s ease-in-out;
+  }
+
+  .q-tree {
+    list-style: none;
+    margin: 4px 0 2px;
+  }
+
+  .q-row {
+    padding: 6px 8px;
+    margin-top: 6px;
+    min-width: 255px;
+    &.selected {
+      background: #ebf5fa;
+    }
+  }
+
+  .q-row.q-else {
+    margin-top: 0px;
+    border-top: 0px!important;
+  }
+
+  .q-connector {
+    position: relative;
+
+    &::before {
+      top: -5px;
+      border-width: 0 0 2px 2px;
+    }
+
+    &::after {
+      border-width: 0 0 0 2px;
+      top: 50%;
+    }
+
+    &::before, &::after {
+      content: '';
+      left: -12px;
+      --border-color: #CCC;
+      border-style: solid;
+      width: 9px;
+      height: calc(50% + 6px);
+      position: absolute;
+    }
+
+    &.and {
+      &::before, &::after {
+        border-color: #2a3142;
+      }
+    }
+
+    &.or {
+      &::before, &::after {
+        border-color: #f05050;
+      }
+    }
+
+    &:last-child::after {
+      content: none;
+    }
+  }
+
+  // TODO Review with Sarva
+  .switch-not-needed.q-connector {
+    position: relative;
+
+    &::before {
+      top: 0px;
+      border-width: 0 0 2px 2px;
+    }
+
+    &::after {
+      border-width: 0 0 0 2px;
+      top: 50%;
+    }
+
+    &::before, &::after {
+      content: none;
+      left: -12px;
+      --border-color: #CCC;
+      border-style: solid;
+      width: 9px;
+      height: calc(50% + 6px);
+      position: absolute;
+    }
+
+    &.and {
+      &::before, &::after {
+        border-color: none;
+      }
+    }
+
+    &.or {
+      &::before, &::after {
+        border-color: #f05050;
+      }
+    }
+
+    &:last-child::after {
+      content: none;
+    }
+  }
+
+  .q-inline-block-display{
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .q-more-icons {
+    float: right;
+    padding: 0px 4px;
+    cursor: pointer;
+    .show {
+      .dropdown-menu {
+        display: block;
+        position: absolute;
+        right: 0px;
+        width: 200px;
+        left: auto;
+      }
+    }
+  }
+
+  .q-tooltip {
+    position: relative;
+    opacity: 1;
+    width: auto;
+    display: inline-block;
+    .t-content {
+        position: absolute;
+        width: auto;
+        padding: 5px 8px;
+        text-align: center;
+        -webkit-transform: translate(-50%, 45%);
+        transform: translate(-50%, 45%);
+        left: 50%;
+        top: -8px;
+        line-height: 15px;
+        border-radius: 3px;
+        transition: all 0.2s ease 0s;
+        display: block;
+        background-color: $theme-form-color;
+        opacity: 0;
+        font-size: 12px;
+        z-index: -1;
+        color: white;
+        white-space: pre;
+        font-weight: normal;
+        &:after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 8px 8px 0 8px;
+            border-color: $theme-form-color transparent transparent transparent;
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+    }
+    
+    &.q-tooltip-bottom {
+        .t-content {
+            top: 62px;
+            &:after {
+                bottom: 24px;
+                transform: translate(-50%, 0) rotate(180deg);
+            }
+        }
+        &.full-width {
+          width:100%;
+        }
+    }
+    
+    &:hover {
+      .t-content {
+          opacity: 1;
+          transition: all 0.5s ease 0s;
+          transform: translate(-50%, -100%);
+          z-index: 1070;
+      }
+    }
+  }
+}

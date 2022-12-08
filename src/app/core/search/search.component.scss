@@ -1,0 +1,66 @@
+.home-search {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  .glyphicon {
+    color: white;
+    display: inline-block;
+    text-decoration: none;
+    top: 5px;
+    cursor: pointer;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  .dropdown-menu{
+    min-width: 300px;
+  }
+  .search-input {
+    display: none;
+    &.visible {
+      display: inline-block;
+      -webkit-transition: all 50s ease;
+      -moz-transition: all 50s ease;
+      transition: all 50s ease;
+    }
+    input {
+      font-size: 14px;
+      background: transparent;
+      color: white;
+      display: block;
+      width: 300px;
+      border: none;
+      border-bottom: 0.1px solid #757575;
+      &:focus {
+        outline: none;
+      }
+    }
+    .bar {
+      position: relative;
+      display: block;
+      width: 300px;
+    }
+    .bar:before,
+    .bar:after {
+      content: '';
+      height: 2px;
+      width: 0;
+      bottom: 1px;
+      position: absolute;
+      background: white;
+      transition: 0.2s ease all;
+      -moz-transition: 0.2s ease all;
+      -webkit-transition: 0.2s ease all;
+    }
+    .bar:before {
+      left: 50%;
+    }
+    .bar:after {
+      right: 50%;
+    }
+    /* active state */
+    input:focus~.bar:before,
+    input:focus~.bar:after {
+      width: 50%;
+    }
+  }
+}

@@ -1,0 +1,301 @@
+<div class="animated fadeIn user">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-user"></i> Department
+                    <button type="button" class="close" (click)="checkAndClose($event)" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <tabset>
+                                <tab heading="Department Detail">
+                                    <div class="row">
+                                        <!-- <div class="col-md-6">
+                                            <div class="form-group logo">
+                                                <label [ngClass]="{'astric': validationSpecs['picture']?.mandatory}"
+                                                    for="name">Picture</label>
+                                                <div class="logo-wrapper" (click)="logoFile.click();">
+                                                    <div *ngIf="user.picture != null" class="logo-pic"
+                                                        [ngStyle]="{'background-image': 'url(' + user.picture + ')'}">
+                                                    </div>
+                                                    <a class="btn"><i class="fa fa-camera"></i></a>
+                                                    <input type="file" (change)="uploadLogo($event)" accept="image/*"
+                                                        #logoFile />
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['picture']">
+                                                    {{validationErrors['picture'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div class="col-sm-6">
+                                            <div class="form-group name">
+                                                <label
+                                                    [ngClass]="{'astric': validationSpecs['displayName']?.mandatory}"
+                                                    for="name">Department Name</label>
+                                                    <div class="float-right">
+                                                        <label class="switch switch-label switch-pill switch-primary">
+                                                    <input type="checkbox" class="switch-input" 
+                                                    [ngModel]="department.status" (ngModelChange)="statusChange(department.status,$event)">
+                                                    <span class="switch-slider"></span>
+                                                    </label>
+                                                   </div>   
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="icon-user"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="department.name"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Department Name">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['name']">
+                                                    {{validationErrors['name'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group name">
+                                                <label [ngClass]="{'astric': validationSpecs['facilityId']?.mandatory}"
+                                                    for="name">Facility</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fa fa-bank"></i></span>
+                                                    </div>
+                                                    <select class="form-control" 
+                                                        [(ngModel)]="department.facilityId"
+                                                        (ngModelChange)="changeDefaultFacility($event)">
+                                                        <option *ngFor="let facility of facilities" [ngValue]="facility.id">
+                                                        {{facility.name}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['defaultOrganization']">
+                                                    {{validationErrors['defaultOrganization'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group name">
+                                                <label [ngClass]="{'astric': validationSpecs['companyId']?.mandatory}"
+                                                    for="name">Company Name</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fa fa-bank"></i></span>
+                                                    </div>
+                                                    <select class="form-control" 
+                                                        [(ngModel)]="department.companyId"
+                                                        (ngModelChange)="changeDefaultOrganization($event)">
+                                                        <option *ngFor="let organization of organizations" [ngValue]="organization.id">
+                                                        {{organization.name}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['defaultOrganization']">
+                                                    {{validationErrors['defaultOrganization'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group name">
+                                                <label [ngClass]="{'astric': validationSpecs['emailId']?.mandatory}"
+                                                    for="name">Email</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="fa fa-envelope-o"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="department.emailId" class="form-control"
+                                                        (change)="markChange($event)" placeholder="Email Id">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['emailId']">
+                                                    {{validationErrors['emailId'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group name">
+                                                <label
+                                                    [ngClass]="{'astric': validationSpecs['phones']?.mandatory}"
+                                                    for="name">Phone</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="icon-user"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="department.phones" class="form-control" autocomplete="false"
+                                                        (change)="markChange($event)" placeholder="Phone">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['phones']">
+                                                    {{validationErrors['phones'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group name">
+                                                <label for="name"
+                                                    [ngClass]="{'astric': validationSpecs['contactName']?.mandatory}">Contact
+                                                    Name</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="icon-user"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="department.contactName" class="form-control"
+                                                        (change)="markChange($event)" placeholder="Contact Name">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['contactName']">
+                                                    {{validationErrors['contactName'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group name">
+                                                <label
+                                                    [ngClass]="{'astric': validationSpecs['contactPhone']?.mandatory}"
+                                                    for="name">Contact Phone</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="fa fa-mobile"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="department.contactPhone"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Contact Phone Number">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['contactPhone']">
+                                                    {{validationErrors['contactPhone'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group name">
+                                                <label
+                                                    [ngClass]="{'astric': validationSpecs['contactMobile']?.mandatory}"
+                                                    for="name">Contact Mobile</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="fa fa-mobile"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="department.contactMobile"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Contact Mobile Number">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['contactMobile']">
+                                                    {{validationErrors['contactMobile'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group name">
+                                                <label
+                                                    [ngClass]="{'astric': validationSpecs['contactEmail']?.mandatory}"
+                                                    for="name">Contact Email</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="fa fa-mobile"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="department.contactEmail"
+                                                        class="form-control" (change)="markChange($event)"
+                                                        placeholder="Contact Email">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['contactEmail']">
+                                                    {{validationErrors['contactEmail'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>  
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group name">
+                                                <label [ngClass]="{'astric': validationSpecs['tags']?.mandatory}"
+                                                    for="name">Tags</label>
+
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i
+                                                                class="fa fa-globe"></i></span>
+                                                    </div>
+                                                    <input type="text" [(ngModel)]="department.tags" class="form-control"
+                                                        (change)="markChange($event)" placeholder="Tags">
+                                                </div>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['tags']">
+                                                    {{validationErrors['tags'].errorMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            &nbsp;
+                                        </div>
+                                    </div>
+                                </tab>
+                            </tabset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary" (click)="save($event)">Save</button>
+                                <button class="btn btn-secondary" type="button"
+                                    (click)="checkAndClose($event)">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div bsModal #discardConfirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm</h4>
+                    <button type="button" class="close" (click)="discardConfirmationModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This is discard the changes and goback to the list. Are you sure you want discard the changes?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        (click)="discardConfirmationModal.hide()">Cancel</button>
+                    <button type="button" class="btn btn-danger" (click)="close()">Discard Changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>

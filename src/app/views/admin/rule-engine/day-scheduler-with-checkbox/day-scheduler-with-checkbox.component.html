@@ -1,0 +1,20 @@
+
+<!-- rouned corner chips-->
+
+<div class="days-scheduler-with-checkbox">
+    <div class="day-name" *ngFor="let day of daySchedules;let index = index" [ngClass]="{'selected' : selectedDayList[index], 'disabled': disabled}"
+        (click)="toggleSelectedDay(index)">{{day.sort}}</div>
+</div>
+
+<!-- with Checkbox -->
+
+<!-- <div class="days-scheduler-with-checkbox">
+    
+    <div class="day-name" *ngFor="let day of daySchedules;let index = index" [ngClass]="{'selected' : selectedDayList[index]}">
+        <input type="checkbox" class="regular-checkbox" [checked]="selectedDayList[index]" (click)="toggleSelectedDay(index)"/>
+
+            {{day.sort}}
+    </div>
+
+
+</div> -->

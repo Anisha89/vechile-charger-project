@@ -1,0 +1,146 @@
+<app-header
+  [fixed]="true"
+  [navbarBrandFull]="{src: 'assets/img/nygov-logo.png', width: 89, height: 55, alt: 'Vehicle Charger Logo'}"
+  [navbarBrandMinimized]="{src: 'assets/img/nygov-logo.png', width: 48, height: 30, alt: 'Vehicle Charger Logo'}"
+  [sidebarToggler]="'lg'"
+  [asideMenuToggler]="false">
+  <ul class="nav navbar-nav d-md-down-none">
+    <li class="nav-item px-3">
+      <h5>New York Power Authority - EV Charging Stations</h5>
+    </li>    
+  </ul>
+  <ul class="nav navbar-nav ml-auto">
+    <li class="nav-item d-md-down-none">
+      <a class="nav-link alarms" (click)="alarms($event)" style="cursor: pointer"><i class="icon-bell"></i><span class="badge badge-pill badge-danger">4</span></a>
+    </li>
+    <li class="nav-item dropdown" dropdown placement="bottom right">
+      <a class="nav-link user" data-toggle="dropdown"role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false" style="cursor: pointer">
+        <img [src]="(loggedInUser?.picture != null)?loggedInUser.picture:'assets/img/avatars/6.jpg'" class="img-avatar" style="width:35px;;border-radius:50%;" alt="admin@bootstrapmaster.com"/>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-item active"><strong><img [src]="(loggedInUser?.picture != null)?loggedInUser.picture:'assets/img/avatars/6.jpg'" class="img-avatar" style="height: 25px" alt="admin@bootstrapmaster.com"/>&nbsp;{{loggedInUser?.displayName}}</strong></div>
+        <div class="dropdown-header text-center"><strong>Settings</strong></div>
+        <a class="dropdown-item" (click)="editProfile($event)"><i class="fa fa-user"></i> Profile</a>
+        <a class="dropdown-item" (click)="settings($event)"><i class="fa fa-wrench"></i> Setting</a>
+        <div class="dropdown-header text-center"><strong>Switch Organization</strong></div>
+        <div *ngFor="let organization of otherOrganizations">
+          <a class="dropdown-item" *ngIf="organization?.id !== currentOrganization?.id" (click)="switch(organization)">
+            <i class="fa fa-bank"></i> {{organization.name}}
+          </a>
+        </div>
+        <div class="divider"></div>
+        <a class="dropdown-item" (click)="logout()"><i class="fa fa-lock"></i> Logout</a>
+      </div>
+    </li>
+  </ul>
+</app-header>
+<div class="app-body">
+  <app-sidebar [fixed]="true" [display]="'lg'">
+    <app-sidebar-nav [navItems]="navItems | async" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+    <!-- <app-sidebar-minimizer></app-sidebar-minimizer> -->
+  </app-sidebar>
+
+  <app-loading *ngIf="isLoading"></app-loading>
+
+
+  <!-- Main content -->
+  <main class="main">
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+      <app-breadcrumb></app-breadcrumb>
+      <li class="breadcrumb-menu d-md-down-none">
+        <div class="btn-group" role="group" aria-label="Button group with nested">
+            <div dropdown placement="bottom right">
+                <a class="btn"  data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
+                  <i class="fa fa-bank"></i> &nbsp; {{currentOrganization?.name}}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+                    <div class="dropdown-header text-center"><strong>Switch Organization</strong></div>
+                    <div *ngFor="let organization of otherOrganizations">
+                      <a class="dropdown-item" *ngIf="organization?.id !== currentOrganization?.id" (click)="switch(organization)">
+                        <i class="fa fa-bank"></i> {{organization.name}}
+                      </a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+      </li>
+    </ol>
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
+    <!-- /.container-fluid -->
+  </main>
+  <app-aside [fixed]="true" [display]="false">
+    <button aria-label="Close" class="close" type="button" (click)="closeAsideMenu($event)">
+      <span _ngcontent-ddi-c5="" aria-hidden="true">×</span>
+    </button>
+    <tabset *ngIf="context.asideContext.object != null">
+      <tab>
+        <ng-template tabHeading><i class="icon-info"></i>&nbsp;Info</ng-template>
+        <div class="aside-info">
+          <div class="p-3 message">
+              <div class="font-weight-bold"><i class="icon-location-pin"></i>&nbsp;&nbsp;&nbsp;{{context.asideContext.object?.address}}</div>
+          </div>
+          <hr/>
+          <div class="p-3 message">
+              <div class="font-weight-bold"><i class="fa fa-money"></i>&nbsp;&nbsp;&nbsp;{{context.asideContext.object?.price | currency:'USD'}} per KVA</div>
+          </div>
+          <hr/>
+
+          <div class="p-3 message bg-light form-group">
+            <label ><i class="fa fa-plug"></i>&nbsp;&nbsp;&nbsp;<b>Would you like to Buy?</b></label>
+            <input class="form-control" [(ngModel)]="noOfKVAToBuy" tooltip="# of KVA" placeholder="# of KVA" type="number">
+            <div class="aside-btns">
+              <span class="amount-to-buy" *ngIf="noOfKVAToBuy != null">{{noOfKVAToBuy*context.asideContext.object?.price | currency:'USD'}}</span>
+              <button class="amount-to-buy-btn" [disabled]="noOfKVAToBuy == null?'disable':''" [ngClass]="{'btn-secondary':noOfKVAToBuy == null, 'btn-primary': noOfKVAToBuy != null }"
+                (click)="setSelectedAsideOptionBuy($event)"><i class="fa fa-money"></i>&nbsp;Buy</button>
+            </div>
+          </div>
+
+          <hr/>
+
+        </div>
+      </tab>
+      <tab [disabled]="noOfKVAToBuy == null">
+        <ng-template tabHeading><i class="fa fa-credit-card"></i>&nbsp;Buy</ng-template>
+        <div class="aside-buy">
+            <div class="p-3 credit-cards">
+              <img src="assets/img/credit-cards.png" />
+            </div>
+            <div class="p-3 message">
+                <label><b>Name on card</b></label>
+                <input class="form-control" placeholder="Name on card" autocomplete="false"  type="text">
+            </div>
+            <div class="p-3 message">
+                <label><b>Card number</b></label>
+                <input class="form-control" placeholder="Card number"  autocomplete="false" type="text">
+            </div>
+            <div class="p-3 message">
+                <label><b>Expiry Date</b></label>
+                <input class="form-control" placeholder="MM/YY" autocomplete="false"  type="text">
+            </div>
+            <div class="p-3 message">
+                <label><b>Security Code</b></label>
+                <input class="form-control" placeholder="CVV" autocomplete="false"  name="cvv" type="password">
+            </div>
+            <div class="p-3 message">
+                <label><b>ZIP/Postal Code</b></label>
+                <input class="form-control" placeholder="ZIP/Postal Code" autocomplete="false" type="text">
+            </div>
+            <div class="p-3 message bg-light">
+              <button class="btn-primary btn-lg">
+                <i class="fa fa-lock"></i>&nbsp;Pay&nbsp;{{noOfKVAToBuy*context.asideContext.object?.price | currency:'USD'}}
+              </button>
+            </div>
+
+        </div>
+        
+      </tab>
+    </tabset>
+  </app-aside>
+</div>
+<app-footer>
+  <span>&copy; 2019 <a  target="_blank" href="https://www.nypa.gov/">NY Power Authority</a>.</span>
+</app-footer>

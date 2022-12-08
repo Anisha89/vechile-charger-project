@@ -1,0 +1,129 @@
+<div class="animated fadeIn alarms">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="icon-bell"></i> Alarms
+                    <div class="card-icons">
+                        <a class="icon-wrapper" (click)="void">
+                            <i class="icon-list"></i>
+                        </a>
+                        <a class="icon-wrapper" (click)="void">
+                            <i class="fa fa-file-excel-o"></i>
+                        </a>
+                        <a class="icon-wrapper">
+                            <i class="fa fa-plus-square-o"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Facility</th>
+                                <th>Vehicle</th>
+                                <th>Outlet</th>
+                                <th>Alarm</th>
+                                <th>Description</th>
+                                <th>Priority</th>
+                                <th>Trigger Time</th>
+                                <th>Normalized Time</th>
+                                <th>Status</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="alarm empty" *ngIf="alarms?.length == 0">
+                                <td colspan="10">No Alarms found</td>
+                            </tr>
+                            <tr class="alarm" [ngClass]="{'selected':selected?.id == alarm.id}" (click)="select(alarm, $event)" *ngFor="let alarm of alarms">
+                                <td class="name">{{alarm?.facility}}</td>
+                                <td>{{alarm?.chargingVehicle}}</td>
+                                <td>{{alarm?.chargingTerminal}}</td>
+                                <td>{{alarm?.alarm}}&nbsp;</td>
+                                <td>{{alarm?.description}}&nbsp;</td>
+                                <td align="right">{{alarm?.priority}}&nbsp;</td>
+                                <td class="date">{{alarm?.triggerTime | date: 'MM/dd/yyyy hh:mm:ss a'}}&nbsp;</td>
+                                <td class="date">{{alarm?.normalizedTime | date: 'MM/dd/yyyy hh:mm:ss a'}}&nbsp;</td>
+                                <td class="status-col {{alarm.status}}"><i class="icon-bell"></i></td>
+                                <td>
+                                    <a class="btn" (click)="checkAndDelete(alarm, $event)">
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <nav>
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" (click)="void">Prev</a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" (click)="void">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" (click)="void">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" (click)="void">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" (click)="void">4</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" (click)="void">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div bsModal #deleteConfirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm</h4>
+                    <button type="button" class="close" (click)="deleteConfirmationModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This will delete the selected Charging Outlet from the List. Are you sure you want discard the changes?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="deleteConfirmationModal.hide()">Cancel</button>
+                    <button type="button" class="btn btn-danger" (click)="delete(selectedChargingTerminal)">Yes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div bsModal #statusChangeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Confirm</h4>
+                    <button type="button" class="close" (click)="statusChangeModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This will Activate/Deactivate Alarm. Are you sure, you want to proceed?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="cancelStatusChange(selected)">No</button>
+                    <button type="button" class="btn btn-danger" (click)="onStatusChange(selected, $event)">Yes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+</div>

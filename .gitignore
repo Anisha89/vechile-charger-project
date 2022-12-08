@@ -1,0 +1,98 @@
+
+# User-specific files
+
+*.suo
+
+*.user
+
+*.userosscache
+
+*.sln.docstates
+*.userprefs
+
+
+# Build results
+
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+[Xx]64/
+[Xx]86/
+[Bb]uild/
+bld/
+[Bb]in/
+[Oo]bj/
+
+
+# MSTest test Results
+
+[Tt]est[Rr]esult*/
+
+[Bb]uild[Ll]og.*
+
+
+# NUNIT
+
+*.VisualState.xml
+
+TestResult.xml
+
+
+# Others
+*.meta
+
+*.obj
+
+*.pdb
+
+*.tmp
+
+*.tmp_proj
+
+*.log
+
+*.vspscc
+
+*.vssscc
+.builds
+
+*.svclog
+
+*.cachefile
+
+
+# ReSharper
+
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+
+
+# DotCover is a Code Coverage Tool
+
+*.dotCover
+
+
+# Publish Web Output
+
+*.[Pp]ublish.xml
+
+*.azurePubxml
+
+
+# NuGet Packages
+
+*.nupkg
+
+#Application specific files
+/node_modules/
+# /dist
+/.vscode/launch.json
+/package-lock.json
+/.idea/
+/coverage/
+/.idea
+.DS_Store
+/documentation
+/UX/

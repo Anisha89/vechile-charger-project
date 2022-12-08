@@ -1,0 +1,33 @@
+<div class="termial-widget">
+    <div class="card">
+        <div class="card-header">
+            <i class="fa fa-plug"></i> {{terminal.make}} - {{terminal.model}}
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-5">
+                    <strong>Price: </strong>{{terminal.price | currency:'USD' }}/min<br/>
+                    <strong>Sales: </strong>{{sales}} kW
+                    <strong>Energy: </strong>400 kWh
+                </div>
+                <div class="col-sm-7 d-none d-md-block">
+                    <div class="btn-group btn-group-toggle float-right mr-3" data-toggle="buttons">
+                    <label class="btn btn-primary" btnRadio="Day" id="option1">Day</label>
+                    <label class="btn btn-outline-secondary" btnRadio="Month" id="option2">Month</label>
+                    <label class="btn btn-outline-secondary" btnRadio="Year" id="option3">Year</label>
+                    </div>
+                </div>
+                </div>
+                <div class="chart-wrapper" style="height:100px;margin-top:0px;">
+                <canvas baseChart class="chart"
+                    [datasets]="mainChartData"
+                    [labels]="mainChartLabels"
+                    [options]="mainChartOptions"
+                    [colors]="mainChartColours"
+                    [legend]="mainChartLegend"
+                    [chartType]="mainChartType">
+                </canvas>
+            </div>
+        </div>
+    </div>
+</div>

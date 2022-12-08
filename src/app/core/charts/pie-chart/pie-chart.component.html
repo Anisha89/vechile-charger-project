@@ -1,0 +1,24 @@
+<!-- <div [style.width.%]="pieChartInfo.width" [style.height.px]="pieChartInfo.height"> -->
+  <!--<ngx-charts-pie-chart [scheme]="pieChartInfo.colorScheme" [results]="data" [legend]="pieChartInfo.showLegend" [explodeSlices]="pieChartInfo.explodeSlices" [labels]="pieChartInfo.showLabels" [doughnut]="pieChartInfo.doughnut" [gradient]="pieChartInfo.gradient" (select)="onSelect($event)" [view]="pieChartInfo.view"  [activeEntries]="activeEntries" (deactivate)="pieDeactivate($event)" >
+  </ngx-charts-pie-chart>-->
+  <!-- {{activeEntries | json}} .bind(this)-->
+<!-- </div> -->
+<!--  -->
+<ng-template [ngIf]="pieChartInfo">
+  <ngx-charts-pie-chart
+    [scheme]="pieChartInfo.colorScheme"
+    [results]="data"
+    [legend]="pieChartInfo.showLegend"
+    [explodeSlices]="pieChartInfo.explodeSlices"
+    [labels]="pieChartInfo.showLabels"
+    [doughnut]="pieChartInfo.doughnut"
+    [gradient]="pieChartInfo.gradient"
+    (select)="onSelect($event)"
+    [view]="pieChartInfo.view"
+    [activeEntries]="activeEntries"
+    [tooltipDisabled]="pieChartInfo.tooltipDisabled"
+    (deactivate)="pieDeactivate($event)"
+    [tooltipText]="tooltipTextFormap"
+  >
+  </ngx-charts-pie-chart>
+</ng-template>

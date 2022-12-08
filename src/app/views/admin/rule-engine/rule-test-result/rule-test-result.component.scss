@@ -1,0 +1,114 @@
+.test-result .modal {
+
+    @media (min-width: 768px) {
+        .modal-dialog {
+            width: 80%;
+            margin: 30px auto;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .modal-dialog {
+            width: 90%;
+            margin: 30px auto;
+        }
+    }
+    .modal-content {
+        border-radius: 0px;
+        .modal-body {
+            background-color: #efefef;
+            .test-result-header {
+                background: #00A1CF;
+                color: white;
+                padding: 5px;
+                text-align: center;
+            }
+
+            .test-result-content-section {
+                .test-result-content {
+                    max-height: 500px;
+                    overflow-y: auto;
+                    border: 1px solid #cdcdcd;
+                    width: 100%;
+                    .test-result-detail {
+                        width: 100%;
+                        .test-result-detail-header {
+                            text-align: center;
+                            background: #f5f4f3;
+                            .asset-id {
+                                border-right: 1px solid #cdcdcd;
+                                width: 50%;
+                                font-weight: 800;
+                            }
+                            .status {
+                                width: 50%;
+                                .status-icon {
+                                    width: 18px;
+                                    height: 18px;
+                                }
+
+                                .error {
+                                    color:red;
+                                    .error-icon {
+                                        width: 16px;
+                                        height: 17px;
+                                        margin-bottom: 2px;
+                                    }
+                                }
+                            }
+                        }
+                        .test-result-detail-content {
+                            border-top: 1px solid #cdcdcd;
+                            background: #fff;
+
+                            .datapoint-name {
+                                width: 50%;
+                                padding: 5px;
+                                border-right: 1px solid #cdcdcd;
+                                text-align: center;
+                            }
+                        
+                            .datapoint-value {
+                                width: 50%;
+                                padding: 5px;
+                                text-align: center;
+                            }
+
+                        }
+                    }
+                    .alram-status {
+                        color: green;
+                    }
+                    .alram-status.ACTIVE {
+                        color: red;
+                    }
+                }
+
+                .code-section {
+                    margin-top: 15px;
+                    border: 1px solid #cdcdcd;
+                    .rule-content {
+                        background: #f5f4f3;
+                        border-top: 1px solid #cdcdcd;
+                        font-weight: 100;
+                        font-family: Courier New;
+                        font-size: 13px;
+                        padding: 5px;
+                        overflow-x: auto;
+                    }
+                }
+            }
+        }
+
+        .modal-footer {
+            .btn {
+                border-radius: 0px;
+            }
+        }
+    }
+}
+
+
+
+
+

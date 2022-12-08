@@ -1,0 +1,74 @@
+<div class="map-wrapper animated fadeIn">
+  <div class="location-inputs">
+    <div class="input-group origin">
+        <input 
+          placeholder="Current Location" 
+          autocorrect="off"
+          autocapitalize="off" 
+          spellcheck="off" 
+          autocomplete="new-password"
+          type="text" 
+          class="form-control" #originRef 
+          [value]="origin?.address"
+          [formControl]="searchControl">
+          <div class="input-group-append">
+            <div class="dropdown" dropdown>      
+              <button class="input-group-text dropdown-toggle" dropdownToggle  href="#" role="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-filter">vivek</i></button>
+              <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="dropdownMenuButton" >
+                <div class ="dropdown-item" *ngFor="let filter of filters">
+                  <a>{{filter}}</a>
+                </div>
+              </div>
+            </div>
+            <button class="input-group-text" *ngIf="!direction"
+              (click)="setDirectionMode()" >
+                <i class="fa fa-angle-double-down"></i>
+            </button>
+            <button class="input-group-text" *ngIf="direction"
+              (click)="unsetDirectionMode()" >
+                <i class="fa fa-angle-double-up"></i>
+            </button>
+          </div>
+      </div>
+      <div class="input-group destination" [hidden]="!direction">
+        <input 
+          placeholder="Destination" 
+          autocorrect="off"
+          autocapitalize="off" 
+          spellcheck="off" 
+          autocomplete="new-password"
+          type="text" 
+          class="form-control" #destinationRef 
+          [value]="destination.address"
+          [formControl]="searchControl">
+          <div class="input-group-append">
+            <button class="input-group-text" (click)="showRoute()"><i class="fa fa-hand-o-right"></i></button>
+            <button class="input-group-text" (click)="hideRoute()"><span aria-hidden="true">&times;</span></button>
+          </div>
+      </div>
+  </div>
+
+  <agm-map 
+    [latitude]="origin.latitude" 
+    [longitude]="origin.longitude" 
+    [zoom]="zoom"
+    [fullscreenControl]="true"
+    (mapClick)="selectDestination($event)">
+    <agm-direction *ngIf="route && origin && origin.latitude && destination && destination.latitude"
+      [origin]="origin" [destination]="destination" [provideRouteAlternatives] = "true">
+    </agm-direction>
+    <agm-marker 
+      [latitude]="currentLocation.latitude" 
+      [longitude]="currentLocation.longitude"
+      [iconUrl]="'/assets/img/live-marker.svg'">
+    </agm-marker>
+
+    <agm-marker *ngFor="let chargingVehicle of chargingVehicles"
+      [latitude]="chargingVehicle.location.latitude" 
+      [longitude]="chargingVehicle.location.longitude"
+      [iconUrl]="chargingVehicle.markerIconUrl"
+      (markerClick)="clickedMarker(chargingVehicle)">
+      
+    </agm-marker>
+  </agm-map>  
+</div>

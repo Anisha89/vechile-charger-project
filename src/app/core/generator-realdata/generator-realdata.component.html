@@ -1,0 +1,220 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="display-flex">
+      <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="row hundred-percent-height">
+          <div class="display-flex hundred-percent-height">
+            <div class="realdata-block">
+              <h1>Status</h1>
+              <ng-template [ngIf]="statusBg === 'Yellow'">
+                <img src="assets/images/status_right_fullset.svg" class="placeholderNew-info svg-icon" />
+              </ng-template>
+
+              <ng-template [ngIf]="statusBg === 'Red'">
+                <img src="assets/images/status_alert_fullset.svg" class="placeholderNew-info svg-icon" />
+              </ng-template>
+            </div>
+            <div class="realdata-block">
+              <h1>Alarm Status</h1>
+              <ng-template [ngIf]="AlarmStatus">
+                <img src="assets/images/alarm_right.svg" class="placeholderNew-info svg-icon alarm-icon" />
+                <h2>Rectified</h2>
+              </ng-template>
+              <ng-template [ngIf]="!AlarmStatus">
+                <img src="assets/images/alarm_alert.svg" class="placeholderNew-info svg-icon alarm-icon" />
+
+                <h1 class="rd">Alarm Status</h1>
+                <h2>Alert</h2>
+              </ng-template>
+            </div>
+            <div class="realdata-block">
+              <h1>Generator Mode</h1>
+              <ng-template [ngIf]="startMode === 'On'">
+                <img src="assets/images/generator_right_fullset.svg" class="placeholderNew-info svg-icon" />
+              </ng-template>
+              <ng-template [ngIf]="startMode === 'Off'">
+                <img src="assets/images/generator_alert_fullset.svg" class="placeholderNew-info svg-icon" />
+
+              </ng-template>
+            </div>
+          </div>
+
+
+        </div>
+
+      </div>
+      <div class="col-sm-12 col-md-6 col-lg-6 engine-remote-container">
+        <div class="row hundred-percent-height">
+          <div class="display-flex hundred-percent-height">
+            <div class="realdata-block ter engine-runtime">
+              <h1>Total Engine Runtime</h1>
+
+              <div class="hour">
+                <div class="firstHour">
+                  <div #hourOne></div><div #hourTwo></div><div [ngClass]="{'Disp': hourThr}" #hourThree></div><div #hourFour></div><div #hourFive></div><div #hourSix></div>
+                  <br/><span>HOUR</span>
+                </div>
+                <div class="secHour">
+                  <div #minOne></div><div #minTwo></div>
+                  <br/><span>MINUTES</span>
+                </div>
+
+              </div>
+            </div>
+            <div class="realdata-block engine-remote">
+              <h1>Remote Control</h1>
+              <div class="stlp" [ngClass]="{'withoutData': withoutData}"  >
+                <div class="st" *ngIf="genCmd"     (click)="rmtCommand(true)"><img src="assets/images/remote_on.svg" class="placeholderNew-info svg-icon remote-img" /></div>
+                <div class="lp" *ngIf="!genCmd"    (click)="rmtCommand(false)"><img src="assets/images/remote_off.svg" class="placeholderNew-info svg-icon remote-img" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="row gen-view-row">
+    <div class="display-flex-row-2">
+      <div class="col-md-12 col-lg-6 white-background-color fuel-meter">
+        <div class="row flex-grow">
+          <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+            <div class="row">
+              <app-half-gauge [minValue]="genEngineFuelLevel?.minValue" [maxValue]="genEngineFuelLevel?.maxValue" [fuelMin]="genEngineFuelLevel?.min" [fuelMax]="genEngineFuelLevel?.max" [fuelUnit]="genEngineFuelLevel?.unit" [fuelTitle]="genEngineFuelLevel?.nm" [fuelMeter]="genEngineFuelLevel?.value" [color]="genEngineFuelLevel?.color"></app-half-gauge>
+
+            </div>
+
+          </div>
+          <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+            <div class="row">
+              <app-half-gauge [minValue]="genBatteryVoltage?.minValue" [maxValue]="genBatteryVoltage?.maxValue" [fuelMin]="genBatteryVoltage?.min" [fuelMax]="genBatteryVoltage?.max" [fuelUnit]="genBatteryVoltage?.unit" [fuelTitle]="genBatteryVoltage?.nm" [fuelMeter]="genBatteryVoltage?.value" [color]="genBatteryVoltage?.color"></app-half-gauge>
+
+            </div>
+
+          </div>
+          <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+            <div class="row">
+              <app-half-gauge [minValue]="genEngineOilTemparature?.minValue" [maxValue]="genEngineOilTemparature?.maxValue" [fuelMin]="genEngineOilTemparature?.min" [fuelMax]="genEngineOilTemparature?.max" [fuelUnit]="genEngineOilTemparature?.unit" [fuelTitle]="genEngineOilTemparature?.nm" [fuelMeter]="genEngineOilTemparature?.value" [color]="genEngineOilTemparature?.color"></app-half-gauge>
+
+            </div>
+
+          </div>
+          <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+            <div class="row">
+              <app-half-gauge [minValue]="genEngineTemparatureLevel?.minValue" [maxValue]="genEngineTemparatureLevel?.maxValue" [fuelMin]="genEngineTemparatureLevel?.min" [fuelMax]="genEngineTemparatureLevel?.max" [fuelUnit]="genEngineTemparatureLevel?.unit" [fuelTitle]="genEngineTemparatureLevel?.nm" [fuelMeter]="genEngineTemparatureLevel?.value" [color]="genEngineTemparatureLevel?.color"></app-half-gauge>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 power">
+        <div class="row">
+          <div class="power-volt power-data white-background-color" id="power-data">
+            <table>
+              <tr>
+                <td><p>True Power:</p></td>
+                <td>
+                  <ng-template *ngIf="genTruePower?.value; else dashh ">
+                    <p>{{genTruePower?.value | number : '1.2-2'}} {{genTruePower?.unit}}</p>
+                  </ng-template>
+                  <ng-template #dashh><p>--</p></ng-template>
+                </td>
+              </tr>
+              <tr>
+                <td><p>Apparent Power:</p></td>
+                <td>
+                  <ng-template *ngIf="genAparentPower?.value; else dashh ">
+                    <p>{{genAparentPower?.value | number : '1.2-2'}} {{genAparentPower?.unit}}</p>
+                  </ng-template>
+                  <ng-template #dashh><div>--</div></ng-template>
+                </td>
+              </tr>
+              <tr>
+                <td><p>Total Energy:</p></td>
+                <td>
+                  <ng-template *ngIf="genTotalEnergy?.value; else dashh ">
+                    <p>{{genTotalEnergy?.value | number : '1.2-2'}} {{genTotalEnergy?.unit}}</p>
+                  </ng-template>
+                  <ng-template #dashh><div>--</div></ng-template>
+                </td>
+              </tr>
+              <tr>
+                <td><p>Power Factor:</p></td>
+                <td>
+                  <ng-template *ngIf="genPowerFactor?.value; else dashh ">
+                    <p>{{genPowerFactor?.value | number : '1.2-2'}} {{genPowerFactor?.unit}}</p>
+                  </ng-template>
+                  <ng-template #dashh><div>--</div></ng-template>
+                </td>
+              </tr>
+              <tr>
+                <td><p>Frequency:</p></td>
+                <td>
+                  <ng-template *ngIf="genFreq?.value; else dashh ">
+                    <p>{{genFreq?.value | number : '1.2-2'}} {{genFreq?.unit}}</p>
+                  </ng-template>
+                  <ng-template #dashh><div>--</div></ng-template>
+                </td>
+              </tr>
+              <tr>
+                <td><p>Speed:</p></td>
+                <td>
+                  <ng-template *ngIf="genEngineSpeed?.value; else dashh ">
+                    <p>{{genEngineSpeed?.value | number : '1.2-2'}} {{genEngineSpeed?.unit}}</p>
+                  </ng-template>
+                  <ng-template #dashh><div>--</div></ng-template>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 voltage">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="row">
+              <div class="phase-voltage white-background-color">
+
+                <div class="volt-col newvlt " [style.height.px]="tableHeight">
+                  <div class="" >
+                    <div>Phase Voltage</div>
+                    <div class="button-volt" *ngIf="phaseVoltageAN?.value; else dash ">{{phaseVoltageAN?.value | number : '1.2-2'}} {{phaseVoltageAN?.unit}}</div>
+                    <div class="button-volt" *ngIf="phaseVoltageBN?.value; else dash "> {{phaseVoltageBN?.value | number : '1.2-2'}} {{phaseVoltageBN?.unit}}</div>
+                    <div class="button-volt" *ngIf="phaseVoltageCN?.value; else dash "> {{phaseVoltageCN?.value | number : '1.2-2'}} {{phaseVoltageCN?.unit}}</div>
+                    <ng-template #dash><div class="button-volt">--</div></ng-template>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <div class="row">
+              <div class="phase-current">
+                <div class="volt-col newvlt last" [style.height.px]="tableHeight" >
+                  <div class="" >
+                    <div>Phase Current</div>
+                    <div  class="button-volt" *ngIf="genCurrentA?.value; else dash ">{{genCurrentA?.value | number : '1.2-2'}} {{genCurrentA?.unit}}</div>
+                    <div class="button-volt"  *ngIf="genCurrentB?.value; else dash ">{{genCurrentB?.value | number : '1.2-2'}} {{genCurrentB?.unit}}</div>
+                    <div class="button-volt"  *ngIf="genCurrentC?.value; else dash ">{{genCurrentC?.value | number : '1.2-2'}} {{genCurrentC?.unit}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+

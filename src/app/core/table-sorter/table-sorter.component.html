@@ -1,0 +1,6 @@
+<a style="cursor: pointer" (click)="sort()" class="text-nowrap">
+  <ng-content></ng-content>
+  <span *ngIf="isSortedByMeAsc" class="glyphicon glyphicon-sort-by-attributes" aria-hidden="true"></span>
+  <span *ngIf="isSortedByMeDesc" class="glyphicon glyphicon-sort-by-attributes-alt" aria-hidden="true"></span>
+  <span *ngIf="!isSortedByMeAsc && !isSortedByMeDesc" class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+</a>

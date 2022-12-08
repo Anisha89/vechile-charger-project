@@ -1,0 +1,286 @@
+<!-- Main -->
+<div class="main">
+    <!--First row-->
+
+    <div class="row">
+        <div class=" col-md-2">
+            <div class="card assetinfocard">
+                <div class="card-header">
+                    <i style="margin-top: 15px;" class=" icon-wrapper fa icon-info"> &nbsp;<b
+                            style="margin-top: 15px;text-transform: uppercase;">{{domain.entityName}}</b></i>
+                </div>
+                <div class="card-body">
+                     <img src="{{domain.rawFile}}" class="picture">
+                    <br>
+                    <h3 style="text-align:center"> <b>Type&nbsp;:&nbsp;{{domainType}}</b></h3>
+                    <h3 style="text-align: center;"> <b>Time&nbsp;:&nbsp;{{lastUpdatedTime}}</b></h3>
+                    <div class="maplevel ">
+                        <google-map width="100%" height="185px" [center]="center" [options]="options">
+                            <map-marker [position]="marker.position" [label]="marker.label" [title]="marker.title"
+                                [options]="marker.options"> </map-marker>
+                        </google-map>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10 ">
+            <div class="card alarmdata">
+                <div class="card-header">
+                    <i style="margin-top: 15px;" class=" fa icon-bell"> &nbsp;<b style="margin-top: 15px;">ALARM</b></i>
+                    <div class="optionbutton">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="severity_dropdownMenuButton"
+                            data-toggle="dropdown" (click)="onAssetAlarmSeverityChange($event.target.value)">
+                            Severity
+                        </button>
+                        <div class="dropdown-menu float-right" aria-labelledby="severity_dropdownMenuButton">
+                            <a class="dropdown-item" *ngFor="let alramSeverity of assetAlarmSeverityList"
+                                (click)="onAssetAlarmSeverityChange(alramSeverity)">
+                                {{alramSeverity}}
+                            </a>
+                        </div>&nbsp;&nbsp;&nbsp;
+                        <div>  
+                             <button id="button-dropup"  class="btn btn-primary dropdown-toggle dropdown-toggle-split" type="button"
+                            id="status_dropdownMenuButton" data-toggle="dropdown"
+                            (click)="onAssetAlarmStatusChange($event.target.value)">
+                            Status
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="status_dropdownMenuButton">
+                            <a class="dropdown-item" *ngFor="let alarmStatus of assetAlarmStatusList"
+                                (click)="onAssetAlarmStatusChange(alarmStatus)">
+                                {{alarmStatus}}
+                            </a>
+                        </div>&nbsp;&nbsp;&nbsp;
+                    </div>
+                    
+                     
+<div>
+    <span>Start Date &nbsp; &nbsp;
+        <input style="height: 35px;margin-bottom: 3px;" type="date" class="form-date"
+            id="startDateAlarm" name="startDateAlarm" [(ngModel)]="alarmDateRange.startDate" />
+     </span>   &nbsp;&nbsp;&nbsp;</div>
+                        <div><span> End Date&nbsp;&nbsp;&nbsp;
+                            <input style="height: 35px;margin-bottom: 3px;" type="date" class="form-date"
+                                id="endDateAlarm" name="endDateAlarm"
+                                [(ngModel)]="alarmDateRange.endDate" /></span>&nbsp;&nbsp;&nbsp;</div>
+                        <button type="submit" (click)="onAssetAlarmDateListChange()"
+                            class="btn btn-primary">Apply</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Severity</th>
+                                <th>Status</th>
+                                <th>Message</th>
+                                <th>Comments</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="assetdashboard empty" *ngIf=" alarmdata.length== 0 ">
+                                <td colspan="5">No data found</td>
+                            </tr>
+                            <tr class="assetdashboard" *ngFor="let alarm of alarmList "
+                                [ngClass]="{'Critical': (alarm.severity == 'Critical')}">
+                                <td>{{alarm.date_time
+                                    |date:'medium'}}</td>
+                                <td>
+                                    <span *ngIf="alarm.severity=='Critical'"><i style="color:red;"
+                                            class="fa fa-exclamation-triangle" aria-hidden="true"></i> &nbsp;
+                                        &nbsp;</span>
+                                    <span *ngIf="alarm.severity=='Warning'"><i style="color:#FFBF00;"
+                                            class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;
+                                        &nbsp;</span>
+                                    {{alarm.severity}}
+                                </td>
+
+                                <td>{{alarm.status}} </td>
+                                <td>{{alarm.message}}</td>
+                                <td>{{alarm.comments}} </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                    <div class="card-footer"*ngIf="alarmdata.length != 0">
+                        <app-pagination [totalData]="alarmdata" [pageSize]="pageSizeAlarm"
+                            (valueChange)='displayalarmData($event)'>
+                        </app-pagination>
+
+                    </div>
+                </div>
+
+            
+        </div>
+    </div>
+
+    <app-loading *ngIf="isLoading"></app-loading>
+    <!-- second row-->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card realtime">
+                <div style="height:70px;" class="card-header">
+                    <i style="margin-top: 15px;" class="fa fa-globe"> &nbsp;<b style="margin-top: 15px;"> REALTIME
+                            DATA</b></i>
+                </div>
+                <div class="card-body" >
+                  
+                        <table class="table table-bordered table-striped table-sm ">
+                            <thead>
+                                <tr>
+    
+                                    <th>Name</th>
+                                    <th>Value</th>
+                                    <th>Node</th>
+                                    <th>Status</th>
+                                    <th>Last Updated</th>
+    
+    
+                                </tr>
+                            </thead>
+                            <tbody >
+                               
+                                <tr class="assetdashboard empty" *ngIf=" realtimedata.length== 0">
+                                    <td colspan="5">No data found</td>
+    
+                                </tr>
+                                <tr class="assetdashboard" *ngFor="let data of realtimedataList"
+                                    [ngClass]="{'Critical': (data.isIndexed == true)}">
+    
+    
+                                    <td style="display: flex;flex-wrap: wrap;">
+                                        <span *ngIf="data.selected===true ">
+                                            <input type="checkbox" id="myCheck1" (click)="onChange($event,data.name)"
+                                                checked>
+    
+    
+                                        </span>
+                                        <span *ngIf="data.selected===false">
+                                            <input type="checkbox" id="myCheck1" (click)="onChange($event,data.name)">
+    
+                                        </span>
+    
+    
+                                        <!-- <span class="roundshape" [ngStyle]="{'background-color':data.color}"></span> -->
+                                        <span class="roundshape" [style]="{'background-color':data.color}"></span>
+                                        <span style="margin-left: 10px;"> {{data.name}}</span>
+    
+                                    </td>
+                                    <td> {{data.value}}</td>
+                                    <td> {{data.node}} </td>
+                                    <td>{{data.status}} </td>
+                                    <td> {{data.ts |date:'medium'}}</td>
+    
+    
+    
+                                </tr>
+                          
+                            </tbody>
+                        </table>
+                    </div>
+                   
+                  
+                   
+                    <div class="card-footer" *ngIf="realtimedata.length != 0">
+                        <app-pagination [totalData]="realtimedata" [pageSize]="pageSizeRealtime"
+                            (valueChange)='displayrealtimeData($event)'>
+                        </app-pagination>
+                    </div>
+               
+            
+              
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card chartcard">
+                <div class="card-header">
+                    <i style="margin-top: 15px;" class="fa fa-bar-chart"> &nbsp;<b style="margin-top: 15px;"> CHART
+                            HISTORY</b></i>
+                    <div class="optionbutton">
+                        <span>Start Date &nbsp;&nbsp;
+                            <input style="height: 35px;margin-bottom: 7px;" type="date" class="form-date" id="startDate"
+                                name="startDate" [(ngModel)]="chartInputData.fromDate" />
+                           </span>  &nbsp;&nbsp;&nbsp;
+                        <span>End Date &nbsp;&nbsp;&nbsp;
+                            <input style="height: 35px;margin-bottom:7px;" type="date" class="form-date" id="endDate"
+                                name="endDate" [(ngModel)]="chartInputData.toDate" />
+
+                            </span> &nbsp;&nbsp;&nbsp;
+
+                        <span><label style="margin-top: 3px;">Duration: </label> &nbsp;&nbsp;&nbsp;
+                            <select style="height: 35px;margin-bottom: 7px;" id="assetAlarmIntervalList"
+                                (change)="onchangeInterval($event.target.value)">
+                                <option *ngFor=" let interval of  chartIntervalList">
+                                    {{ interval }}
+                                </option>
+                            </select>
+                            <!--<input type="radio" [value]="interval" name="interval" [ngModel]="selectedInterval"
+              (change)="onchangeInterval(interval)">{{ interval }}-->
+                          
+                        </span> &nbsp;&nbsp;&nbsp;
+                        <span> <label style="margin-top: 3px;">Type:</label> &nbsp;&nbsp;&nbsp;
+                            <select style="height: 35px;margin-bottom: 7px;" id="assetAlarmDateList"
+                                (change)="onchangechartType($event.target.value)">
+                                <option *ngFor=" let type of  chartTypeList">
+                                    {{type}}
+                                </option>
+                            </select></span>&nbsp;&nbsp;&nbsp;
+
+                        <button type="submit"  (click)="submitChartReqInfo()" class="btn btn-primary">Apply</button>
+
+
+
+                    </div>
+                </div>
+                <div #containerRef class="card-body" style="margin-top:10px;padding:0">
+                    <div *ngIf="assetChartDataList != undefined">
+                        <div class=" chart-container">
+                            <div class="bar" *ngIf="assetChartDataList===undefined">
+                                <span>Please select realtime parameters&nbsp;</span>
+                            </div>
+                            <!-- bar chart-->
+                            <div class="bar" *ngIf="chartInputData.chartType==='Bar'">
+                                <ngx-charts-bar-vertical-2d
+                                    [view]="[containerRef.offsetWidth, containerRef.offsetHeight]"
+                                    [scheme]="chartUIData.colorScheme" [results]="assetChartDataList"
+                                    [gradient]="chartUIData.gradient" [xAxis]="chartUIData.showXAxis"
+                                    [yAxis]="chartUIData.showYAxis" [legend]="chartUIData.showLegend"
+                                    [showXAxisLabel]="chartUIData.showXAxisLabel"
+                                    [showYAxisLabel]="chartUIData.showYAxisLabel"
+                                    [legendTitle]="chartUIData.legendTitle" (select)="onSelect($event)"
+                                    (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+                                </ngx-charts-bar-vertical-2d>
+                            </div>
+                            <div class="line" *ngIf="chartInputData.chartType==='Line'">
+                                <ngx-charts-line-chart [view]="[containerRef.offsetWidth, containerRef.offsetHeight]"
+                                    [scheme]="chartUIData.colorScheme" [legend]="chartUIData.showLegend"
+                                    [results]="assetChartDataList" [showXAxisLabel]="chartUIData.showXAxisLabel"
+                                    [showYAxisLabel]="chartUIData.showYAxisLabel" [xAxis]="chartUIData.showXAxis"
+                                    [yAxis]="chartUIData.showYAxis" [xAxisLabel]="chartUIData.xAxisLabel"
+                                    [yAxisLabel]="chartUIData.yAxisLabel" [timeline]="chartUIData.timeline"
+                                    (select)="onSelect($event)" (activate)="onActivate($event)"
+                                    (deactivate)="onDeactivate($event)">
+                                </ngx-charts-line-chart>
+                            </div>
+                            <div class="stacked" *ngIf="chartInputData.chartType==='Stacked'">
+                                <ngx-charts-bar-vertical-stacked [view]="[containerRef.offsetWidth, containerRef.offsetHeight]"
+                                    [scheme]="chartUIData.colorScheme" [results]="assetChartDataList"
+                                    [gradient]="chartUIData.gradient" [xAxis]="chartUIData.showXAxis"
+                                    [yAxis]="chartUIData.showYAxis" [legend]="chartUIData.showLegend"
+                                    [showXAxisLabel]="chartUIData.showXAxisLabel"
+                                    [showYAxisLabel]="chartUIData.showYAxisLabel" [xAxisLabel]="chartUIData.xAxisLabel"
+                                    [yAxisLabel]="chartUIData.yAxisLabel" [animations]="chartUIData.animations"
+                                    (select)="onSelect($event)">
+                                </ngx-charts-bar-vertical-stacked>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

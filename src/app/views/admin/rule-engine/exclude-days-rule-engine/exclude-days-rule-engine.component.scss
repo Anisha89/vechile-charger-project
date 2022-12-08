@@ -1,0 +1,238 @@
+
+::-webkit-datetime-edit-year-field:not([aria-valuenow]),
+::-webkit-datetime-edit-month-field:not([aria-valuenow]),
+::-webkit-datetime-edit-day-field:not([aria-valuenow]) {
+    color: transparent;
+}
+
+
+
+.app-exclude-days-rule-engine {
+    position: relative;
+    .selected-days {
+    
+      box-shadow: 0px 1px 5px #959595;
+      padding: 10px;
+      cursor: pointer;
+      background-color: white;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-size: 14px;
+      color: #000;
+      margin-bottom: 15px;
+      width: 100%;
+      position: absolute;
+      border: 0px;
+      background: transparent;
+      .selected-day {
+        background-color: #3EA0CE;
+        color: #fff;
+        border-radius: 2px;
+        margin: 2px 2px;
+        padding: 0px 5px;
+        display: inline-block;
+        transition: all 0.3s ease;
+      }
+    }
+    .form-control {
+      width: 150px;
+      display: inline-block;
+    }
+
+    &.disabled {
+      opacity: 0.65;
+      background-color:#F5F5F5;
+      .selected-days {
+        background: #F0F0F0;
+      }
+    }
+
+    input[type="date"] {
+        position: relative;
+    }
+    
+    /* create a new arrow, because we are going to mess up the native one
+    see "List of symbols" below if you want another, you could also try to add a font-awesome icon.. */
+    input[type="date"]:after {
+      font-family: 'FontAwesome';
+      content: "\f073"; 
+      // color: #555;
+      //background-image: url(assets/icons/rule-engine/calendar.svg);
+      position: absolute;
+      padding: 0 5px;
+      right: 0px;
+    }
+
+    // For Microsoft edge
+    input[type="date"]::after {
+      font-family: 'FontAwesome';
+      content: "\f073"; 
+      // color: #555;
+      //background-image: url(assets/icons/rule-engine/calendar.svg);
+      position: absolute;
+      padding: 0 5px;
+      right: 0px;
+      display: inline;
+    }
+    
+    /* change color of symbol on hover */
+    input[type="date"]:hover:after {
+        // color: #bf1400;
+    }
+    
+    /* make the native arrow invisible and stretch it over the whole field so you can click anywhere in the input field to trigger the native datepicker*/
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      
+      @media only screen and (max-width: 1024px) {
+        -webkit-appearance: none;
+      }
+        // font-family: 'Font Awesome 5 Free';
+        // content: "\f073"; 
+        // color: #555;
+        position: absolute;
+        // top: 0;
+        // left: 0;
+        right: 0;
+        z-index: 1;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        // bottom: 0;
+        // width: auto;
+        // height: auto;
+        color: transparent;
+        background: transparent; 
+        --display: none;
+        opacity: 0;
+        --webkit-appearance: none;       
+    }
+
+    
+    /* adjust increase/decrease button */
+    input[type="date"]::-webkit-inner-spin-button {
+        --z-index: 1;
+    }
+    
+     /* adjust clear button */
+     input[type="date"]::-webkit-clear-button {
+        --z-index: 1;
+     }
+  }
+
+  .custom{
+    position: relative;
+    --min-height: 41px;
+    .selected-days{
+      box-shadow: none;
+      padding: 0px;
+      height: auto;
+      min-height: 30px;
+      border-radius: 3px;
+      width: 100%;
+      line-height: normal;
+      position: relative;
+      z-index: 1;
+      max-width: calc(100% - 25px);
+      border-right: 0px;
+      position: absolute;
+      width: auto;
+      margin-top: 2px;
+      /* margin-top: 2px; */
+      margin-bottom: 0px;
+      background: white;
+      margin-left: 4px;
+      .selected-day{
+        color: #ffffff;
+        border-radius: 3px;
+        padding: 2px 5px;
+        margin: 3px 3px 0px 0px;
+        font-size: 12px;
+      }
+    }
+    input[type="date"] {
+      width: 100% !important;
+      display: inline-block;
+      position: absolute;
+      top: 0px;
+      height: 100%;
+      outline: none;
+      box-shadow: none;
+      border-radius: 0px;
+      &.date-input {
+        @media only screen and (max-width: 1024px) {
+          -webkit-appearance: none;
+          -moz-appearance: none;
+        }
+
+        min-width: 95%;
+        // z-index: 1;
+        background: transparent;
+
+        &.no-placeholder::before {
+          width: 100%;
+          content: "";
+          display: block; 
+          
+        }
+        // &.no-placeholder:before {
+        //   width: 100%;
+        //   content: "";
+        //   display: block; 
+          
+        // }
+        &.no-placeholder::placeholder {
+          display: none;
+        }
+
+        // For Edge
+        &.no-placeholder::-ms-input-placeholder {
+          display: none;
+          opacity: 0;
+        }
+
+        // For Chrome/Safari/Opera
+        &.no-placeholder::-webkit-input-placeholder {
+          display: none;
+        }
+
+        
+
+        
+      }
+
+      // &.date-input::before {
+      //   width: 100%;
+      //   content: "";
+      // }
+      &:active, &:focus {
+        outline: none;
+      }
+      &.picker {
+        width: calc(100% - 130px) !important;
+        height: 24px !important;
+        font-size: 999px !important;
+        opacity: 0 !important;
+        position: absolute !important;
+        top: 0 !important;
+        right: 30px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+    }
+    input[type=date]::-webkit-clear-button,  input[type=date]::-webkit-inner-spin-button{
+      // -webkit-appearance: none;
+       display: none;
+    }
+    // input[type=date] {
+    //   -webkit-appearance: none;
+    //   -moz-appearance: none;
+    // }
+  }
+
+  
+
+
+.fa-remove:before {
+  content: "\f00d";
+}

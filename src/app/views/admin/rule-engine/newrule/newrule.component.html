@@ -1,0 +1,477 @@
+<div class="animated fadeIn rules">
+   <div class="row">
+      <div class="col-lg-12">
+         <div class="card">
+            <div class="card-header">
+               <i class="fa fa-cogs"></i> Rules
+               <div class="card-icons">
+                  <a class="icon-wrapper">
+                  <i class="icon-list"></i>
+                  </a>
+                  <a class="icon-wrapper">
+                  <i class="fa fa-file-excel-o"></i>
+                  </a>
+                  <a class="icon-wrapper">
+                  <i class="fa fa-plus-square-o" (click)="onAdd($event)"></i>
+                  </a>
+               </div>
+            </div>
+            <div class="card-body">
+               <div class="row">
+                  <!--left panel start-->
+                  <div class="col-sm-3 card">
+                     <div class="card-body">
+                        <div *ngIf="rules?.length === 0">
+                           NO RULES FOUND
+                        </div>
+                        <div class="card list" [ngClass]="{'selected':selected?.id == rule.id}"
+                        (click)="select(rule, $event)" *ngFor="let rule of rulesList" (click)="onEdit(rule, $event)">
+                        <div class="card-body">
+                           <app-loading *ngIf="isLoading"></app-loading>
+                           {{rule.name}}
+                           <div style="float: right;">
+                              <a class="btn" (click)="confirmAnddelete(rule, $event)">
+                              <i class="fa fa-trash-o"></i>
+                              </a>
+                           </div>
+                           <br> <br>
+                           <b>{{rule.updatedOn| date: 'MM/dd/yyyy hh:mm a'}}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>{{rule.publishedOn|
+                           date: 'MM/dd/yyyy hh:mm a'}}</b><br><br>
+                           <div class="buttonarrange"
+                              style="display: flex;flex-wrap:wrap;justify-content:space-between;">
+                              <!--Active toggle button-->
+                              <label class="switch">
+                                 <input type="checkbox" id="togBtn"  [(ngModel)]="rule.status">
+                                 <div class="slider round">
+                                    <span class="SwitchOff">Inactive</span>
+                                    <span class="SwitchOn">Active</span>
+                                 </div>
+                              </label>
+                              <!--Local/remote toggle button-->
+                              <label class="switch">
+                                 <input type="checkbox" id="togBtn" [(ngModel)]="rule.localOrRemote" >
+                                 <div class="slider round">
+                                    <span class="SwitchOff">Local</span>
+                                    <span class="SwitchOn">Remote</span>
+                                 </div>
+                              </label>
+                              <!--Test-->
+                              <button style="border-radius: 25px;margin-bottom: 5px;width:75px;"
+                                 class="btn btn-primary sm btn-test testbtn" (click)="test(rule)">Test</button>
+                              <!--Publish-->
+                              <button style="border-radius: 25px;margin-bottom: 5px;"
+                              class="btn btn-primary sm btn-publish publishbtn" *ngIf="!rule.published"
+                              (click)="confirmPublish(rule)">Publish</button>
+                              <button style="border-radius: 25px;margin-bottom: 5px;"
+                              class="btn btn-primary sm btn-publish publishbtn " *ngIf="rule.published"
+                              (click)="confirmPublish(rule)">Unpublish</button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- Left Panel end  -->
+               <!--Right Panel-->
+               <div class=" animated fadeIn rule-engine col-sm-9">
+                  <div class="card">
+                     <div class="card-header">
+                        {{newOrEdit}}
+                     </div>
+                     <div class="rule-body" #ruleBody (resized)="calcualteRuleContentHeight()" *ngIf="rule != null">
+                     <div class="rule-section rule-define-section">
+                        <div class="rule-define-section-body">
+                           <div class="row">
+                              <div class="col-sm-6 column rule-name" [ngClass]="{'with-list': showList}">
+                                 <label class="smaller">Rule Name</label>
+                                 <input type="text" placeholder="Rule Name" class="input rule-name form-control"
+                                 [(ngModel)]="rule.name" [disabled]="disabled" />
+                                 <div class="invalid-feedback"
+                                    *ngIf="validationErrors && validationErrors['name']">
+                                    {{validationErrors['name'].errorMessage}}
+                                 </div>
+                              </div>
+                              <div style="width:100%;" class=" col-sm-6 column asset-type-and-status right"
+                                 [ngClass]="{'with-list': showList}">
+                                 <div class="column asset-type-column" [ngClass]="{'edit-mode': rule.ruleId}">
+                                    <label class="smaller">Asset Types</label>
+                                    <ng-multiselect-dropdown style="width: 525px;"
+                                    [placeholder]="'Please Select Asset Types..!'"
+                                    [class]="asset-list"
+                                    [settings]="dropdownSettingsAssetType" [data]="domainIdAndNameList"
+                                    [(ngModel)]="selectedDomainIdAndNameList" (onSelect)="onItemSelect($event)"
+                                    (onSelectAll)="onSelectAll($event)">
+                                    </ng-multiselect-dropdown>
+                                    <div class="invalid-feedback"
+                                       *ngIf="validationErrors && validationErrors['assetType']">
+                                       {{validationErrors['assetType'].errorMessage}}
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="row rule-description">
+                              <app-rule-builder #ruleBuilder [payload]="payload" [disabled]="disabled"
+                              (datapint-changed)="handleDatapointChanged($event)" [rule]="rule">
+                              </app-rule-builder>
+                              <div class="invalid-feedback"
+                                 *ngIf="validationErrors && validationErrors['rawRule']">
+                                 {{validationErrors['rawRule'].errorMessage}}
+                              </div>
+                           </div>
+                           <div class="row tags">
+                              <label class="smaller">Tags</label>
+                              <div class="rule-tags rule-tooltip">
+                                 <tag-input [(ngModel)]='rule.tags' [disable]="disabled" [ripple]="false"
+                                 [addOnBlur]="true"></tag-input>
+                              </div>
+                           </div>
+                           <div class="row">
+                              <div class="col-sm-4">
+                                 <input style="width:100%;height:35px;" class="input" type="number" min="15"
+                                 [ngClass]="{'highlight-error':errors?.onStateDelay?.error}"
+                                 onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                 [(ngModel)]="rule.onStateDelay" [disabled]="disabled"
+                                 placeholder="On State Delay" />
+                                 <div class="invalid-feedback"
+                                    *ngIf="validationErrors && validationErrors['onStateDelay']">
+                                    On State Delay should be 15 sec or higher
+                                 </div>
+                              </div>
+                              <div class="col-sm-4">
+                                 <input style="width:100%;height:35px;" class="input" type="number" min="15"
+                                 [ngClass]="{'highlight-error':errors?.offStateDelay?.error}"
+                                 onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                 [(ngModel)]="rule.offStateDelay" [disabled]="disabled"
+                                 placeholder="Off State Delay" [(ngModel)]="rule.offStateDelay" />
+                                 <div class="invalid-feedback"
+                                    *ngIf="validationErrors && validationErrors['offStateDelay']">
+                                    Off State Delay should be 15 sec or higher
+                                 </div>
+                              </div>
+                              <div class="col-sm-4 ">
+                                 <input style="width:100%;height:35px;" type="text" placeholder="Alarm Name"
+                                 class="input alarm-name" [(ngModel)]="rule.alarmName" [disabled]="disabled" />
+                                 <div class="invalid-feedback"
+                                    *ngIf="validationErrors && validationErrors['alarmName']">
+                                    {{validationErrors['alarmName'].errorMessage}}
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="row"  >
+                              <div class="col-sm-2"style="border:1px solid gray;display:flex;flex-wrap:wrap;">
+                                <label style="margin-top:10px;margin-left: -10px;">Status</label>
+                                 <label style="margin-left: 110px;margin-top: 5px;margin-bottom: 5px;" class="switch">
+                                    <input type="checkbox" id="togBtn" [(ngModel)]="rule.status">
+                                    <div class="slider round">
+                                       <span class="SwitchOff">Inactive</span>
+                                       <span class="SwitchOn">Active</span>
+                                    </div>
+                                 </label>
+                                 
+                                
+                              </div>
+                              <div class="col-sm-10">
+                                 <div style="border:1px solid gray;height:45px;width:100%;">
+                                    <label
+                                       style="margin-top: 10px;float:left;margin-left: 1px;">Output:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                    <div
+                                       style="display: flex;justify-content: space-evenly;flex-wrap: wrap;align-items: center;">
+                                       <div class="outputa" [ngClass]="{'disabled': disabled}">
+                                          <i style="color:white;" class="icon-bell circle-icon" 
+                                          [ngStyle]="{'background-color' :  propColoralarm}"
+                                          (click)="onPutAlarm()"></i>   &nbsp;&nbsp;Alarm
+                                       </div>
+                                       <div class="outputa" [ngClass]="{'disabled': disabled}">
+                                          <i style="color:white;" class="fa fa fa-envelope circle-icon"
+                                          [ngStyle]="{'background-color' :  propColoremail }"
+                                          (click)="onPutEmail()"></i>&nbsp;&nbsp;Email
+                                       </div>
+                                       <div class="outputa" [ngClass]="{'disabled': disabled}">
+                                          <i style="color:white;" class="fa fa-mobile-phone circle-icon"
+                                          [ngStyle]="{'background-color' :  propColorsms }"
+                                          (click)="onPutSms()"></i>&nbsp;&nbsp;SMS
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div style="border: 1px solid gray;padding:20px 20px;">
+                              <div class="row">
+                                 <div class="col-sm-6">
+                                    <input style="width:100%;height:35px;" type="text"
+                                    placeholder="Alarm Description" [(ngModel)]="rule.output.alarm_des"
+                                    [disabled]="disabled" />
+                                    <div class="invalid-feedback"
+                                       *ngIf="validationErrors && validationErrors['output_alarm_des']">
+                                       {{validationErrors['output_alarm_des'].errorMessage}}
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <input style="width:100%;height:35px;" type="text"
+                                    placeholder="Normal Description" [(ngModel)]="rule.output.normal_des"
+                                    [disabled]="disabled" />
+                                    <div class="invalid-feedback"
+                                       *ngIf="validationErrors && validationErrors['output_normal_des']">
+                                       {{validationErrors['output_normal_des'].errorMessage}}
+                                    </div>
+                                 </div>
+                              </div>
+                              <br>
+                              <div class="row">
+                                 <div class="col-sm-6">
+                                    <select style="width:100%;height: 35px;" [(ngModel)]="rule.output.pri"
+                                    [disabled]="disabled"
+                                    [ngClass]="{'highlight-error':errors?.output_sts?.error}">
+                                    <option *ngFor="let priority of alarmPriorities"
+                                    [selected]="priority === rule.output.pri" [ngValue]="priority">
+                                    {{priority}}
+                                    </option>
+                                    </select>
+                                    <div class="invalid-feedback"
+                                       *ngIf="validationErrors && validationErrors['output_pri']">
+                                       {{validationErrors['output_pri'].errorMessage}}
+                                    </div>
+                                 </div>
+                                 <div class="col-sm-6">
+                                    <input style="width:100%;height:35px;" type="text" placeholder="Value"
+                                    [(ngModel)]="rule.output.val" [disabled]="disabled" />
+                                    <div class="invalid-feedback"
+                                       *ngIf="validationErrors && validationErrors['output_val']">
+                                       {{validationErrors['output_val'].errorMessage}}
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <br>
+                        <div class="rule-assign-section-body">
+                           <div class="row asset-list">
+                              <label class="smaller">Select Assets</label>
+                              <ng-multiselect-dropdown style="width:100%;"
+                              [placeholder]="'Please Select Assets.....!'" [settings]="dropdownSettingsAssetId"
+                              [data]="domains" [(ngModel)]="selectedDomains" (onSelect)="onItemSelect($event)"
+                              (onSelectAll)="onSelectAll($event)">
+                              </ng-multiselect-dropdown>
+                              <div class="invalid-feedback"
+                                 *ngIf="validationErrors && validationErrors['assets']">
+                                 Please select at least one asset
+                              </div>
+                           </div>
+                           <br>
+                           <div class="row days">
+                              <div class="column day-schedule">
+                                 <label>Day Schedule</label>
+                                 <app-day-scheduler-with-checkbox [disabled]="disabled"
+                                 (notifyChange)="onDayScheduleChange($event)" [data]="rule.daySchedule">
+                                 </app-day-scheduler-with-checkbox>
+                                 <div class="invalid-feedback"
+                                    *ngIf="validationErrors && validationErrors['daySchedule']">>
+                                    Please schedule the rule for at least one day in a week
+                                 </div>
+                              </div>
+                              <div class="column exclude-days">
+                                 <label>Exclude Days</label>
+                                 <app-exclude-days-rule-engine [disabled]="disabled"
+                                 [excludedDays]="rule.excludeDays" (selected)="onSelectExcludeDay($event)">
+                                 </app-exclude-days-rule-engine>
+                              </div>
+                           </div>
+                           <div class="row time-schedule">
+                              <div class="col-sm-6">
+                                 <label>Control time : From {{startTime}}
+                                 To
+                                 {{endTime}}
+                                 <span class="pull-right time-zone">Timezone : Eastern Time</span>
+                                 </label>
+                                 <div class="time-slider-range" [ngClass]="{'disabled': disabled }">
+                                    <app-time-slider [(range)]="timeRangeValue" (timeRange)="onTimeChange($event)"
+                                    #timeRange></app-time-slider>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="rule-footer">
+                           <button class="btn" (click)="close($event)" *ngIf="disabled">Close</button>
+                           <label class="switch">
+                              <input type="checkbox" id="togBtn" [(ngModel)]="rule.localOrRemote" >
+                              <div class="slider round">
+                                 <!--ADDED HTML -->
+                                 <span class="SwitchOff">Local</span>
+                                 <span class="SwitchOn">Remote</span>
+                                 <!--END-->
+                              </div>
+                           </label>
+                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                           <button class="btn" (click)="save($event)" *ngIf="add && !disabled "
+                           [ngClass]="{'disabled': saveDisabled}">Save</button>
+                           <button class="btn" (click)="save($event)" *ngIf="!add && !disabled  "
+                           [ngClass]="{'disabled': saveDisabled}">Save</button>
+                           <button class="btn" (click)="test(rule)" *ngIf="add && !disabled"
+                           [ngClass]="{'disabled': saveDisabled}">Test</button>
+                           <button class="btn" (click)="test(rule)" *ngIf="!add && !disabled"
+                           [ngClass]="{'disabled': saveDisabled}">Test</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!--Rightpanel ends-->
+      <div class="card-footer" *ngIf="rules?.length > 0">
+         <div *ngIf="rules.length != 0 ">
+            <app-pagination [totalData]="rules"
+            [pageSize]="pageSizeRules" (valueChange)='displayData($event)'>
+            </app-pagination>
+         </div>
+      </div>
+   </div>
+</div>
+<!--Error Modal-->
+<div bsModal #errorModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Vehicle Charger</h4>
+            <button type="button" class="close" (click)="errorModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <p>Submit Failed, Please contact the system administrator..!</p>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="errorModal.hide()">Close</button>
+         </div>
+      </div>
+      <!-- /.modal-content -->
+   </div>
+   <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!--Error modal Ends-->
+<!--Success Modal-->
+<div bsModal #successModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Vehicle Charger</h4>
+            <button type="button" class="close" (click)="successModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <p>Saved Data Successfully..!</p>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="successModal.hide()">Close</button>
+         </div>
+      </div>
+      <!-- /.modal-content -->
+   </div>
+   <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!--Sucess Modal Ends-->
+<div bsModal #discardConfirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Confirm</h4>
+            <button type="button" class="close" (click)="discardConfirmationModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <p>This is discard the changes and goback to the list. Are you sure you want discard the changes?</p>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="discardConfirmationModal.hide()">Cancel</button>
+            <button type="button" class="btn btn-danger" (click)="refresh()">Discard Changes</button>
+         </div>
+      </div>
+      <!-- /.modal-content -->
+   </div>
+   <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!--Status Modal-->
+<div bsModal #statusChangeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Confirm</h4>
+            <button type="button" class="close" (click)="statusChangeModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <p>This will Activate/Deactivate Rule. Are you sure, you want to proceed?</p>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="cancelStatusChange(selected)">No</button>
+            <button type="button" class="btn btn-danger" (click)="onStatusChange(selected, $event)">Yes</button>
+         </div>
+      </div>
+      <!-- /.modal-content -->
+   </div>
+   <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!--Publish Modal-->
+<div bsModal #publishConfirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Confirm</h4>
+            <button type="button" class="close" (click)="publishConfirmationModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <p>Are you sure you want to
+               <span *ngIf="!selected?.published"> publish?</span>
+               <span *ngIf="selected?.published"> unpublish?</span>
+            </p>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="publishConfirmationModal.hide()">Cancel</button>
+            <button type="button" class="btn"
+            [ngClass]="{'btn-danger': selected?.published, 'btn-success': !selected?.published}"
+            (click)="publish(selected, $event)">
+            <span *ngIf="!selected?.published">Publish</span>
+            <span *ngIf="selected?.published">Unpublish</span>
+            </button>
+         </div>
+      </div>
+      <!-- /.modal-content -->
+   </div>
+   <!-- /.modal-dialog -->
+</div>
+<!--delete modal-->
+<div bsModal #deleteConfirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Confirm</h4>
+            <button type="button" class="close" (click)="deleteConfirmationModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <p>This will remove the Rule and the related data permanently. Are you sure, you want to delete?</p>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="deleteConfirmationModal.hide()">Cancel</button>
+            <button type="button" class="btn btn-danger" (click)="delete(selected, $event)">Delete</button>
+         </div>
+      </div>
+      <!-- /.modal-content -->
+   </div>
+   <!-- /.modal-dialog -->
+</div>
+<!--test modal-->
+<app-rule-test-result [show]="showTestResult" [rule]="testRule" [testResults]="testResults"
+(onClose)="onTestResultModalClose()">
+</app-rule-test-result>
+</div>

@@ -1,0 +1,107 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="panel panel-app" id="genAssetDescApp">
+      <div class="panel-heading clearfix panel-white-heading panel-border">
+        <img src="assets/images/info.svg" class="svg-info svg-icon" />
+        <div class="text-left">
+          <span class="genAsset-info-text">Generator Info</span>
+          <span class="pull-right genAsset-info-dropdown-label col-lg-6">
+                  <select id="genAssetsSelect" class="form-control input-sm" name="assetSelect" [(ngModel)]="assetId">
+                    <option *ngFor="let parent of assetsAvailable;" [ngValue]="parent.assetId">{{parent.assetId}}</option>
+                  </select>
+                </span>
+          <!-- </div> -->
+        </div>
+        <!-- <span class="text-right"></span> -->
+      </div>
+      <div class="panel-body-padding panel-border">
+        <div>
+          <div class="genAsses-description-image-div">
+            <img [src]="assetDescInfo?.logo ? assetDescInfo.logo : defaultImg" class="img img-responsive genAsset-desc-img" alt="Asset Description">
+          </div>
+        </div>
+        <div class="">
+          <div class="panel-desc panel-desc-all-p" *ngIf="assetDescInfo?.isRequiredFiledAvailable">
+            <div *ngIf="assetDescInfo?.assetType" class="panel-row">
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 heading">
+                Asset Type:
+              </div>
+              <div id="assetType" (click)="showArrow('assetType')" class="col-lg-7 col-md-7 col-sm-7 col-xs-7 bg-grey-theme desc-value">
+                &nbsp;
+                <p id="genAssetTypeText">{{assetDescInfo?.assetType}}</p>
+                <div *ngIf="assetDescInfo?.assetType">
+                  <p class="arrows left-arrow" (click)="leftClick($event,'assetTypeText')">
+                  </p>
+                  <p class="arrows right-arrow" (click)="rightClick($event,'assetTypeText')">></p>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="assetDescInfo?.vin" class="panel-row">
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 heading">
+                VIN:
+              </div>
+              <div id="genAssetDescInfoVin" (click)="showArrow('assetDescInfoVin')" class="col-lg-7 col-md-7 col-sm-7 col-xs-7 bg-grey-theme desc-value"
+                   [ngStyle]="assetDescInfo?.vin.length > 15 && {'padding': '0'}">
+                &nbsp;
+                <p id="genAssetDescInfoVinText">{{assetDescInfo?.vin}}</p>
+                <div *ngIf="assetDescInfo?.vin">
+                  <p class="arrows left-arrow" (click)="leftClick($event,'assetDescInfoVinText')">
+                  </p>
+                  <p class="arrows right-arrow" (click)="rightClick($event,'assetDescInfoVinText')">></p>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="assetDescInfo?.serialNumber" class="panel-row">
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 heading">
+                SNo. :
+              </div>
+              <div id="genAssetDescInfoSerialNumber" (click)="showArrow('assetDescInfoSerialNumber')" class="col-lg-7 col-md-7 col-sm-7 col-xs-7 bg-grey-theme desc-value"
+                   [ngStyle]="!assetDescInfo?.serialNumber && {'opacity' : 0}">
+                &nbsp;
+                <p id="genAssetDescInfoSerialNumberText">{{assetDescInfo?.serialNumber}}</p>
+                <div *ngIf="assetDescInfo?.serialNumber">
+                  <p class="arrows left-arrow" (click)="leftClick($event,'assetDescInfoSerialNumberText')">
+                  </p>
+                  <p class="arrows right-arrow" (click)="rightClick($event,'assetDescInfoSerialNumberText')">></p>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="assetDescInfo?.unitNumber" class="panel-row">
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 heading">
+                Unit No. :
+              </div>
+              <div id="genAssetDescInfoUnitNumber" (click)="showArrow('assetDescInfoUnitNumber')" class="col-lg-7 col-md-7 col-sm-7 col-xs-7 bg-grey-theme desc-value"
+                   [ngStyle]="!assetDescInfo?.unitNumber && {'opacity' : 0}">
+                &nbsp;
+                <p id="genAssetDescInfoUnitNumberText">{{assetDescInfo?.unitNumber}}</p>
+                <div *ngIf="assetDescInfo?.unitNumber">
+                  <p class="arrows left-arrow" (click)="leftClick($event,'assetDescInfoUnitNumberText')">
+                  </p>
+                  <p class="arrows right-arrow" (click)="rightClick($event,'assetDescInfoUnitNumberText')">></p>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="assetDescInfo?.calibrationId" class="panel-row">
+              <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 heading">
+                Calibration ID:
+              </div>
+              <div id="calibrationId" (click)="showArrow('calibrationId')" class="col-lg-7 col-md-7 col-sm-7 col-xs-7 bg-grey-theme desc-value"
+                   [ngStyle]="!assetDescInfo?.calibrationId && {'opacity' : 0}">
+                &nbsp;
+                <p id="calibrationIdText">{{assetDescInfo?.calibrationId}}</p>
+                <div *ngIf="assetDescInfo?.calibrationId">
+                  <p class="arrows left-arrow" (click)="leftClick($event,'calibrationIdText')">
+                  </p>
+                  <p class="arrows right-arrow" (click)="rightClick($event,'calibrationIdText')">></p>
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

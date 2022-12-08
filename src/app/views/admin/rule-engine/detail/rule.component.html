@@ -1,0 +1,271 @@
+<div class="animated fadeIn rule-engine">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fa fa-cogs"></i> Rule
+                    <button type="button" class="close" (click)="checkAndClose($event)" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="rule-body" #ruleBody (resized)="calcualteRuleContentHeight()" *ngIf="rule != null">
+                                <!-- Richa Starts -->
+                                <div class="rule-section rule-define-section">
+                                    <div class="rule-define-section-body">
+                                        <div class="row">
+                                            <div class="column rule-name" [ngClass]="{'with-list': showList}">
+                                                <label class="smaller">Rule Name</label>
+                                                <input type="text" placeholder="Rule Name" 
+                                                    class="input rule-name form-control"
+                                                    [(ngModel)]="rule.name" [disabled]="disabled" />
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['name']">
+                                                    {{validationErrors['name'].errorMessage}}
+                                                </div>
+                                            </div>
+                                            <div class="column asset-type-and-status right" [ngClass]="{'with-list': showList}">
+                                                <div class="column asset-type-column" [ngClass]="{'edit-mode': rule.ruleId}">
+                                                    <label class="smaller">Asset Type</label>
+                                                    <select [(ngModel)]="rule.assetType" [disabled]="disabled"
+                                                        class="form-control"
+                                                        (change)="onAssetTypeChanged($event.target.value)">
+                                                        <option>
+                                                            Charging Vehicle
+                                                        </option>
+                                                    </select>
+                                                    <div class="invalid-feedback"
+                                                        *ngIf="validationErrors && validationErrors['assetType']">
+                                                        {{validationErrors['assetType'].errorMessage}}
+                                                    </div>
+                                                </div>
+                                                <div class="column right rule-status-column" [ngClass]="{'edit-mode': rule.ruleId}">
+                                                    <label>Status</label>
+                                                    <div class="column right rule-status">
+                                                        <label class="switch switch-label switch-pill switch-primary">
+                                                            <input type="checkbox" class="switch-input" 
+                                                                [ngModel]="rule.status"
+                                                                (ngModelChange)="rule.status = $event">
+                                                            <span class="switch-slider"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                
+                                            </div>
+                                        </div>
+                
+                                        <div class="row rule-description">
+                                            <app-rule-builder #ruleBuilder
+                                                [payload]="payload" [disabled]="disabled" 
+                                                (datapint-changed)="handleDatapointChanged($event)" [rule]="rule">
+                                            </app-rule-builder>
+                                            <div class="invalid-feedback"
+                                                *ngIf="validationErrors && validationErrors['rawRule']">
+                                                {{validationErrors['rawRule'].errorMessage}}
+                                            </div>
+                                        </div>
+                
+                                        <div class="row output-data">
+                                            <div class="output-data-content">
+                                                <div class="first-row">
+                                                    <label class="smaller">Alarm</label>
+                                                    <input type="text" placeholder="Rule Name" 
+                                                            class="input alarm-name"
+                                                            [(ngModel)]="rule.alarmName" [disabled]="disabled" />
+                                                        <div class="invalid-feedback"
+                                                            *ngIf="validationErrors && validationErrors['alarmName']">
+                                                            {{validationErrors['alarmName'].errorMessage}}
+                                                        </div>
+                                                </div>
+                                                <div class="first-row second-part">
+                                                    <label class="smaller">Description</label>
+                                                    <input type="text" [(ngModel)]="rule.output.alarm_des"
+                                                        placeholder="Description" [disabled]="disabled"/>
+                                                    <div class="invalid-feedback"
+                                                        *ngIf="validationErrors && validationErrors['output_alarm_des']">
+                                                        {{validationErrors['output_alarm_des'].errorMessage}}
+                                                    </div>
+                                                </div>
+                                                <div class="first-row third-part rule-tooltip">
+                                                    <label class="smaller">Normal</label>
+                                                    <input type="text" [(ngModel)]="rule.output.normal_des"
+                                                        placeholder="Description" [disabled]="disabled"/>
+                                                    <div class="invalid-feedback"
+                                                        *ngIf="validationErrors && validationErrors['output_normal_des']">
+                                                        {{validationErrors['output_normal_des'].errorMessage}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="output-data-content">
+                                                <div class="second-row">
+                                                    <label class="smaller">On State Delay (in sec)</label>
+                                                    <input class="input" type="number" min="15" 
+                                                        [ngClass]="{'highlight-error':errors?.onStateDelay?.error}"
+                                                        onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                                        [(ngModel)]="rule.onStateDelay" [disabled]="disabled" placeholder="On State Delay" />
+                                                    <div class="invalid-feedback"
+                                                        *ngIf="validationErrors && validationErrors['onStateDelay']">
+                                                        On State Delay should be 15 sec or higher
+                                                    </div>
+                                                </div>
+                                                <div class="second-row second-part">
+                                                    <label class="smaller">Off State Delay (in sec)</label>
+                                                    <input class="input" type="number" min="15"
+                                                        [ngClass]="{'highlight-error':errors?.offStateDelay?.error}"
+                                                        onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                                        [(ngModel)]="rule.offStateDelay" [disabled]="disabled" placeholder="Off State Delay" />
+                                                        <div class="invalid-feedback"
+                                                        *ngIf="validationErrors && validationErrors['offStateDelay']">
+                                                        Off State Delay should be 15 sec or higher
+                                                    </div>
+                                                </div>
+                                                <div class="second-row third-part">
+                                                    <label class="smaller">Priority</label>
+                                                    <select [(ngModel)]="rule.output.pri" [disabled]="disabled"
+                                                        [ngClass]="{'highlight-error':errors?.output_sts?.error}">
+                                                        <option *ngFor="let key of objectKeys(alarmPriorities)" [ngValue]="alarmPriorities[key]">
+                                                            {{key}}
+                                                        </option>
+                                                    </select>
+                                                    <div class="invalid-feedback"
+                                                        *ngIf="validationErrors && validationErrors['output_pri']">
+                                                        {{validationErrors['output_pri'].errorMessage}}
+                                                    </div>
+                                                </div>
+                                                <div class="second-row fourth-part">
+                                                    <label class="smaller">Value</label>
+                                                    <input type="text" [(ngModel)]="rule.output.val"
+                                                        placeholder="Value" [disabled]="disabled"/>
+                                                    <div class="invalid-feedback"
+                                                        *ngIf="validationErrors && validationErrors['output_val']">
+                                                        {{validationErrors['output_val'].errorMessage}}
+                                                    </div>
+                                            </div>
+                                        </div>
+                
+                                        <div class="output-data-content">
+                                            <div class="third-row">
+                                                <label>Notifications</label>
+                                                <div class="column rule-output">
+                                                    <div class="output-options" >
+                                                        <div class="output-type" (click)="onOutPutClick('email')" [ngClass]="{'disabled': disabled}">
+                                                            <i class="fa fa-envelope"></i>&nbsp;&nbsp;Email
+                                                        </div>
+                                                        <div class="output-type" (click)="onOutPutClick('sms')" [ngClass]="{'disabled': disabled}">
+                                                            <i class="fa fa-mobile-phone"></i>&nbsp;&nbsp;SMS
+                                                        </div>
+                                                        <div class="output-type" (click)="onOutPutClick('push')" [ngClass]="{'disabled': disabled}">
+                                                            <i class="icon-bell"></i>&nbsp;&nbsp;Push
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="rule-section rule-assign-section">
+                                    <div class="rule-section-header rule-assign-section-header">Assign</div>
+                                    <div class="rule-assign-section-body">
+                                        <div class="row asset-list">
+                                            <label class="smaller">Select Assets</label>
+                                            <angular2-multiselect [settings]="assetsSetting" appUnselectOptionMultiselect
+                                                (onUnselectAll)="onUnselectAll($event)" [ngClass]="{'highlight-error':errors?.assets?.error}"
+                                                [data]="applicableAssets" [(ngModel)]="rule.assets">
+                                            </angular2-multiselect>
+                                            <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['assets']">
+                                                Please select at least one asset
+                                            </div>
+                                        </div>
+                
+                                        <div class="row days">
+                                            <div class="column day-schedule">
+                                                <label>Day Schedule</label>
+                                                <app-day-scheduler-with-checkbox [disabled]="disabled" (notifyChange)="onDayScheduleChange($event)" [data]="rule.daySchedule"></app-day-scheduler-with-checkbox>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="validationErrors && validationErrors['daySchedule']">>
+                                                    Please schedule the rule for at least one day in a week
+                                                </div>
+                                            </div>
+                                            <div class="column exclude-days" >
+                                                <label>Exclude Days</label>
+                                                <app-exclude-days-rule-engine [disabled]="disabled" [excludedDays]="rule.excludeDays" (selected)="onSelectExcludeDay($event)"></app-exclude-days-rule-engine>
+                                            </div>
+                                        </div>
+                                        <div class="row time-schedule">
+                                            <label>Control time : From {{startTime}}
+                                                To
+                                                {{endTime}}
+                                                <span class="pull-right time-zone">Timezone : Eastern Time</span>
+                                            </label>
+                                            <div class="time-slider-range" [ngClass]="{'disabled': disabled }">
+                                                <app-time-slider [(range)]="timeRangeValue" (timeRange)="onTimeChange($event)"
+                                                    #timeRange></app-time-slider>
+                                            </div>
+                                        </div>
+                                        <div class="row tags">
+                                            <label class="smaller">Tags</label>
+                                            <div class="rule-tags rule-tooltip">
+                                                <tag-input [(ngModel)]='tags' [disable]="disabled" [ripple]="false" [addOnBlur]="true"></tag-input>
+                                            </div>
+                                        </div>
+                
+                                    </div>
+                                </div>
+
+                                <div class="rule-footer">
+                                    <button class="btn" (click)="close($event)" *ngIf="disabled" >Close</button>
+                                    <button class="btn" (click)="checkAndClose($event)" *ngIf="!disabled">Cancel</button>
+                                    <button class="btn" (click)="save($event)" *ngIf="add && !disabled" [ngClass]="{'disabled': saveDisabled}">Save</button>
+                                    <button class="btn" (click)="save($event)" *ngIf="!add && !disabled" [ngClass]="{'disabled': saveDisabled}">Save</button>
+
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div bsModal #errorModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Vehicle Charger</h4>
+                    <button type="button" class="close" (click)="errorModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Submit Failed, Please contact the system administrator..!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" (click)="errorModal.hide()">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div bsModal #discardConfirmationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirm</h4>
+                <button type="button" class="close" (click)="discardConfirmationModal.hide()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>This is discard the changes and goback to the list. Are you sure you want discard the changes?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="discardConfirmationModal.hide()">Cancel</button>
+                <button type="button" class="btn btn-danger" (click)="close()">Discard Changes</button>
+            </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
